@@ -26,8 +26,8 @@ export default function ConfirmationModal({
   onConfirm,
   title,
   message,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
+  confirmText = "Confirmar",
+  cancelText = "Cancelar",
   type = "info",
 }: ConfirmationModalProps) {
   const getIcon = () => {

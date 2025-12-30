@@ -3,11 +3,11 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  PLANNING: { label: "Planning", color: "#8B5CF6" },
-  ACTIVE: { label: "Active", color: "#10B981" },
-  ON_HOLD: { label: "On Hold", color: "#F59E0B" },
-  COMPLETED: { label: "Completed", color: "#3B82F6" },
-  CANCELLED: { label: "Cancelled", color: "#EF4444" },
+  PLANNING: { label: "Planificación", color: "#8B5CF6" },
+  ACTIVE: { label: "Activo", color: "#10B981" },
+  ON_HOLD: { label: "En Espera", color: "#F59E0B" },
+  COMPLETED: { label: "Completado", color: "#3B82F6" },
+  CANCELLED: { label: "Cancelado", color: "#EF4444" },
 };
 
 interface ProjectPortfolioChartProps {
@@ -25,8 +25,8 @@ export function ProjectPortfolioChart({ data }: ProjectPortfolioChartProps) {
 
   return (
     <ChartWrapper
-      title="Project Portfolio Status"
-      description={`${totalProjects} total projects across organization`}
+      title="Estado del Portafolio de Proyectos"
+      description={`${totalProjects} proyectos en total en la organización`}
       config={chartConfig}
       className="border-[var(--border)]"
     >

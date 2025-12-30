@@ -159,7 +159,7 @@ export default function ChatPanel() {
       {
         role: "assistant",
         content:
-          "⚠️ Organization changed. My previous responses may no longer apply to the correct workspace or projects.",
+          "⚠️ La organización ha cambiado. Mis respuestas anteriores podrían no aplicar al workspace o proyectos actuales.",
         timestamp: new Date(),
       },
     ]);
@@ -182,7 +182,7 @@ export default function ChatPanel() {
         ...prev,
         {
           role: "system",
-          content: `✅ Navigated to workspace: ${workspaceName}`,
+          content: `✅ Navegado al workspace: ${workspaceName}`,
           timestamp: new Date(),
         },
       ]);
@@ -199,7 +199,7 @@ export default function ChatPanel() {
         ...prev,
         {
           role: "system",
-          content: `✅ Navigated to project: ${projectName}`,
+          content: `✅ Navegado al proyecto: ${projectName}`,
           timestamp: new Date(),
         },
       ]);
@@ -310,7 +310,7 @@ export default function ChatPanel() {
       });
     } catch (err: any) {
       console.error("Chat error:", err);
-      setError(err.message || "Failed to send message");
+      setError(err.message || "Error al enviar el mensaje");
 
       // Remove the streaming placeholder message
       setMessages((prev) => prev.slice(0, -1));
@@ -347,13 +347,13 @@ export default function ChatPanel() {
         {
           role: "system",
           content:
-            "🔄 Context cleared. You are now in global mode - specify workspace and project for your next actions.",
+            "🔄 Contexto borrado. Ahora estás en modo global - especifica un workspace y proyecto para tus próximas acciones.",
           timestamp: new Date(),
         },
       ]);
     } catch (error) {
       console.error("Failed to clear context:", error);
-      setError("Failed to clear context. Please try again.");
+      setError("Error al borrar el contexto. Por favor intenta de nuevo.");
     }
   };
 
@@ -408,9 +408,8 @@ export default function ChatPanel() {
     <>
       {/* Chat Panel - positioned below header */}
       <div
-        className={`fixed top-0 right-0 bottom-0 bg-[var(--background)] border-l border-[var(--border)] z-40 transform transition-transform duration-300 ease-in-out h-full pb-20 ${
-          isChatOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 bottom-0 bg-[var(--background)] border-l border-[var(--border)] z-40 transform transition-transform duration-300 ease-in-out h-full pb-20 ${isChatOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         style={{ width: `${panelWidth}px` }}
       >
         <div
@@ -421,24 +420,24 @@ export default function ChatPanel() {
         <div className="flex items-center justify-between p-4 border-b border-[var(--border)] bg-[var(--background)]">
           <div className="flex items-center gap-2">
             <HiSparkles className="w-5 h-5 text-blue-600" />
-            <h2 className="text-lg font-semibold text-primary">AI Assistant</h2>
+            <h2 className="text-lg font-semibold text-primary">Asistente de IA</h2>
           </div>
           <div className="flex items-center gap-2">
             {/* Context Clear Button */}
             <button
               onClick={clearContext}
               className="flex items-center gap-1 px-2 py-1 text-xs text-[var(--muted-foreground)] hover:bg-[var(--accent)]  rounded-md transition-all duration-200"
-              title="Clear workspace/project context"
+              title="Borrar contexto de workspace/proyecto"
             >
               <HiArrowPath className="w-3 h-3" />
-              Context
+              Contexto
             </button>
             {messages.length > 0 && (
               <button
                 onClick={clearChat}
                 className="px-2 py-1 text-xs text-[var(--muted-foreground)] hover:bg-[var(--accent)] rounded-md transition-all duration-200"
               >
-                Clear
+                Limpiar
               </button>
             )}
             <button
@@ -465,39 +464,39 @@ export default function ChatPanel() {
                     <HiSparkles className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-primary mb-2">
-                    Hi! I'm your Taskosaur AI Assistant
+                    ¡Hola! Soy tu Asistente de IA de Taskosaur
                   </h3>
                   <p className="text-sm mb-4 text-gray-600 dark:text-gray-400">
-                    I can help you manage tasks, projects, and workspaces
+                    Puedo ayudarte a gestionar tareas, proyectos y workspaces
                   </p>
                   <div className="text-left bg-[var(--accent)] rounded-lg p-4">
                     <p className="text-sm font-medium mb-2 text-[var(--muted-foreground)]">
-                      Try these commands:
+                      Prueba estos comandos:
                     </p>
                     <ul className="text-sm space-y-1.5 text-gray-600 dark:text-gray-400">
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "Create a task called [name]"
+                        "Crear una tarea llamada [nombre]"
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "Show high priority tasks"
+                        "Mostrar tareas de alta prioridad"
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "Mark [task] as done"
+                        "Marcar [tarea] como hecha"
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "Create a workspace called [name]"
+                        "Crear un workspace llamado [nombre]"
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "List my projects"
+                        "Listar mis proyectos"
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                        "Navigate to [workspace] workspace"
+                        "Navegar al workspace [nombre]"
                       </li>
                     </ul>
                   </div>
@@ -586,7 +585,7 @@ export default function ChatPanel() {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyPress}
                 placeholder={
-                  !user ? "Please log in to use AI assistant..." : "Message AI Assistant..."
+                  !user ? "Inicia sesión para usar el asistente de IA..." : "Mensaje para el Asistente de IA..."
                 }
                 disabled={isLoading || !user}
                 rows={1}

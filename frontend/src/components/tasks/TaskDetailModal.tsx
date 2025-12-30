@@ -89,7 +89,7 @@ export default function TaskDetailModal({
     onUpdate(updatedTask);
   };
 
-  const handleMoveSubtask = (taskId: string, newParentId: string) => {};
+  const handleMoveSubtask = (taskId: string, newParentId: string) => { };
 
   const handleLogTime = (timeEntry: Omit<TimeEntry, "id" | "createdAt" | "updatedAt">) => {
     const newTimeEntry: TimeEntry = {
@@ -203,23 +203,21 @@ export default function TaskDetailModal({
             <nav className="flex space-x-8">
               <button
                 onClick={() => setActiveTab("details")}
-                className={`py-2 px-1 text-sm font-medium border-b-2 ${
-                  activeTab === "details"
+                className={`py-2 px-1 text-sm font-medium border-b-2 ${activeTab === "details"
                     ? "border-indigo-500 text-indigo-600 dark:text-indigo-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                }`}
+                  }`}
               >
-                Details
+                Detalles
               </button>
               <button
                 onClick={() => setActiveTab("dependencies")}
-                className={`py-2 px-1 text-sm font-medium border-b-2 ${
-                  activeTab === "dependencies"
+                className={`py-2 px-1 text-sm font-medium border-b-2 ${activeTab === "dependencies"
                     ? "border-indigo-500 text-indigo-600 dark:text-indigo-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                }`}
+                  }`}
               >
-                Dependencies
+                Dependencias
                 {task.dependsOn && task.dependsOn.length > 0 && (
                   <span className="ml-2 bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 text-xs px-2 py-1 rounded-full">
                     {task.dependsOn.length}
@@ -228,13 +226,12 @@ export default function TaskDetailModal({
               </button>
               <button
                 onClick={() => setActiveTab("hierarchy")}
-                className={`py-2 px-1 text-sm font-medium border-b-2 ${
-                  activeTab === "hierarchy"
+                className={`py-2 px-1 text-sm font-medium border-b-2 ${activeTab === "hierarchy"
                     ? "border-indigo-500 text-indigo-600 dark:text-indigo-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                }`}
+                  }`}
               >
-                Hierarchy
+                Jerarquía
                 {task.childTasks && task.childTasks.length > 0 && (
                   <span className="ml-2 bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 text-xs px-2 py-1 rounded-full">
                     {task.childTasks.length}
@@ -243,13 +240,12 @@ export default function TaskDetailModal({
               </button>
               <button
                 onClick={() => setActiveTab("time")}
-                className={`py-2 px-1 text-sm font-medium border-b-2 ${
-                  activeTab === "time"
+                className={`py-2 px-1 text-sm font-medium border-b-2 ${activeTab === "time"
                     ? "border-indigo-500 text-indigo-600 dark:text-indigo-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
-                }`}
+                  }`}
               >
-                Time Tracking
+                Registro de Tiempo
                 {task.timeEntries && task.timeEntries.length > 0 && (
                   <span className="ml-2 bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 text-xs px-2 py-1 rounded-full">
                     {task.timeEntries.length}
@@ -278,42 +274,42 @@ export default function TaskDetailModal({
                     />
                   </svg>
                   <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-white">
-                    Task Details
+                    Detalles de la Tarea
                   </h3>
                   <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    Comprehensive task editing interface will be implemented here.
+                    Aquí se implementará una interfaz completa de edición de tareas.
                   </p>
                   <div className="mt-6 text-sm text-gray-600 dark:text-gray-400 space-y-2">
                     {task.parentTask && (
                       <p>
-                        <strong>Parent Task:</strong> {task.parentTask.slug}: {task.parentTask.title}
+                        <strong>Tarea Padre:</strong> {task.parentTask.slug}: {task.parentTask.title}
                       </p>
                     )}
                     <p>
-                      <strong>Description:</strong> {task.description || "No description"}
+                      <strong>Descripción:</strong> {task.description || "Sin descripción"}
                     </p>
                     <p>
-                      <strong>Reporter:</strong> {task.reporter.firstName} {task.reporter.lastName}
+                      <strong>Reportador:</strong> {task.reporter.firstName} {task.reporter.lastName}
                     </p>
                     {task.assignee && (
                       <p>
-                        <strong>Assignee:</strong> {task.assignee.firstName}{" "}
+                        <strong>Asignado:</strong> {task.assignee.firstName}{" "}
                         {task.assignee.lastName}
                       </p>
                     )}
                     {task.dueDate && (
                       <p>
-                        <strong>Due Date:</strong> {new Date(task.dueDate).toLocaleDateString()}
+                        <strong>Fecha de Vencimiento:</strong> {new Date(task.dueDate).toLocaleDateString()}
                       </p>
                     )}
                     {task.storyPoints && (
                       <p>
-                        <strong>Story Points:</strong> {task.storyPoints}
+                        <strong>Puntos de Historia:</strong> {task.storyPoints}
                       </p>
                     )}
                     {task.originalEstimate && (
                       <p>
-                        <strong>Original Estimate:</strong> {task.originalEstimate / 60} hours
+                        <strong>Estimación Original:</strong> {task.originalEstimate / 60} horas
                       </p>
                     )}
                   </div>
@@ -355,9 +351,9 @@ export default function TaskDetailModal({
           {/* Actions */}
           <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <Button variant="secondary" onClick={onClose}>
-              Close
+              Cerrar
             </Button>
-            <Button>Save Changes</Button>
+            <Button>Guardar Cambios</Button>
           </div>
         </div>
       </div>

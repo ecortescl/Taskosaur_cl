@@ -18,10 +18,10 @@ const extendedQuestions: QuestionType[] = [
   ...questions,
   {
     id: "organizationName",
-    question: "What's your organization name?",
-    description: "This will be the name of your first organization.",
-    inputLabel: "Organization Name",
-    placeholder: "Enter your organization name",
+    question: "¿Cuál es el nombre de tu organización?",
+    description: "Este será el nombre de tu primera organización.",
+    inputLabel: "Nombre de la Organización",
+    placeholder: "Ingresa el nombre de tu organización",
     type: "input" as const,
   },
 ];
@@ -72,12 +72,12 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
           createOrganizationAndHandleRedirect(),
         ]);
 
-        toast.success("Profile and organization created successfully!");
+        toast.success("¡Perfil y organización creados con éxito!");
         router.reload();
         onComplete();
       } catch (error: any) {
         console.error("Error:", error);
-        toast.error(error?.message || "Failed to complete setup. Please try again.");
+        toast.error(error?.message || "Error al completar la configuración. Por favor intenta de nuevo.");
       } finally {
         setIsSubmitting(false);
       }
@@ -103,7 +103,7 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
       const result = await createOrganization({
         name: orgName.trim(),
         slug,
-        description: "My organization created during onboarding",
+        description: "Mi organización creada durante la configuración inicial",
         settings: {
           allowInvites: true,
           requireEmailVerification: false,
@@ -129,7 +129,7 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
       });
       return result;
     } catch (error: any) {
-      throw new Error(error?.message || "Failed to create organization");
+      throw new Error(error?.message || "Error al crear la organización");
     }
   };
 
@@ -155,7 +155,7 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
         <div className="w-full lg:w-1/2 px-6 py-12 overflow-y-auto">
           <div className="w-full bg-[var(--background)] pb-4 flex justify-end items-end">
             <span className="text-sm font-medium text-[var(--foreground)]">
-              Question {currentQuestion + 1} of {totalQuestions}
+              Pregunta {currentQuestion + 1} de {totalQuestions}
             </span>
           </div>
           <div className="px-[10%] space-y-8">
@@ -166,7 +166,7 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
               <p className="text-[var(--foreground)] text-sm">
                 {currentQuestionData.type === "input"
                   ? currentQuestionData.description
-                  : "Please select one option that best describes your preference."}
+                  : "Por favor selecciona la opción que mejor describa tu preferencia."}
               </p>
             </div>
 
@@ -191,26 +191,26 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
                   <div className="mt-6 pt-6 border-t border-[var(--border)] space-y-6">
                     <div className="space-y-4">
                       <Label className="text-sm font-medium text-[var(--foreground)]">
-                        Workspace Name
+                        Nombre del Espacio de Trabajo
                       </Label>
                       <Input
                         type="text"
                         value={workspaceName}
                         onChange={(e) => setWorkspaceName(e.target.value)}
-                        placeholder="e.g., Main Workspace"
+                        placeholder="ej., Espacio de Trabajo Principal"
                         className="border-[var(--border)] bg-[var(--background)] p-4 text-lg"
                       />
                     </div>
 
                     <div className="space-y-4">
                       <Label className="text-sm font-medium text-[var(--foreground)]">
-                        Project Name
+                        Nombre del Proyecto
                       </Label>
                       <Input
                         type="text"
                         value={projectName}
                         onChange={(e) => setProjectName(e.target.value)}
-                        placeholder="e.g., First Project"
+                        placeholder="ej., Primer Proyecto"
                         className="border-[var(--border)] bg-[var(--background)] p-4 text-lg"
                       />
                     </div>
@@ -225,11 +225,10 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
                     <button
                       key={option.id}
                       onClick={() => handleOptionSelect(option.value)}
-                      className={`p-2 pl-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer ${
-                        isSelected
+                      className={`p-2 pl-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer ${isSelected
                           ? "border-gray-600 bg-[var(--background)] shadow-lg"
                           : "border-gray-800 bg-[var(--background)] hover:border-gray-600 hover:shadow-md"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-medium text-lg">{option.text}</span>
@@ -247,34 +246,32 @@ function IntroQuestions({ onComplete }: { onComplete: () => void }) {
               <button
                 onClick={handlePrevious}
                 disabled={currentQuestion === 0}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  currentQuestion === 0
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${currentQuestion === 0
                     ? "bg-[var(--primary)]/70 text-[var(--primary-foreground)] cursor-not-allowed"
                     : "bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] hover:shadow-md cursor-pointer"
-                }`}
+                  }`}
               >
                 <ChevronLeft className="h-5 w-5" />
-                Previous
+                Anterior
               </button>
 
               <button
                 onClick={handleNext}
                 disabled={!isAnswerSelected || isSubmitting}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  !isAnswerSelected || isSubmitting
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${!isAnswerSelected || isSubmitting
                     ? "bg-[var(--primary)]/70 text-[var(--primary-foreground)] cursor-not-allowed"
                     : "bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] hover:shadow-lg cursor-pointer"
-                }`}
+                  }`}
               >
                 {isSubmitting ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/20 border-t-white"></div>
-                    Setting up...
+                    Configurando...
                   </>
                 ) : isLastQuestion ? (
-                  "Complete Setup"
+                  "Completar Configuración"
                 ) : (
-                  "Next"
+                  "Siguiente"
                 )}
                 {!isLastQuestion && <ChevronRight className="h-5 w-5" />}
               </button>

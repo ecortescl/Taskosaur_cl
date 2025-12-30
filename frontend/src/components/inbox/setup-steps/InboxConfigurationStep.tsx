@@ -40,13 +40,13 @@ export default function InboxConfigurationStep({
       <div className="space-y-5">
         <div>
           <Label className="pb-2 text-sm font-medium" htmlFor="inboxName">
-            Inbox Name <span className="text-red-500">*</span>
+            Nombre del Inbox <span className="text-red-500">*</span>
           </Label>
           <Input
             id="inboxName"
             value={formData.name}
             onChange={(e) => onFieldChange("name", e.target.value)}
-            placeholder="Support Inbox"
+            placeholder="Inbox de Soporte"
             className={`h-10 ${validationErrors.name ? "border-red-500" : ""}`}
           />
           {validationErrors.name && (
@@ -56,27 +56,27 @@ export default function InboxConfigurationStep({
 
         <div>
           <Label className="pb-2 text-sm font-medium" htmlFor="description">
-            Description
+            Descripción
           </Label>
           <Textarea
             id="description"
             value={formData.description}
             onChange={(e) => onFieldChange("description", e.target.value)}
-            placeholder="Customer support email integration"
+            placeholder="Integración de email para soporte al cliente"
             rows={2}
           />
         </div>
 
         <div>
           <Label className="pb-2 text-sm font-medium" htmlFor="emailAddress">
-            Email Address
+            Dirección de Email
           </Label>
           <Input
             id="emailAddress"
             type="email"
             value={formData.emailAddress}
             onChange={(e) => onFieldChange("emailAddress", e.target.value)}
-            placeholder="support@company.com"
+            placeholder="soporte@empresa.com"
             className={`h-10 ${validationErrors.emailAddress ? "border-red-500" : ""}`}
           />
           {validationErrors.emailAddress && (
@@ -87,7 +87,7 @@ export default function InboxConfigurationStep({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label className="pb-2 text-sm font-medium" htmlFor="defaultTaskType">
-              Default Task Type
+              Tipo de Tarea por Defecto
             </Label>
             <Select
               value={formData.defaultTaskType}
@@ -96,23 +96,23 @@ export default function InboxConfigurationStep({
               }
             >
               <SelectTrigger className="w-full border-[var(--border)] h-10">
-                <SelectValue placeholder="Select task type" />
+                <SelectValue placeholder="Seleccionar tipo de tarea" />
               </SelectTrigger>
               <SelectContent className="bg-[var(--card)] border-[var(--border)]">
                 <SelectItem className="hover:bg-[var(--muted)]" value="TASK">
-                  Task
+                  Tarea
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="BUG">
-                  Bug
+                  Error (Bug)
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="EPIC">
-                  Epic
+                  Épica
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="STORY">
-                  Story
+                  Historia
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="SUBTASK">
-                  Subtask
+                  Subtarea
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -120,7 +120,7 @@ export default function InboxConfigurationStep({
 
           <div>
             <Label className="pb-2 text-sm font-medium" htmlFor="defaultPriority">
-              Default Priority
+              Prioridad por Defecto
             </Label>
             <Select
               value={formData.defaultPriority}
@@ -129,20 +129,20 @@ export default function InboxConfigurationStep({
               }
             >
               <SelectTrigger className="w-full border-[var(--border)] h-10">
-                <SelectValue placeholder="Select priority" />
+                <SelectValue placeholder="Seleccionar prioridad" />
               </SelectTrigger>
               <SelectContent className="bg-[var(--card)] border-[var(--border)]">
                 <SelectItem className="hover:bg-[var(--muted)]" value="LOW">
-                  Low
+                  Baja
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="MEDIUM">
-                  Medium
+                  Media
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="HIGH">
-                  High
+                  Alta
                 </SelectItem>
                 <SelectItem className="hover:bg-[var(--muted)]" value="HIGHEST">
-                  Highest
+                  Máxima
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -152,18 +152,17 @@ export default function InboxConfigurationStep({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label className="pb-2 text-sm font-medium" htmlFor="defaultStatus">
-              Default Status <span className="text-red-500">*</span>
+              Estado por Defecto <span className="text-red-500">*</span>
             </Label>
             <Select
               value={formData.defaultStatusId}
               onValueChange={(value) => onFieldChange("defaultStatusId", value)}
             >
               <SelectTrigger
-                className={`w-full border-[var(--border)] h-10 ${
-                  validationErrors.defaultStatusId ? "border-red-500" : ""
-                }`}
+                className={`w-full border-[var(--border)] h-10 ${validationErrors.defaultStatusId ? "border-red-500" : ""
+                  }`}
               >
-                <SelectValue placeholder="Select default status" />
+                <SelectValue placeholder="Seleccionar estado por defecto" />
               </SelectTrigger>
               <SelectContent className="bg-[var(--card)] border-[var(--border)]">
                 {availableStatuses.map((status) => (
@@ -188,7 +187,7 @@ export default function InboxConfigurationStep({
 
           <div>
             <Label className="pb-2 text-sm font-medium" htmlFor="defaultAssignee">
-              Default Assignee
+              Asignado por Defecto
             </Label>
             <SearchableAssigneeDropdown
               value={formData.defaultAssigneeId}
@@ -203,10 +202,10 @@ export default function InboxConfigurationStep({
           <div className="flex items-center justify-between">
             <div>
               <Label className="pb-2 cursor-pointer text-sm font-medium" htmlFor="autoCreateTask">
-                Auto-create Tasks
+                Creación Automática de Tareas
               </Label>
               <p className="text-sm text-[var(--muted-foreground)]/60">
-                Automatically convert emails to tasks
+                Convertir automáticamente correos en tareas
               </p>
             </div>
             <Switch
@@ -219,9 +218,9 @@ export default function InboxConfigurationStep({
           <div className="flex items-center justify-between">
             <div>
               <Label className="pb-2 cursor-pointer text-sm font-medium" htmlFor="autoReply">
-                Auto-reply
+                Respuesta Automática
               </Label>
-              <p className="text-sm text-[var(--muted-foreground)]/60">Send automatic replies</p>
+              <p className="text-sm text-[var(--muted-foreground)]/60">Enviar respuestas automáticas</p>
             </div>
             <Switch
               id="autoReply"
@@ -234,13 +233,13 @@ export default function InboxConfigurationStep({
         {formData.autoReplyEnabled && (
           <div>
             <Label className="pb-2 text-sm font-medium" htmlFor="autoReplyTemplate">
-              Auto-reply Message <span className="text-red-500">*</span>
+              Mensaje de Respuesta Automática <span className="text-red-500">*</span>
             </Label>
             <Textarea
               id="autoReplyTemplate"
               value={formData.autoReplyTemplate}
               onChange={(e) => onFieldChange("autoReplyTemplate", e.target.value)}
-              placeholder="Thank you for contacting us. We'll respond within 24 hours."
+              placeholder="Gracias por contactarnos. Le responderemos en un plazo de 24 horas."
               rows={3}
               className={validationErrors.autoReplyTemplate ? "border-red-500" : ""}
             />
@@ -253,7 +252,7 @@ export default function InboxConfigurationStep({
 
       <div className="flex justify-end pt-4">
         <ActionButton onClick={onSubmit} disabled={isSaving} primary>
-          {isSaving ? <>Creating...</> : <>{"Next"}</>}
+          {isSaving ? <>Creando...</> : <>{"Siguiente"}</>}
         </ActionButton>
       </div>
     </div>

@@ -38,10 +38,10 @@ function WorkspaceSettingsContent() {
   });
 
   const retryFetch = () => {
-    toast.info("Refreshing workspace data...");
+    toast.info("Actualizando datos del espacio de trabajo...");
     const fetchWorkspace = async () => {
       if (!initialWorkspaceSlug || !isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         return;
       }
@@ -51,7 +51,7 @@ function WorkspaceSettingsContent() {
         const workspaceData = await getWorkspaceBySlug(initialWorkspaceSlug);
 
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           return;
         }
@@ -63,7 +63,7 @@ function WorkspaceSettingsContent() {
           slug: workspaceData.slug || "",
         });
       } catch (err) {
-        setError(err?.message ? err.message : "Failed to load workspace");
+        setError(err?.message ? err.message : "Error al cargar el espacio de trabajo");
       } finally {
         setLoading(false);
       }
@@ -88,19 +88,19 @@ function WorkspaceSettingsContent() {
     {
       name: "archive",
       type: "archive" as const,
-      label: "Archive Workspace",
-      description: "Archive this workspace and make it read-only",
+      label: "Archivar Espacio de Trabajo",
+      description: "Archiva este espacio de trabajo y hazlo de solo lectura",
       handler: async () => {
         try {
           const result = await archiveWorkspace(workspace.id);
           if (result.success) {
             await router.replace("/workspaces");
           } else {
-            toast.error("Failed to archive workspace");
+            toast.error("Error al archivar el espacio de trabajo");
           }
         } catch (error) {
           console.error("Archive error:", error);
-          toast.error("Failed to archive workspace");
+          toast.error("Error al archivar el espacio de trabajo");
           throw error;
         }
       },
@@ -109,15 +109,15 @@ function WorkspaceSettingsContent() {
     {
       name: "delete",
       type: "delete" as const,
-      label: "Delete Workspace",
-      description: "Permanently delete this workspace and all its data",
+      label: "Eliminar Espacio de Trabajo",
+      description: "Elimina permanentemente este espacio de trabajo y todos sus datos",
       handler: async () => {
         try {
           await deleteWorkspace(workspace.id);
           await router.replace("/workspaces");
         } catch (error) {
           console.error("Delete error:", error);
-          toast.error("Failed to delete workspace");
+          toast.error("Error al eliminar el espacio de trabajo");
           throw error;
         }
       },
@@ -129,7 +129,7 @@ function WorkspaceSettingsContent() {
     let isActive = true;
     const fetchWorkspace = async () => {
       if (!initialWorkspaceSlug || !isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         router.push("/login");
         return;
@@ -142,14 +142,14 @@ function WorkspaceSettingsContent() {
         if (!isActive) return;
 
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           router.replace("/workspaces");
           return;
         }
 
         if (!workspaceData.id) {
-          setError("You don't have access to this workspace");
+          setError("No tienes acceso a este espacio de trabajo");
           setLoading(false);
           router.replace("/workspaces");
           return;
@@ -164,7 +164,7 @@ function WorkspaceSettingsContent() {
       } catch (err) {
         if (!isActive) return;
 
-        const errorMessage = err instanceof Error ? err.message : "Failed to load workspace";
+        const errorMessage = err instanceof Error ? err.message : "Error al cargar el espacio de trabajo";
         setError(errorMessage);
 
         if (errorMessage.includes("not found") || errorMessage.includes("404")) {
@@ -188,7 +188,7 @@ function WorkspaceSettingsContent() {
 
     // Validate slug format
     if (formData.slug && !/^[a-z0-9-]+$/.test(formData.slug)) {
-      toast.error("Workspace slug can only contain lowercase letters, numbers, and hyphens");
+      toast.error("El slug del espacio de trabajo solo puede contener letras minúsculas, números y guiones");
       return;
     }
 
@@ -208,12 +208,12 @@ function WorkspaceSettingsContent() {
       if (updatedWorkspace.slug !== initialWorkspaceSlug) {
         await router.replace(`/${updatedWorkspace.slug}/settings`);
       }
-      toast.success("Workspace settings updated successfully!");
+      toast.success("¡Ajustes del espacio de trabajo actualizados con éxito!");
     } catch (err) {
       // Handle Conflict and Error instances
-      const errorMessage = 
-        (err as any)?.message || 
-        (err instanceof Error ? err.message : "Failed to update workspace");
+      const errorMessage =
+        (err as any)?.message ||
+        (err instanceof Error ? err.message : "Error al actualizar el espacio de trabajo");
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -273,8 +273,8 @@ function WorkspaceSettingsContent() {
     <>
       <div className="dashboard-container pt-0 space-y-6">
         <PageHeader
-          title="Workspace Settings"
-          description="Manage your workspace configuration and preferences"
+          title="Ajustes del Espacio de Trabajo"
+          description="Gestiona la configuración y preferencias de tu espacio de trabajo"
         />
 
         {success && (
@@ -294,41 +294,41 @@ function WorkspaceSettingsContent() {
 
         <Card className="border-none bg-[var(--card)]">
           <CardHeader>
-            <CardTitle>General Information</CardTitle>
+            <CardTitle>Información General</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Workspace Name</Label>
+              <Label htmlFor="name">Nombre del Espacio de Trabajo</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder="Enter workspace name"
+                placeholder="Ingresa el nombre del espacio de trabajo"
                 disabled={saving || !hasAccess}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="slug">Workspace Slug</Label>
+              <Label htmlFor="slug">Slug del Espacio de Trabajo</Label>
               <Input
                 id="slug"
                 value={formData.slug}
                 onChange={(e) => handleInputChange("slug", e.target.value)}
-                placeholder="workspace-slug"
+                placeholder="slug-del-espacio"
                 disabled={saving || !hasAccess}
               />
               <p className="text-xs text-[var(--muted-foreground)]">
-                Used in URLs. Must be unique within this organization. Only lowercase letters, numbers, and hyphens are allowed.
+                Se usa en las URLs. Debe ser único dentro de esta organización. Solo se permiten letras minúsculas, números y guiones.
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Descripción</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleInputChange("description", e.target.value)}
-                placeholder="Describe your workspace..."
+                placeholder="Describe tu espacio de trabajo..."
                 rows={3}
                 disabled={saving || !hasAccess}
               />
@@ -340,7 +340,7 @@ function WorkspaceSettingsContent() {
                 disabled={saving || !formData.name.trim() || !hasAccess}
                 className="h-9 px-4 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] shadow-sm hover:shadow-md transition-all duration-200 font-medium cursor-pointer rounded-lg flex items-center gap-2"
               >
-                {saving ? "Saving..." : "Save Changes"}
+                {saving ? "Guardando..." : "Guardar Cambios"}
               </Button>
             </div>
           </CardContent>
@@ -350,9 +350,9 @@ function WorkspaceSettingsContent() {
           <div className="flex items-start gap-3">
             <HiExclamationTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h4 className="font-medium text-red-800 dark:text-red-400">Danger Zone</h4>
+              <h4 className="font-medium text-red-800 dark:text-red-400">Zona de Peligro</h4>
               <p className="text-sm text-red-700 dark:text-red-500 mb-4">
-                These actions cannot be undone. Please proceed with caution.
+                Estas acciones no se pueden deshacer. Por favor procede con precaución.
               </p>
               <DangerZoneModal
                 entity={{
@@ -370,7 +370,7 @@ function WorkspaceSettingsContent() {
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
                   <HiExclamationTriangle className="w-4 h-4 mr-2" />
-                  Delete Workspace
+                  Eliminar Espacio de Trabajo
                 </Button>
               </DangerZoneModal>
             </div>

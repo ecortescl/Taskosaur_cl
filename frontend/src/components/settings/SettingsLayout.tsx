@@ -31,22 +31,22 @@ export default function SettingsLayout({
             setCurrentOrganization({
               id: parsedOrg.id,
               name: parsedOrg.name,
-              plan: parsedOrg.plan || "Free",
+              plan: parsedOrg.plan || "Gratis",
             });
           } catch {
             if (orgId) {
               setCurrentOrganization({
                 id: orgId,
-                name: "Selected Organization",
-                plan: "Free",
+                name: "Organización Seleccionada",
+                plan: "Gratis",
               });
             }
           }
         } else if (orgId) {
           setCurrentOrganization({
             id: orgId,
-            name: "Selected Organization",
-            plan: "Free",
+            name: "Organización Seleccionada",
+            plan: "Gratis",
           });
         }
       } catch (error) {
@@ -69,69 +69,69 @@ export default function SettingsLayout({
   const settingsSections = [
     {
       id: "profile",
-      title: "Profile",
+      title: "Perfil",
       icon: "👤",
-      description: "Personal information and preferences",
+      description: "Información personal y preferencias",
     },
     {
       id: "account",
-      title: "Account",
+      title: "Cuenta",
       icon: "⚙️",
-      description: "Account settings and security",
+      description: "Configuración de la cuenta y seguridad",
     },
     {
       id: "notifications",
-      title: "Notifications",
+      title: "Notificaciones",
       icon: "🔔",
-      description: "Email and push notification preferences",
+      description: "Preferencias de notificaciones por email y push",
     },
     {
       id: "ai-chat",
-      title: "AI Chat",
+      title: "Chat de IA",
       icon: "🤖",
-      description: "AI assistant configuration and settings",
+      description: "Configuración y ajustes del asistente de IA",
     },
     {
       id: "appearance",
-      title: "Appearance",
+      title: "Apariencia",
       icon: "🎨",
-      description: "Theme and display preferences",
+      description: "Preferencias de tema y visualización",
     },
     {
       id: "organization",
-      title: "Organization",
+      title: "Organización",
       icon: "🏢",
-      description: "Organization settings and members",
+      description: "Configuración de la organización y miembros",
     },
     {
       id: "projects",
-      title: "Projects",
+      title: "Proyectos",
       icon: "📁",
-      description: "Project configuration and defaults",
+      description: "Configuración de proyectos y valores predeterminados",
     },
     {
       id: "integrations",
-      title: "Integrations",
+      title: "Integraciones",
       icon: "🔌",
-      description: "Third-party integrations and APIs",
+      description: "Integraciones de terceros y APIs",
     },
     {
       id: "security",
-      title: "Security",
+      title: "Seguridad",
       icon: "🔒",
-      description: "Security and privacy settings",
+      description: "Ajustes de seguridad y privacidad",
     },
     {
       id: "billing",
-      title: "Billing",
+      title: "Facturación",
       icon: "💳",
-      description: "Subscription and billing information",
+      description: "Información de suscripción y facturación",
     },
     {
       id: "advanced",
-      title: "Advanced",
+      title: "Avanzado",
       icon: "⚡",
-      description: "Advanced configuration options",
+      description: "Opciones de configuración avanzada",
     },
   ];
 
@@ -139,9 +139,9 @@ export default function SettingsLayout({
     <div className="settings-layout-container settings-layout-container-dark">
       <div className="settings-layout-wrapper">
         <div className="settings-layout-header">
-          <h1 className="settings-layout-title settings-layout-title-dark">Settings</h1>
+          <h1 className="settings-layout-title settings-layout-title-dark">Configuración</h1>
           <p className="settings-layout-subtitle settings-layout-subtitle-dark">
-            Manage your account, organization, and preferences
+            Administre su cuenta, organización y preferencias
           </p>
         </div>
 
@@ -153,11 +153,10 @@ export default function SettingsLayout({
                 <button
                   key={section.id}
                   onClick={() => onSectionChange(section.id)}
-                  className={`settings-nav-item ${
-                    activeSection === section.id
-                      ? "settings-nav-item-active settings-nav-item-active-dark"
-                      : "settings-nav-item-inactive settings-nav-item-inactive-dark"
-                  }`}
+                  className={`settings-nav-item ${activeSection === section.id
+                    ? "settings-nav-item-active settings-nav-item-active-dark"
+                    : "settings-nav-item-inactive settings-nav-item-inactive-dark"
+                    }`}
                 >
                   <span className="settings-nav-item-icon">{section.icon}</span>
                   <div className="settings-nav-item-content">
@@ -174,7 +173,7 @@ export default function SettingsLayout({
             {currentOrganization && (
               <div className="settings-org-context settings-org-context-dark">
                 <h3 className="settings-org-context-title settings-org-context-title-dark">
-                  Current Organization
+                  Organización Actual
                 </h3>
                 <div className="settings-org-context-content">
                   <div className="settings-org-context-avatar settings-org-context-avatar-dark">
@@ -187,7 +186,7 @@ export default function SettingsLayout({
                       {currentOrganization.name}
                     </div>
                     <div className="settings-org-context-plan settings-org-context-plan-dark">
-                      {currentOrganization.plan} Plan
+                      Plan {currentOrganization.plan}
                     </div>
                   </div>
                 </div>

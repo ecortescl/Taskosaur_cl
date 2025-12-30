@@ -79,7 +79,7 @@ const Pagination = ({
   return (
     <div className="flex items-center justify-between px-2 py-3 border-t border-[var(--border)] mt-4">
       <div className="text-sm text-[var(--muted-foreground)]">
-        Showing {startItem} to {endItem} of {total} subtasks
+        Mostrando {startItem} a {endItem} de {total} subtareas
       </div>
 
       <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ const Pagination = ({
           className="h-8 px-3"
         >
           <HiChevronLeft className="h-4 w-4" />
-          Previous
+          Anterior
         </Button>
 
         <div className="flex items-center gap-1">
@@ -116,7 +116,7 @@ const Pagination = ({
           disabled={page >= totalPages || isLoading}
           className="h-8 px-3"
         >
-          Next
+          Siguiente
           <HiChevronRight className="h-4 w-4" />
         </Button>
       </div>
@@ -247,13 +247,13 @@ export default function Subtasks({
       const defaultStatus = taskStatuses.find((s) => s.category === "TODO") || taskStatuses[0];
 
       if (!defaultStatus) {
-        console.error("No task statuses available");
+        console.error("No hay estados de tarea disponibles");
         return;
       }
 
       const subtaskData = {
         title: newSubtaskTitle.trim(),
-        description: `Subtask for parent task`,
+        description: `Subtarea para tarea padre`,
         priority: subtaskPriority as "LOW" | "MEDIUM" | "HIGH" | "HIGHEST",
         type: ["TASK", "BUG", "EPIC", "STORY"].includes(subtaskType)
           ? (subtaskType as "TASK" | "BUG" | "EPIC" | "STORY")
@@ -277,7 +277,7 @@ export default function Subtasks({
         setCurrentPage(1);
       }
     } catch (error) {
-      console.error("Failed to add subtask:", error);
+      console.error("Error al agregar subtarea:", error);
     }
   };
 
@@ -294,7 +294,7 @@ export default function Subtasks({
       const todoStatus = taskStatuses.find((s) => s.category === "TODO");
 
       if (!completedStatus || !todoStatus) {
-        console.error("Required statuses not found (DONE or TODO categories)");
+        console.error("Estados requeridos no encontrados (categorías DONE o TODO)");
         return;
       }
 
@@ -305,7 +305,7 @@ export default function Subtasks({
       await updateSubtask(subtaskId, { statusId: newStatusId });
       onSubtaskUpdated?.(subtaskId, { statusId: newStatusId });
     } catch (error) {
-      console.error("Failed to toggle subtask status:", error);
+      console.error("Error al cambiar el estado de la subtarea:", error);
     }
   };
 
@@ -347,7 +347,7 @@ export default function Subtasks({
 
       onSubtaskUpdated?.(subtaskId, updateData);
     } catch (error) {
-      console.error("Failed to update subtask:", error);
+      console.error("Error al actualizar subtarea:", error);
     }
   };
 
@@ -374,14 +374,14 @@ export default function Subtasks({
 
         onSubtaskDeleted?.(subtaskId);
       } catch (error) {
-        console.error("Failed to delete subtask:", error);
+        console.error("Error al eliminar subtarea:", error);
       }
     };
 
     if (showConfirmModal) {
       showConfirmModal(
-        "Delete Subtask",
-        "Are you sure you want to delete this subtask? This action cannot be undone.",
+        "Eliminar Subtarea",
+        "¿Estás seguro de que quieres eliminar esta subtarea? Esta acción no se puede deshacer.",
         confirmDelete,
         "danger"
       );
@@ -461,9 +461,8 @@ export default function Subtasks({
       <div className="space-y-4">
         <SectionHeader
           icon={HiListBullet}
-          title={`Subtasks (${completedCount}/${
-            subtaskPagination?.total || Array.isArray(subtTask) ? subtTask.length : 0
-          })`}
+          title={`Subtareas (${completedCount}/${subtaskPagination?.total || Array.isArray(subtTask) ? subtTask.length : 0
+            })`}
         />
 
         {/* Subtasks List */}
@@ -520,7 +519,7 @@ export default function Subtasks({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setEditingTitle(e.target.value)
                         }
-                        placeholder="Enter subtask title..."
+                        placeholder="Ingresa título de subtarea..."
                         className="h-9 border-input bg-background text-[var(--foreground)] focus:ring-2 focus:ring-[var(--primary)]/20"
                         autoFocus
                         onKeyDown={(e) => {
@@ -535,7 +534,7 @@ export default function Subtasks({
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-2">
                           <Label htmlFor="edit-priority" className="text-xs font-medium">
-                            Priority
+                            Prioridad
                           </Label>
                           <Select
                             value={subtaskPriority}
@@ -543,7 +542,7 @@ export default function Subtasks({
                             disabled={isLoading}
                           >
                             <SelectTrigger className="w-full h-8 text-xs  border-[var(--border)] bg-[var(--background)]">
-                              <SelectValue placeholder="Select priority" />
+                              <SelectValue placeholder="Seleccionar prioridad" />
                             </SelectTrigger>
                             <SelectContent className="border-none bg-[var(--card)]">
                               {PRIORITY_OPTIONS.map((option) => (
@@ -560,7 +559,7 @@ export default function Subtasks({
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="edit-type" className="text-xs font-medium">
-                            Type
+                            Tipo
                           </Label>
                           <Select
                             value={subtaskType}
@@ -568,7 +567,7 @@ export default function Subtasks({
                             disabled={isLoading}
                           >
                             <SelectTrigger className="w-full h-8 text-xs  border-[var(--border)] bg-[var(--background)]">
-                              <SelectValue placeholder="Select type" />
+                              <SelectValue placeholder="Seleccionar tipo" />
                             </SelectTrigger>
                             <SelectContent className="border-none bg-[var(--card)]">
                               {TASK_TYPE_OPTIONS.map((option) => (
@@ -592,7 +591,7 @@ export default function Subtasks({
                           primary
                           className="h-8 px-3 cursor-pointer"
                         >
-                          Save
+                          Guardar
                         </ActionButton>
                         <ActionButton
                           onClick={handleCancelEdit}
@@ -600,7 +599,7 @@ export default function Subtasks({
                           secondary
                           className="h-8 px-3 cursor-pointer"
                         >
-                          Cancel
+                          Cancelar
                         </ActionButton>
                       </div>
                     </div>
@@ -628,11 +627,10 @@ export default function Subtasks({
                           </div>
                           <div
                             onClick={(e) => handleToggleSubtaskStatus(subtask.id, e)}
-                            className={`text-sm font-medium cursor-pointer line-clamp-2 ${
-                              isSubtaskCompleted(subtask)
+                            className={`text-sm font-medium cursor-pointer line-clamp-2 ${isSubtaskCompleted(subtask)
                                 ? "text-[var(--muted-foreground)] line-through"
                                 : "text-[var(--foreground)]"
-                            }`}
+                              }`}
                           >
                             {subtask.title}
                           </div>
@@ -640,7 +638,7 @@ export default function Subtasks({
 
                         {isAuth && (
                           <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity flex-shrink-0">
-                            <Tooltip content="Edit" position="top" color="primary">
+                            <Tooltip content="Editar" position="top" color="primary">
                               <ActionButton
                                 onClick={(e) =>
                                   handleEditSubtask(
@@ -658,7 +656,7 @@ export default function Subtasks({
                                 <HiPencilSquare className="w-4 h-4" />
                               </ActionButton>
                             </Tooltip>
-                            <Tooltip content="Delete" position="top" color="primary">
+                            <Tooltip content="Eliminar" position="top" color="primary">
                               <ActionButton
                                 onClick={(e) => handleDeleteSubtask(subtask.id, e)}
                                 variant="ghost"
@@ -689,14 +687,14 @@ export default function Subtasks({
                         />
                         <DynamicBadge
                           label={
-                            taskStatuses.find((s) => s.id === subtask.statusId)?.name || "Unknown"
+                            taskStatuses.find((s) => s.id === subtask.statusId)?.name || "Desconocido"
                           }
                           bgColor={getStatusColor(subtask.statusId)}
                           size="sm"
                           className="px-1.5 py-0.5 text-[10px] h-5 min-h-0"
                         />
                         {subtask.dueDate && (
-                          <Tooltip content="Due Date" position="top" color="primary">
+                          <Tooltip content="Fecha de vencimiento" position="top" color="primary">
                             <span className="text-xs text-[var(--muted-foreground)] flex items-center gap-1">
                               <HiCalendar className="w-3 h-3" />
                               {new Date(subtask.dueDate).toLocaleDateString("en-US", {
@@ -729,9 +727,9 @@ export default function Subtasks({
         {!isLoading && Array.isArray(subtTask) && subtTask.length === 0 && (
           <div className="text-center py-8 bg-[var(--muted)]/30 rounded-lg border border-[var(--border)]">
             <HiListBullet className="w-8 h-8 mx-auto mb-3 text-[var(--muted-foreground)]" />
-            <p className="text-sm font-medium text-[var(--foreground)] mb-2">No subtasks yet</p>
+            <p className="text-sm font-medium text-[var(--foreground)] mb-2">No hay subtareas aún</p>
             <p className="text-xs text-[var(--muted-foreground)]">
-              Add subtasks to break down this task into smaller, manageable pieces
+              Agrega subtareas para dividir esta tarea en partes más manejables
             </p>
           </div>
         )}
@@ -748,7 +746,7 @@ export default function Subtasks({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setNewSubtaskTitle(e.target.value)
               }
-              placeholder="Enter subtask title..."
+              placeholder="Ingresa título de subtarea..."
               className="h-9 border-input bg-background text-[var(--foreground)]"
               autoFocus
               disabled={isLoading}
@@ -757,7 +755,7 @@ export default function Subtasks({
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="subtask-priority" className="text-xs font-medium">
-                  Priority
+                  Prioridad
                 </Label>
                 <Select
                   value={subtaskPriority}
@@ -765,7 +763,7 @@ export default function Subtasks({
                   disabled={isLoading}
                 >
                   <SelectTrigger className="w-full h-8 text-xs  border-[var(--border)] bg-[var(--background)]">
-                    <SelectValue placeholder="Select priority" />
+                    <SelectValue placeholder="Seleccionar prioridad" />
                   </SelectTrigger>
                   <SelectContent className="border-none bg-[var(--card)]">
                     {PRIORITY_OPTIONS.map((option) => (
@@ -783,14 +781,14 @@ export default function Subtasks({
 
               <div className="space-y-2">
                 <Label htmlFor="subtask-type" className="text-xs font-medium">
-                  Type
+                  Tipo
                 </Label>
                 <Select value={subtaskType} onValueChange={setSubtaskType} disabled={isLoading}>
                   <SelectTrigger className="w-full h-8 text-xs  border-[var(--border)] bg-[var(--background)]">
-                    <SelectValue placeholder="Select type" />
+                    <SelectValue placeholder="Seleccionar tipo" />
                   </SelectTrigger>
                   <SelectContent className="border-none bg-[var(--card)]">
-                    {TASK_TYPE_OPTIONS.filter(option => option.value !='TASK').map((option) => (
+                    {TASK_TYPE_OPTIONS.filter(option => option.value != 'TASK').map((option) => (
                       <SelectItem
                         key={option.value}
                         value={option.value}
@@ -813,7 +811,7 @@ export default function Subtasks({
                     primary
                     showPlusIcon
                   >
-                    {isLoading ? "Adding..." : "Add Subtask"}
+                    {isLoading ? "Agregando..." : "Agregar Subtarea"}
                   </ActionButton>
                 </div>
               )}
@@ -826,7 +824,7 @@ export default function Subtasks({
                 secondary
                 className="cursor-pointer"
               >
-                Cancel
+                Cancelar
               </ActionButton>
             </div>
           </form>
@@ -840,7 +838,7 @@ export default function Subtasks({
               primary
               className="min-w-[193.56px]"
             >
-              Add Subtask
+              Agregar Subtarea
             </ActionButton>
           </div>
         ) : null}

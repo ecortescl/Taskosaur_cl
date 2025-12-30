@@ -23,10 +23,10 @@ export default function ProfilePage() {
               <HiCog6Tooth className="w-5 h-5 text-[var(--primary)]" />
             </div>
             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
-              Authentication Required
+              Autenticación Requerida
             </h3>
             <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">
-              Please log in to access your account settings.
+              Por favor, inicie sesión para acceder a la configuración de su cuenta.
             </p>
           </div>
         </div>
@@ -40,15 +40,15 @@ export default function ProfilePage() {
         {/* Header */}
         <PageHeader
           icon={<HiCog6Tooth className="w-5 h-5 text-[var(--primary)]" />}
-          title="Profile Settings"
-          description="Manage your profile settings, preferences, and security options to customize your experience."
+          title="Configuración de Perfil"
+          description="Gestione la configuración de su perfil, preferencias y opciones de seguridad para personalizar su experiencia."
           actions={
             <ActionButton
               secondary
               leftIcon={<HiSparkles />}
               onClick={() => setIsAIModalOpen(true)}
             >
-              AI Settings
+              Configuración de IA
             </ActionButton>
           }
         />

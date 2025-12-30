@@ -66,6 +66,21 @@ interface ActivityFeedPanelProps {
   emptyMessage?: string;
 }
 
+function getEntityTypeLabel(type: string | null | undefined): string {
+  if (!type) return "";
+  const lower = type.toLowerCase();
+  if (lower.includes("attachment") || lower.includes("attchment")) return "adjunto";
+
+  const map: Record<string, string> = {
+    task: "tarea",
+    project: "proyecto",
+    workspace: "workspace",
+    user: "usuario",
+    organization: "organización",
+  };
+  return map[lower] || type;
+}
+
 function getEntityLink(activity: ActivityFeedItem): string {
   if (!activity.entityType) return "#";
 
@@ -99,9 +114,9 @@ function normalizeActivity(activity: any): ActivityFeedItem {
   const user = activity.user || {};
 
   const userName =
-    user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Unknown User";
+    user.name || `${user.firstName || ""} ${user.lastName || ""}`.trim() || "Usuario Desconocido";
 
-  const description = activity.description || activity.newValue?.title || "Activity";
+  const description = activity.description || activity.newValue?.title || "Actividad";
 
   return {
     id: activity.id || "",
@@ -131,7 +146,7 @@ export function ActivityFeedPanel({
   error,
   onRetry,
   onClearFilter,
-  emptyMessage = "No activity yet",
+  emptyMessage = "Aún no hay actividad",
 }: ActivityFeedPanelProps) {
   const normalizedActivities = activities.map(normalizeActivity);
 
@@ -162,7 +177,7 @@ export function ActivityFeedPanel({
           </div>
           <p className="activity-empty-title">{emptyMessage}</p>
           <p className="activity-empty-description">
-            Recent activity will appear here once things start moving.
+            La actividad reciente aparecerá aquí cuando las cosas empiecen a moverse.
           </p>
           {onClearFilter && (
             <Button
@@ -171,7 +186,7 @@ export function ActivityFeedPanel({
               onClick={onClearFilter}
               className="activity-empty-button"
             >
-              Show All Activities
+              Mostrar Todas las Actividades
             </Button>
           )}
         </div>
@@ -199,23 +214,23 @@ export function ActivityFeedPanel({
             <div className="activity-content-container">
               <div className="activity-content-main">
                 <span className="activity-content-user-name">
-                  {activity?.user?.name ? activity.user.name : "Unknown User"}
+                  {activity?.user?.name ? activity.user.name : "Usuario Desconocido"}
                 </span>
                 <span className="activity-content-action">
                   {activity.type === "invitation_sent" ? (
                     <>
-                      Sent invitation to{" "}
+                      Envió una invitación a{" "}
                       <span className="activity-content-user-name">
                         {activity.newValue?.user?.firstName && activity.newValue?.user?.lastName
                           ? `${activity.newValue.user.firstName} ${activity.newValue.user.lastName}`
                           : activity.newValue?.member?.user?.firstName &&
-                              activity.newValue?.member?.user?.lastName
+                            activity.newValue?.member?.user?.lastName
                             ? `${activity.newValue.member.user.firstName} ${activity.newValue.member.user.lastName}`
                             : activity.newValue?.user?.email ||
-                              activity.newValue?.member?.user?.email ||
-                              "Unknown User"}
+                            activity.newValue?.member?.user?.email ||
+                            "Usuario Desconocido"}
                       </span>{" "}
-                      to join {activity.newValue?.entity?.type || "organization/workspace/project"}
+                      para unirse a {activity.newValue?.entity?.type || "organización/workspace/proyecto"}
                     </>
                   ) : (
                     activity.action
@@ -224,7 +239,7 @@ export function ActivityFeedPanel({
                 {activity.entityId && activity.type !== "invitation_sent" && (
                   <span>
                     <Link href={getEntityLink(activity)} className="activity-content-link">
-                      View {activity.entityType?.replace(/\s*Att[a]?chment$/i, "")}
+                      Ver {getEntityTypeLabel(activity.entityType)}
                     </Link>
                   </span>
                 )}

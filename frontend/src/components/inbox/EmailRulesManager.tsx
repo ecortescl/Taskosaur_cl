@@ -101,7 +101,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
       if (error.response?.status === 404) {
         setCurrentInbox(null);
       } else {
-        toast.error("Failed to load email integration settings");
+        toast.error("Error al cargar los ajustes de integración de email");
       }
     }
   };
@@ -127,7 +127,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
               name:
                 `${m.user.firstName || ""} ${m.user.lastName || ""}`.trim() ||
                 m.user.email ||
-                "Unknown User",
+                "Usuario Desconocido",
               email: m.user.email || "",
               avatar: m.user.avatar || null,
               role: m.role || "MEMBER",
@@ -167,25 +167,25 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
       const rulesData = await inboxApi.getRules(projectId);
       setRules(rulesData);
     } catch (error) {
-      toast.error("Failed to load rules");
+      toast.error("Error al cargar las reglas");
     }
   };
 
   const handleSaveRule = async () => {
     if (!formData.name.trim()) {
-      toast.error("Rule name is required");
+      toast.error("El nombre de la regla es obligatorio");
       return;
     }
 
     if (formData.conditions.some((c) => !c.value.trim())) {
-      toast.error("All condition values are required");
+      toast.error("Todos los valores de las condiciones son obligatorios");
       return;
     }
 
     // Validate auto-reply actions have a template
     const autoReplyAction = formData.actions.find((a) => a.type === "autoReply");
     if (autoReplyAction && (!autoReplyAction.value || !(autoReplyAction.value as string).trim())) {
-      toast.error("Auto-reply message template is required");
+      toast.error("La plantilla del mensaje de respuesta automática es obligatoria");
       return;
     }
 
@@ -206,10 +206,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
 
       if (editingRule) {
         await inboxApi.updateRule(projectId, editingRule.id, ruleData);
-        toast.success("Rule updated successfully");
+        toast.success("Regla actualizada con éxito");
       } else {
         await inboxApi.createRule(projectId, ruleData);
-        toast.success("Rule created successfully");
+        toast.success("Regla creada con éxito");
       }
 
       await loadRules();
@@ -217,7 +217,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
       setEditingRule(null);
       setFormData(defaultRule);
     } catch (error) {
-      toast.error("Failed to save rule");
+      toast.error("Error al guardar la regla");
     } finally {
       setSaving(false);
     }
@@ -276,10 +276,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
     try {
       setIsDeleting(true);
       await inboxApi.deleteRule(projectId, deletingRule.id);
-      toast.success("Rule deleted successfully");
+      toast.success("Regla eliminada con éxito");
       await loadRules();
     } catch (error) {
-      toast.error("Failed to delete rule");
+      toast.error("Error al eliminar la regla");
     } finally {
       setIsDeleting(false);
       setIsDeleteModalOpen(false);
@@ -380,10 +380,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <IoWarning className="w-5 h-5 text-[var(--primary)]" />
-                  <span className="text-md font-semibold">Email Processing Rules</span>
+                  <span className="text-md font-semibold">Reglas de Procesamiento de Email</span>
                 </div>
                 <p className="text-sm font-normal text-[var(--muted-foreground)]/60 mt-2">
-                  Automatically process incoming emails based on conditions
+                  Procesar automáticamente los emails entrantes basados en condiciones
                 </p>
               </div>
             </CardTitle>
@@ -397,7 +397,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                   setFormData(defaultRule);
                 }}
               >
-                Add Rule
+                Añadir Regla
               </ActionButton>
             )}
           </div>
@@ -408,9 +408,9 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
               {rules.length === 0 && !showForm ? (
                 <div className="text-center py-8">
                   <IoWarning className="w-7 h-7 mx-auto text-[var(--muted-foreground)]/40 mb-2" />
-                  <h3 className="text-sm font-semibold">No Rules Configured</h3>
+                  <h3 className="text-sm font-semibold">No Hay Reglas Configuradas</h3>
                   <p className="text-[var(--muted-foreground)]/60 text-sm">
-                    Create rules to automatically process incoming emails
+                    Crea reglas para procesar automáticamente los emails entrantes
                   </p>
                 </div>
               ) : (
@@ -423,15 +423,15 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                             <div className="flex items-center space-x-2">
                               <h4 className="text-sm">{rule.name}</h4>
                               <Badge className={getPriorityColor(rule.priority)}>
-                                Priority {rule.priority}
+                                Prioridad {rule.priority}
                               </Badge>
                               {rule.enabled ? (
                                 <Badge className="bg-green-100 text-green-800 ">
                                   <HiCheckCircle className="w-3 h-3 mr-1" />
-                                  Enabled
+                                  Activada
                                 </Badge>
                               ) : (
-                                <Badge variant="secondary">Disabled</Badge>
+                                <Badge variant="secondary">Desactivada</Badge>
                               )}
                             </div>
                             {rule.description && (
@@ -440,11 +440,11 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                               </p>
                             )}
                             <div className="text-[13px] text-[var(--muted-foreground)]/50">
-                              Stop on match: {rule.stopOnMatch ? "Yes" : "No"}
+                              Detener si coincide: {rule.stopOnMatch ? "Sí" : "No"}
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Tooltip content="Edit" position="top" color="primary">
+                            <Tooltip content="Editar" position="top" color="primary">
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -454,7 +454,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                                 <HiPencil className="size-3" />
                               </Button>
                             </Tooltip>
-                            <Tooltip content="Delete" position="top" color="primary">
+                            <Tooltip content="Eliminar" position="top" color="primary">
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -475,9 +475,9 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
             <>
               <div className="text-center py-8">
                 <IoWarning className="w-7 h-7 mx-auto text-[var(--muted-foreground)]/40 mb-2" />
-                <h3 className="text-sm font-semibold">No Project Inbox Configured</h3>
+                <h3 className="text-sm font-semibold">No hay Inbox del Proyecto Configurado</h3>
                 <p className="text-[var(--muted-foreground)]/60 text-sm">
-                  Please set up a project inbox before adding rules.
+                  Por favor, configura un inbox del proyecto antes de añadir reglas.
                 </p>
               </div>
             </>
@@ -488,25 +488,25 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
       {showForm && (
         <Card className="border-none bg-[var(--card)] rounded-md">
           <CardHeader>
-            <CardTitle>{editingRule ? "Edit Rule" : "Create New Rule"}</CardTitle>
+            <CardTitle>{editingRule ? "Editar Regla" : "Crear Nueva Regla"}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Basic Info */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="pb-2" htmlFor="name">
-                  Rule Name <span className="projects-form-label-required">*</span>
+                  Nombre de la Regla <span className="projects-form-label-required">*</span>
                 </Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                  placeholder="High Priority Support"
+                  placeholder="Soporte de Alta Prioridad"
                 />
               </div>
               <div>
                 <Label className="pb-2" htmlFor="priority">
-                  Priority
+                  Prioridad
                 </Label>
                 <Input
                   id="priority"
@@ -526,7 +526,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
 
             <div>
               <Label className="pb-2" htmlFor="description">
-                Description
+                Descripción
               </Label>
               <Textarea
                 id="description"
@@ -537,7 +537,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                     description: e.target.value,
                   }))
                 }
-                placeholder="Automatically prioritize urgent emails from VIP clients"
+                placeholder="Priorizar automáticamente emails urgentes de clientes VIP"
                 rows={2}
               />
             </div>
@@ -545,10 +545,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="pb-2" htmlFor="enabled">
-                    Enable Rule
+                    Activar Regla
                   </Label>
                   <p className="text-sm text-[var(--muted-foreground)]/60">
-                    Rule will be active and process emails
+                    La regla estará activa y procesará emails
                   </p>
                 </div>
                 <Switch
@@ -562,10 +562,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
               <div className="flex items-center justify-between">
                 <div>
                   <Label className="pb-2" htmlFor="stopOnMatch">
-                    Stop on Match
+                    Detener si coincide
                   </Label>
                   <p className="text-sm text-[var(--muted-foreground)]/60">
-                    Stop processing other rules if this one matches
+                    Dejar de procesar otras reglas si esta coincide
                   </p>
                 </div>
                 <Switch
@@ -581,7 +581,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
             <div>
               <div className="flex items-center justify-between mb-2">
                 <Label>
-                  Conditions (All must match)
+                  Condiciones (Todas deben coincidir)
                   <span className="projects-form-label-required">*</span>
                 </Label>
                 <ActionButton
@@ -590,7 +590,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                   className="border-none bg-[var(--card)]"
                   onClick={addCondition}
                 >
-                  Add Condition
+                  Añadir Condición
                 </ActionButton>
               </div>
 
@@ -643,7 +643,7 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                     <Input
                       value={condition.value}
                       onChange={(e) => updateCondition(index, "value", e.target.value)}
-                      placeholder="Enter value..."
+                      placeholder="Ingresar valor..."
                       className="flex-1"
                     />
 
@@ -666,14 +666,14 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
             {/* Actions */}
             <div>
               <div className="flex items-center justify-between mb-2 ">
-                <Label>Actions</Label>
+                <Label>Acciones</Label>
                 <ActionButton
                   showPlusIcon
                   secondary
                   className="border-none bg-[var(--card)]"
                   onClick={addAction}
                 >
-                  Add Action
+                  Añadir Acción
                 </ActionButton>
               </div>
 
@@ -712,25 +712,25 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                       options={
                         action.type === "setPriority"
                           ? PRIORITY_OPTIONS.map((opt) => ({
-                              id: opt.value,
-                              value: opt.value,
-                              label: opt.label,
-                            }))
+                            id: opt.value,
+                            value: opt.value,
+                            label: opt.label,
+                          }))
                           : action.type === "assignTo"
                             ? members.map((m) => ({
-                                id: m.id,
-                                value: m.id,
-                                label: m.name,
-                                avatar: m.avatar,
-                                email: m.email,
-                              }))
+                              id: m.id,
+                              value: m.id,
+                              label: m.name,
+                              avatar: m.avatar,
+                              email: m.email,
+                            }))
                             : action.type === "addLabels"
                               ? labels.map((l) => ({
-                                  id: l.id,
-                                  value: l.id,
-                                  label: l.name,
-                                  color: l.color,
-                                }))
+                                id: l.id,
+                                value: l.id,
+                                label: l.name,
+                                color: l.color,
+                              }))
                               : []
                       }
                       isLoading={
@@ -742,31 +742,31 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                       showColorIndicator={action.type === "addLabels"}
                       placeholder={
                         action.type === "setPriority"
-                          ? "Select priority"
+                          ? "Seleccionar prioridad"
                           : action.type === "assignTo"
-                            ? "Select member"
+                            ? "Seleccionar miembro"
                             : action.type === "addLabels"
-                              ? "Select label"
+                              ? "Seleccionar etiqueta"
                               : undefined
                       }
                       loadingText={
                         action.type === "assignTo"
-                          ? "Loading members..."
+                          ? "Cargando miembros..."
                           : action.type === "addLabels"
-                            ? "Loading labels..."
+                            ? "Cargando etiquetas..."
                             : undefined
                       }
                       emptyText={
                         action.type === "assignTo"
-                          ? "No members available"
+                          ? "No hay miembros disponibles"
                           : action.type === "addLabels"
-                            ? "No labels available"
+                            ? "No hay etiquetas disponibles"
                             : undefined
                       }
                     />
 
                     {formData.actions.length > 1 && (
-                      <Tooltip content="Delete Action" position="left" color="primary">
+                      <Tooltip content="Eliminar Acción" position="left" color="primary">
                         <ActionButton
                           variant="outline"
                           className="justify-center cursor-pointer border-none bg-[var(--destructive)]/5 hover:bg-[var(--destructive)]/10 text-[var(--destructive)]"
@@ -791,10 +791,10 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
                   setFormData(defaultRule);
                 }}
               >
-                Cancel
+                Cancelar
               </ActionButton>
               <ActionButton onClick={handleSaveRule} disabled={saving} primary>
-                {saving ? "Saving..." : editingRule ? "Update Rule" : "Create Rule"}
+                {saving ? "Guardando..." : editingRule ? "Actualizar Regla" : "Crear Regla"}
               </ActionButton>
             </div>
           </CardContent>
@@ -808,12 +808,11 @@ export default function EmailRulesManager({ projectId }: EmailRulesManagerProps)
           setDeletingRule(null);
         }}
         onConfirm={handleDeleteRule}
-        title="Delete Rule"
-        message={`Are you sure you want to delete the rule "${
-          deletingRule?.name || ""
-        }"? This action cannot be undone.`}
-        confirmText={isDeleting ? "Deleting..." : "Delete"}
-        cancelText="Cancel"
+        title="Eliminar Regla"
+        message={`¿Estás seguro de que deseas eliminar la regla "${deletingRule?.name || ""
+          }"? Esta acción no se puede deshacer.`}
+        confirmText={isDeleting ? "Eliminando..." : "Eliminar"}
+        cancelText="Cancelar"
         type="danger"
       />
     </div>

@@ -3,7 +3,7 @@ import { HiViewList, HiChartBar } from "react-icons/hi";
 
 export const taskViewTypes = [
   {
-    name: "List",
+    name: "Lista",
     key: "list",
     icon: <HiViewList size={16} />,
   },

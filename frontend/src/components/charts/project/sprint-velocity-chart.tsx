@@ -12,8 +12,8 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  velocity: { label: "Story Points", color: "#3B82F6" },
-  average: { label: "Average Velocity", color: "#94A3B8" },
+  velocity: { label: "Puntos de Historia", color: "#3B82F6" },
+  average: { label: "Velocidad Promedio", color: "#94A3B8" },
 };
 
 interface SprintVelocityChartProps {
@@ -60,7 +60,7 @@ export function SprintVelocityChart({ data }: SprintVelocityChartProps) {
   const chartData = data?.map((sprint) => ({
     sprint: sprint.name,
     velocity: sprint.tasks.reduce((acc, task) => acc + (task.storyPoints || 0), 0),
-    date: new Date(sprint.createdAt).toLocaleDateString(),
+    date: new Date(sprint.createdAt).toLocaleDateString("es-419"),
   }));
 
   // Calculate average velocity
@@ -77,8 +77,8 @@ export function SprintVelocityChart({ data }: SprintVelocityChartProps) {
 
   return (
     <ChartWrapper
-      title="Sprint Velocity Trend"
-      description="Story points completed per sprint"
+      title="Tendencia de Velocidad del Sprint"
+      description="Puntos de historia completados por sprint"
       config={chartConfig}
       className="border-[var(--border)]"
     >
@@ -88,7 +88,7 @@ export function SprintVelocityChart({ data }: SprintVelocityChartProps) {
           <XAxis dataKey="sprint" tick={<CustomizedAxisTick />} interval={0} height={60} />
           <YAxis
             label={{
-              value: "Story Points",
+              value: "Puntos de Historia",
               angle: -90,
               position: "insideLeft",
               offset: -10,

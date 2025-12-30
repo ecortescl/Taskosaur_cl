@@ -227,7 +227,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
               className="kanban-column-add-task-button"
             >
               <HiPlus size={14} />
-              Add a task
+              Agregar una tarea
             </Button>
           )}
         </div>
@@ -239,8 +239,8 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
           className={cn(
             "kanban-column-tasks-container",
             dragState.isDragging &&
-              dragState.draggedTo === status.statusId &&
-              "kanban-column-tasks-container-dragging"
+            dragState.draggedTo === status.statusId &&
+            "kanban-column-tasks-container-dragging"
           )}
           style={{
             backgroundColor:
@@ -255,7 +255,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
               <CardContent className="kanban-create-task-content">
                 {/* Form Header */}
                 <div className="kanban-create-task-header">
-                  <span className="kanban-create-task-title">Create new task</span>
+                  <span className="kanban-create-task-title">Crear nueva tarea</span>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -270,7 +270,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                 <Input
                   value={taskForm.title}
                   onChange={(e) => setTaskForm((p) => ({ ...p, title: e.target.value }))}
-                  placeholder="What needs to be done?"
+                  placeholder="¿Qué necesita hacerse?"
                   className="kanban-create-task-title-input"
                   autoFocus
                 />
@@ -278,7 +278,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                 {/* Due date & priority */}
                 <div className="kanban-create-task-form-grid">
                   <div className="kanban-create-task-field">
-                    <label className="kanban-create-task-label">Due date</label>
+                    <label className="kanban-create-task-label">Fecha vencimiento</label>
                     <Input
                       type="date"
                       min={moment().format("YYYY-MM-DD")}
@@ -294,15 +294,15 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                   </div>
 
                   <div className="kanban-create-task-field">
-                    <label className="kanban-create-task-label">Priority</label>
+                    <label className="kanban-create-task-label">Prioridad</label>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="kanban-create-task-priority-dropdown">
-                          {taskForm.priority === "LOW" && "🔵 Low"}
-                          {taskForm.priority === "MEDIUM" && "🟡 Medium"}
-                          {taskForm.priority === "HIGH" && "🟠 High"}
-                          {taskForm.priority === "HIGHEST" && "🔴 Highest"}
+                          {taskForm.priority === "LOW" && "🔵 Baja"}
+                          {taskForm.priority === "MEDIUM" && "🟡 Media"}
+                          {taskForm.priority === "HIGH" && "🟠 Alta"}
+                          {taskForm.priority === "HIGHEST" && "🔴 Máxima"}
                           <ChevronDown className="h-3 w-3" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -311,25 +311,25 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                           onClick={() => setTaskForm((p) => ({ ...p, priority: "LOW" }))}
                           className="kanban-create-task-priority-item"
                         >
-                          🔵 Low
+                          🔵 Baja
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => setTaskForm((p) => ({ ...p, priority: "MEDIUM" }))}
                           className="kanban-create-task-priority-item"
                         >
-                          🟡 Medium
+                          🟡 Media
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => setTaskForm((p) => ({ ...p, priority: "HIGH" }))}
                           className="kanban-create-task-priority-item"
                         >
-                          🟠 High
+                          🟠 Alta
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => setTaskForm((p) => ({ ...p, priority: "HIGHEST" }))}
                           className="kanban-create-task-priority-item"
                         >
-                          🔴 Highest
+                          🔴 Máxima
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -344,7 +344,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                     onClick={reset}
                     className="kanban-create-task-cancel"
                   >
-                    Cancel
+                    Cancelar
                   </Button>
                   <Button
                     size="sm"
@@ -356,7 +356,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
                       color: "white",
                     }}
                   >
-                    Create Task
+                    Crear Tarea
                   </Button>
                 </div>
               </CardContent>
@@ -389,7 +389,7 @@ const StatusColumn: React.FC<StatusColumnProps> = ({
               onClick={handleLoadMore}
               className="w-full text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground)] py-2"
             >
-              Load More ({status.pagination.total - status.tasks.length} remaining)
+              Cargar Más ({status.pagination.total - status.tasks.length} restantes)
             </Button>
           )}
         </div>

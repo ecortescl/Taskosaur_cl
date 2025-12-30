@@ -88,15 +88,15 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
 
   const getTypeLabel = (type: NotificationType) => {
     const labelMap = {
-      TASK_ASSIGNED: "Task Assigned",
-      TASK_STATUS_CHANGED: "Task Status",
-      TASK_COMMENTED: "Task Comment",
-      TASK_DUE_SOON: "Due Soon",
-      PROJECT_CREATED: "Project Created",
-      PROJECT_UPDATED: "Project Updated",
-      WORKSPACE_INVITED: "Workspace Invite",
-      MENTION: "Mention",
-      SYSTEM: "System",
+      TASK_ASSIGNED: "Tarea Asignada",
+      TASK_STATUS_CHANGED: "Estado de Tarea",
+      TASK_COMMENTED: "Comentario de Tarea",
+      TASK_DUE_SOON: "Vence Pronto",
+      PROJECT_CREATED: "Proyecto Creado",
+      PROJECT_UPDATED: "Proyecto Actualizado",
+      WORKSPACE_INVITED: "Invitación a Workspace",
+      MENTION: "Mención",
+      SYSTEM: "Sistema",
     };
     return labelMap[type] || type.replace(/_/g, " ");
   };
@@ -109,11 +109,11 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInDays < 7) return `${diffInDays}d ago`;
-    return date.toLocaleDateString();
+    if (diffInMinutes < 1) return "Recién";
+    if (diffInMinutes < 60) return `${diffInMinutes}m atrás`;
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+    if (diffInDays < 7) return `${diffInDays}d atrás`;
+    return date.toLocaleDateString("es-ES");
   };
 
   const handleNotificationClick = async (notification: Notification) => {
@@ -210,7 +210,7 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
       setStats(response.summary);
     } catch (error) {
       console.error("Failed to fetch notifications:", error);
-      setError(error?.message || "Failed to load notifications. Please try again.");
+      setError(error?.message || "Error al cargar las notificaciones. Por favor, inténtelo de nuevo.");
       setNotifications([]);
       setPagination({
         currentPage: 1,
@@ -229,8 +229,8 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
   }, [fetchNotifications]);
 
   /* import useNotification inside component */
-  const { refreshNotifications } = useNotification();  
-  
+  const { refreshNotifications } = useNotification();
+
   const handleMarkAsRead = async (notificationIds: string[]) => {
     try {
       if (notificationIds.length === 1) {
@@ -246,12 +246,12 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
         ...prev,
         unread: Math.max(0, prev.unread - notificationIds.length),
       }));
-      toast.success("Successfully marked as read");
-      
+      toast.success("Marcado como leído con éxito");
+
       // Update global context
       refreshNotifications();
     } catch (error) {
-      toast.error(error?.message || "Failed to mark as read the notification(s)");
+      toast.error(error?.message || "Error al marcar como leída(s) la(s) notificación(es)");
       console.error("Failed to mark notification(s) as read:", error);
     }
   };
@@ -278,12 +278,12 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
       } else {
         fetchNotifications();
       }
-      toast.success("Notifications(s) deleted successfully!");
-      
+      toast.success("¡Notificación(es) eliminada(s) con éxito!");
+
       // Update global context
       refreshNotifications();
     } catch (error) {
-      toast.error(error?.message || "Notifications(s) deleted successfully!");
+      toast.error(error?.message || "Error al eliminar la(s) notificación(es)");
       console.error("Failed to delete notification(s):", error);
     }
   };
@@ -293,12 +293,12 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
       await notificationApi.markAllUnreadAsRead(organizationId);
       setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
       setStats((prev) => ({ ...prev, unread: 0 }));
-      toast.success("Successfully marked all as read");
-      
+      toast.success("Todas las notificaciones marcadas como leídas");
+
       // Update global context
       refreshNotifications();
     } catch (error) {
-      toast.error(error?.message || "Failed to mark all as read");
+      toast.error(error?.message || "Error al marcar todas como leídas");
       console.error("Failed to mark all as read:", error);
     }
   };
@@ -367,18 +367,16 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between">
                       <h4
-                        className={`font-bold text-[15px] truncate ${
-                          isUnread ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
-                        }`}
+                        className={`font-bold text-[15px] truncate ${isUnread ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
+                          }`}
                       >
                         {notification.title}
                       </h4>
                     </div>
 
                     <p
-                      className={`text-sm mt-[2px] line-clamp-2 ${
-                        isUnread ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
-                      }`}
+                      className={`text-sm mt-[2px] line-clamp-2 ${isUnread ? "text-[var(--foreground)]" : "text-[var(--muted-foreground)]"
+                        }`}
                     >
                       {notification.message}
                     </p>
@@ -400,7 +398,7 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
 
                       {notification.createdByUser && (
                         <span>
-                          by {notification.createdByUser.firstName}{" "}
+                          por {notification.createdByUser.firstName}{" "}
                           {notification.createdByUser.lastName}
                         </span>
                       )}
@@ -433,13 +431,13 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
       <div className="sticky top-0 z-10">
         <PageHeader
           icon={<HiBell className="size-20px" />}
-          title="Notifications"
-          description={`${stats.total} total notifications, ${stats.unread} unread`}
+          title="Notificaciones"
+          description={`${stats.total} notificaciones en total, ${stats.unread} sin leer`}
           actions={
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 gap-2">
               {stats.unread > 0 && (
                 <ActionButton primary onClick={handleMarkAllAsRead}>
-                  Mark All Read ({stats.unread})
+                  Marcar Todo como Leído ({stats.unread})
                 </ActionButton>
               )}
 
@@ -452,7 +450,7 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
                     className="bg-[var(--primary)] text-[var(--muted)]"
                   >
                     <HiCheck className="w-4 h-4" />
-                    Mark as Read
+                    Marcar como Leído
                   </Button>
                   <Button
                     variant="destructive"
@@ -460,7 +458,7 @@ export default function NotificationScreen({ userId, organizationId }: Notificat
                     className="bg-[var(--destructive)]"
                   >
                     <HiTrash className="w-4 h-4" />
-                    Delete
+                    Eliminar
                   </Button>
                 </div>
               )}

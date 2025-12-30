@@ -82,7 +82,7 @@ export default function SearchableAssigneeDropdown({
             </div>
           ) : (
             <div className="flex items-center gap-2 text-muted-foreground">
-              <span>Select default assignee</span>
+              <span>Seleccionar asignado por defecto</span>
             </div>
           )}
           <ChevronDown className="w-4 h-4 text-muted-foreground" />
@@ -97,13 +97,13 @@ export default function SearchableAssigneeDropdown({
       >
         <Command>
           <CommandInput
-            placeholder="Search assignees..."
+            placeholder="Buscar asignados..."
             value={localSearchTerm}
             onValueChange={handleSearchChange}
             className="border-b border-[var(--border)] focus:ring-0 w-full"
           />
           <CommandList>
-            <CommandEmpty>No assignees found.</CommandEmpty>
+            <CommandEmpty>No se encontraron asignados.</CommandEmpty>
             <CommandGroup>
               <CommandItem
                 onSelect={() => {
@@ -112,7 +112,7 @@ export default function SearchableAssigneeDropdown({
                 }}
                 className="flex items-center gap-2 cursor-pointer hover:bg-[var(--muted)]"
               >
-                No default assignee
+                Sin asignado por defecto
               </CommandItem>
               {users.map((user) => (
                 <CommandItem

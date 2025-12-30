@@ -46,7 +46,7 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
         <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-2xl px-4 py-2.5 flex items-center gap-3">
           <div className="flex items-center justify-center gap-2 text-xs">
             <div className="font-semibold rounded-full bg-primary/10 px-3 py-1">
-              {selectedCount} {selectedCount === 1 ? "task" : "tasks"} selected
+              {selectedCount} {selectedCount === 1 ? "tarea seleccionada" : "tareas seleccionadas"}
             </div>
 
             {/* ✅ Gmail-like “Select all” link */}
@@ -58,7 +58,7 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
                     onClick={onAllDeleteSelect}
                     className="text-primary hover:underline font-medium"
                   >
-                    Select all {totalTask} tasks
+                    Seleccionar las {totalTask} tareas
                   </button>
                 </>
               ) : (
@@ -68,7 +68,7 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
                     onClick={onAllDeleteSelect}
                     className="text-primary hover:underline font-medium"
                   >
-                    Clear all {totalTask} selected tasks
+                    Limpiar todas las {totalTask} tareas seleccionadas
                   </button>
                 </>
               ))}
@@ -84,7 +84,7 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
               className="text-destructive hover:text-destructive flex items-center justify-center hover:bg-destructive/10 h-8 px-2"
             >
               <Trash2 className="size-3" />
-              <span className="text-sm">Delete</span>
+              <span className="text-sm">Eliminar</span>
             </Button>
 
             <Button
@@ -103,12 +103,11 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
         isOpen={showDeleteConfirmation}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
-        title="Delete Tasks"
-        message={`Are you sure you want to delete ${selectedCount} ${
-          selectedCount === 1 ? "task" : "tasks"
-        }? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
+        title="Eliminar Tareas"
+        message={`¿Estás seguro de que quieres eliminar ${selectedCount} ${selectedCount === 1 ? "tarea" : "tareas"
+          }? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
         type="danger"
       />
     </>

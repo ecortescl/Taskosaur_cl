@@ -3,6 +3,7 @@ import { Badge } from "../ui";
 
 export type TaskStatus =
   | "todo"
+  | "to-do"
   | "in-progress"
   | "in-review"
   | "completed"
@@ -20,6 +21,7 @@ interface StatusBadgeProps {
 
 const taskStatusClassMap: Record<TaskStatus, string> = {
   todo: "",
+  "to-do": "",
   backlog: "statusbadge-todo",
   "in-progress": "statusbadge-inprogress",
   "in-review": "statusbadge-inreview",
@@ -37,21 +39,22 @@ const projectStatusClassMap: Record<ProjectStatus, string> = {
 };
 
 const taskStatusLabels: Record<TaskStatus, string> = {
-  todo: "To Do",
+  todo: "Por Hacer",
+  "to-do": "Por Hacer",
   backlog: "Backlog",
-  "in-progress": "In Progress",
-  "in-review": "In Review",
-  completed: "Completed",
-  done: "Done",
-  cancelled: "Cancelled",
+  "in-progress": "En Progreso",
+  "in-review": "En Revisión",
+  completed: "Completado",
+  done: "Hecho",
+  cancelled: "Cancelado",
 };
 
 const projectStatusLabels: Record<ProjectStatus, string> = {
-  active: "Active",
-  completed: "Completed",
-  on_hold: "On Hold",
-  cancelled: "Cancelled",
-  planning: "Planning",
+  active: "Activo",
+  completed: "Completado",
+  on_hold: "En Espera",
+  cancelled: "Cancelado",
+  planning: "Planificación",
 };
 
 type Props = StatusBadgeProps & React.ComponentProps<typeof Badge>;

@@ -15,14 +15,14 @@ export default function DeleteAccountSection() {
 
   const handleDelete = async () => {
     if (!currentUser) return;
-    if (!confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
+    if (!confirm("¿Está seguro de que desea eliminar su cuenta? Esta acción no se puede deshacer.")) return;
     setLoading(true);
     try {
       await deleteUser(currentUser.id);
-      toast.success("Account deleted successfully!");
+      toast.success("¡Cuenta eliminada con éxito!");
       router.push("/login");
     } catch {
-      toast.error("Error deleting account.");
+      toast.error("Error al eliminar la cuenta.");
     } finally {
       setLoading(false);
     }
@@ -32,15 +32,15 @@ export default function DeleteAccountSection() {
     <Card className="rounded-md bg-red-50 shadow-sm border border-red-200">
       <CardHeader>
         <CardTitle className="flex items-center gap-3 text-lg font-semibold text-red-700">
-          <HiExclamationTriangle className="w-5 h-5" /> Delete Account
+          <HiExclamationTriangle className="w-5 h-5" /> Eliminar Cuenta
         </CardTitle>
         <CardDescription className="text-red-500">
-          Permanently delete your account and all associated data.
+          Elimine permanentemente su cuenta y todos los datos asociados.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Button variant="destructive" onClick={handleDelete} disabled={loading}>
-          {loading ? "Deleting..." : "Delete Account"}
+          {loading ? "Eliminando..." : "Eliminar Cuenta"}
         </Button>
       </CardContent>
     </Card>

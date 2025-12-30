@@ -1,125 +1,125 @@
 export const PROJECT_CATEGORIES = [
   {
     id: "operational",
-    label: "Operational",
+    label: "Operacional",
     color: "#3B82F6", // Blue
-    description: "Day-to-day operations and maintenance",
+    description: "Operaciones y mantenimiento del día a día",
   },
   {
     id: "technical",
-    label: "Technical",
+    label: "Técnico",
     color: "#8B5CF6", // Purple
-    description: "Development and technical projects",
+    description: "Desarrollo y proyectos técnicos",
   },
   {
     id: "strategic",
-    label: "Strategic",
+    label: "Estratégico",
     color: "#10B981", // Green
-    description: "Long-term planning and strategy",
+    description: "Planificación y estrategia a largo plazo",
   },
   {
     id: "hiring",
-    label: "Hiring",
+    label: "Contratación",
     color: "#F59E0B", // Yellow
-    description: "Recruitment and team building",
+    description: "Reclutamiento y formación de equipos",
   },
   {
     id: "financial",
-    label: "Financial",
+    label: "Financiero",
     color: "#EF4444", // Red
-    description: "Budget and financial planning",
+    description: "Presupuesto y planificación financiera",
   },
   {
     id: "neutral",
     label: "Neutral",
     color: "#6B7280", // Gray
-    description: "General or uncategorized projects",
+    description: "Proyectos generales o sin categorizar",
   },
   {
     id: "innovation",
-    label: "Innovation",
+    label: "Innovación",
     color: "#6366F1", // Indigo
-    description: "Creativity and innovation initiatives",
+    description: "Iniciativas de creatividad e innovación",
   },
   {
     id: "community",
-    label: "Community",
+    label: "Comunidad",
     color: "#EC4899", // Pink
-    description: "Community and engagement initiatives",
+    description: "Iniciativas de comunidad y compromiso",
   },
   {
     id: "sustainability",
-    label: "Sustainability",
+    label: "Sostenibilidad",
     color: "#14B8A6", // Teal
-    description: "Sustainability and environment projects",
+    description: "Proyectos de sostenibilidad y medio ambiente",
   },
   {
     id: "marketing",
     label: "Marketing",
     color: "#F97316", // Orange
-    description: "Marketing and outreach campaigns",
+    description: "Campañas de marketing y difusión",
   },
   {
     id: "research",
-    label: "Research",
+    label: "Investigación",
     color: "#06B6D4", // Cyan
-    description: "Research and analysis projects",
+    description: "Proyectos de investigación y análisis",
   },
   {
     id: "growth",
-    label: "Growth",
+    label: "Crecimiento",
     color: "#65A30D", // Lime
-    description: "Growth and expansion initiatives",
+    description: "Iniciativas de crecimiento y expansión",
   },
 ];
 
 export const roles = [
   {
     id: "0",
-    name: "OWNER",
-    description: "Can manage all",
+    name: "DUEÑO",
+    description: "Puede gestionar todo",
     variant: "default" as const,
   },
   {
     id: "1",
-    name: "MANAGER",
-    description: "Can manage project and members",
+    name: "GESTOR",
+    description: "Puede gestionar el proyecto y los miembros",
     variant: "default" as const,
   },
   {
     id: "2",
-    name: "MEMBER",
-    description: "Can access and work on projects",
+    name: "MIEMBRO",
+    description: "Puede acceder y trabajar en los proyectos",
     variant: "default" as const,
   },
   {
     id: "3",
-    name: "VIEWER",
-    description: "Can only view project content",
+    name: "VISOR",
+    description: "Solo puede ver el contenido del proyecto",
     variant: "secondary" as const,
   },
 ];
 
 export const ACTION_TYPES = [
-  { value: "setPriority", label: "Set Priority" },
-  { value: "assignTo", label: "Assign To" },
-  { value: "addLabels", label: "Add Labels" },
-  { value: "markAsSpam", label: "Mark as Spam" },
-  { value: "autoReply", label: "Auto Reply" },
+  { value: "setPriority", label: "Establecer Prioridad" },
+  { value: "assignTo", label: "Asignar a" },
+  { value: "addLabels", label: "Añadir Etiquetas" },
+  { value: "markAsSpam", label: "Marcar como Spam" },
+  { value: "autoReply", label: "Respuesta Automática" },
 ];
 
 export const EMAIL_FIELDS = [
-  { value: "subject", label: "Subject" },
-  { value: "from", label: "From" },
-  { value: "to", label: "To" },
+  { value: "subject", label: "Asunto" },
+  { value: "from", label: "De" },
+  { value: "to", label: "Para" },
   { value: "cc", label: "CC" },
-  { value: "body", label: "Body" },
+  { value: "body", label: "Cuerpo" },
 ];
 
 export const EMAIL_OPERATORS = [
-  { value: "contains", label: "Contains" },
-  { value: "equals", label: "Equals" },
-  { value: "matches", label: "Matches" },
-  { value: "startsWith", label: "Starts With" },
-  { value: "endsWith", label: "Ends With" },
+  { value: "contains", label: "Contiene" },
+  { value: "equals", label: "Es igual a" },
+  { value: "matches", label: "Coincide con" },
+  { value: "startsWith", label: "Empieza por" },
+  { value: "endsWith", label: "Termina en" },
 ];

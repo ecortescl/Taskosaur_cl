@@ -14,22 +14,22 @@ const QuizPage = () => {
   const questions = [
     {
       id: 1,
-      question: "Hey there, what brings you here today?",
+      question: "¡Hola! ¿Qué te trae por aquí hoy?",
       options: [
-        { id: 1, text: "Work", value: "work" },
+        { id: 1, text: "Trabajo", value: "work" },
         { id: 2, text: "Personal", value: "personal" },
-        { id: 3, text: "School", value: "school" },
-        { id: 4, text: "Nonprofits", value: "nonprofits" },
+        { id: 3, text: "Escuela", value: "school" },
+        { id: 4, text: "Sin fines de lucro", value: "nonprofits" },
       ],
       svg: "",
     },
     {
       id: 2,
-      question: "What describes your current role?",
+      question: "¿Cuál es tu rol actual?",
       options: [
-        { id: 1, text: "Business owner", value: "businessOwner" },
-        { id: 2, text: "Team Leader", value: "teamLeader" },
-        { id: 3, text: "Team Member", value: "teamMember" },
+        { id: 1, text: "Dueño de negocio", value: "businessOwner" },
+        { id: 2, text: "Líder de equipo", value: "teamLeader" },
+        { id: 3, text: "Miembro de equipo", value: "teamMember" },
         { id: 4, text: "Freelancer", value: "freelancer" },
         { id: 5, text: "Director", value: "director" },
         { id: 6, text: "C-Level", value: "cLevel" },
@@ -39,9 +39,9 @@ const QuizPage = () => {
     },
     {
       id: 3,
-      question: "How many people are on your team?",
+      question: "¿Cuántas personas hay en tu equipo?",
       options: [
-        { id: 1, text: "Only me", value: "onlyMe" },
+        { id: 1, text: "Solo yo", value: "onlyMe" },
         { id: 2, text: "2-5", value: "2-5" },
         { id: 3, text: "6-10", value: "6-10" },
         { id: 4, text: "11-15", value: "11-15" },
@@ -54,7 +54,7 @@ const QuizPage = () => {
     },
     {
       id: 4,
-      question: "How many people work at your company?",
+      question: "¿Cuántas personas trabajan en tu empresa?",
       options: [
         { id: 1, text: "1-19", value: "1-19" },
         { id: 2, text: "20-49", value: "20-49" },
@@ -68,19 +68,19 @@ const QuizPage = () => {
     },
     {
       id: 5,
-      question: "One last question, select what you'd like to manage first",
+      question: "Una última pregunta, selecciona qué te gustaría gestionar primero",
       options: [
-        { id: 1, text: "Education", value: "education" },
-        { id: 2, text: "Sales and CRM", value: "salesAndCRM" },
-        { id: 3, text: "Design and Creative", value: "designAndCreative" },
-        { id: 4, text: "Product Management", value: "productManagement" },
+        { id: 1, text: "Educación", value: "education" },
+        { id: 2, text: "Ventas y CRM", value: "salesAndCRM" },
+        { id: 3, text: "Diseño y Creativo", value: "designAndCreative" },
+        { id: 4, text: "Gestión de Producto", value: "productManagement" },
         { id: 5, text: "IT", value: "it" },
-        { id: 6, text: "HR and Recruiting", value: "hrAndRecruiting" },
-        { id: 7, text: "Software Development", value: "softwareDevelopment" },
+        { id: 6, text: "RRHH y Reclutamiento", value: "hrAndRecruiting" },
+        { id: 7, text: "Desarrollo de Software", value: "softwareDevelopment" },
         { id: 8, text: "Legal", value: "legal" },
-        { id: 9, text: "Construction", value: "construction" },
+        { id: 9, text: "Construcción", value: "construction" },
         { id: 14, text: "Marketing", value: "marketing" },
-        { id: 15, text: "Other", value: "other" },
+        { id: 15, text: "Otro", value: "other" },
       ],
       svg: "",
     },
@@ -108,10 +108,10 @@ const QuizPage = () => {
         await updateUser(currentUser.id, {
           onboardInfo: answers,
         });
-        toast.success("Preference updated successfully!");
+        toast.success("¡Preferencia actualizada con éxito!");
         router.push("/organization");
       } catch {
-        toast.error("Failed to update profile. Please try again.");
+        toast.error("Error al actualizar el perfil. Por favor intenta de nuevo.");
       }
     }
 
@@ -147,10 +147,10 @@ const QuizPage = () => {
             <div className="max-w-6xl mx-auto px-6 py-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-[var(--foreground)]">
-                  Question {currentQuestion + 1} of {totalQuestions}
+                  Pregunta {currentQuestion + 1} de {totalQuestions}
                 </span>
                 <span className="text-sm font-medium text-[var(--foreground)]">
-                  {Math.round(((currentQuestion + 1) / totalQuestions) * 100)}% Complete
+                  {Math.round(((currentQuestion + 1) / totalQuestions) * 100)}% Completado
                 </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
@@ -169,7 +169,7 @@ const QuizPage = () => {
                 {currentQuestionData.question}
               </h1>
               <p className="text-[var(--foreground)]">
-                Please select one option that best describes your preference.
+                Por favor selecciona la opción que mejor describa tu preferencia.
               </p>
             </div>
 
@@ -181,11 +181,10 @@ const QuizPage = () => {
                   <button
                     key={option.id}
                     onClick={() => handleOptionSelect(option.value)}
-                    className={`p-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer hover:scale-[1.02] ${
-                      isSelected
+                    className={`p-4 rounded-xl border-2 text-left transition-all duration-200 cursor-pointer hover:scale-[1.02] ${isSelected
                         ? "border-blue-600 bg-[var(--background)] shadow-lg"
                         : "border-gray-800 bg-[var(--background)] hover:border-blue-600 hover:shadow-md"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-lg">{option.text}</span>
@@ -202,26 +201,24 @@ const QuizPage = () => {
               <button
                 onClick={handlePrevious}
                 disabled={currentQuestion === 0}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-                  currentQuestion === 0
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${currentQuestion === 0
                     ? "bg-[var(--primary)]/70 text-[var(--primary-foreground)] cursor-not-allowed"
                     : "bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] hover:shadow-md cursor-pointer"
-                }`}
+                  }`}
               >
                 <ChevronLeft className="h-5 w-5" />
-                Previous
+                Anterior
               </button>
 
               <button
                 onClick={handleNext}
                 disabled={!isAnswerSelected}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-                  !isAnswerSelected
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${!isAnswerSelected
                     ? "bg-[var(--primary)]/70 text-[var(--primary-foreground)] cursor-not-allowed"
                     : "bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] hover:shadow-lg cursor-pointer"
-                }`}
+                  }`}
               >
-                {currentQuestion === totalQuestions - 1 ? "Complete" : "Next"}
+                {currentQuestion === totalQuestions - 1 ? "Completar" : "Siguiente"}
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>

@@ -11,10 +11,10 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  ADMIN: { label: "Admin", color: "#DC2626" },
-  MANAGER: { label: "Manager", color: "#EA580C" },
-  MEMBER: { label: "Member", color: "#3B82F6" },
-  VIEWER: { label: "Viewer", color: "#10B981" },
+  ADMIN: { label: "Administrador", color: "#DC2626" },
+  MANAGER: { label: "Gerente", color: "#EA580C" },
+  MEMBER: { label: "Miembro", color: "#3B82F6" },
+  VIEWER: { label: "Visualizador", color: "#10B981" },
 };
 
 interface TeamUtilizationChartProps {
@@ -31,8 +31,8 @@ export function TeamUtilizationChart({ data }: TeamUtilizationChartProps) {
 
   return (
     <ChartWrapper
-      title="Team Role Distribution"
-      description="Organization member roles breakdown"
+      title="Distribución de Roles del Equipo"
+      description="Desglose de roles de miembros de la organización"
       config={chartConfig}
       className="border-[var(--border)]"
     >
@@ -42,7 +42,7 @@ export function TeamUtilizationChart({ data }: TeamUtilizationChartProps) {
           <PolarAngleAxis dataKey="role" />
           <PolarRadiusAxis />
           <ChartTooltip content={<ChartTooltipContent className="border-0 bg-[var(--accent)]" />} />
-          <Radar name="Count" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <Radar name="Cantidad" dataKey="count" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
         </RadarChart>
       </ResponsiveContainer>
     </ChartWrapper>

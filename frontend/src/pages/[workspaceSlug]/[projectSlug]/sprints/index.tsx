@@ -186,8 +186,8 @@ function SprintsPageContent() {
       <div className="space-y-6">
         {/* Header */}
         <PageHeader
-          title="Sprint Management"
-          description="Organize your work into focused iterations and track progress effectively."
+          title="Gestión de Sprints"
+          description="Organiza tu trabajo en iteraciones enfocadas y realiza un seguimiento efectivo del progreso."
           actions={
             hasAccess && (
               <Button
@@ -198,7 +198,7 @@ function SprintsPageContent() {
                 className="h-10 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] shadow-sm hover:shadow-md transition-all duration-200 font-medium flex items-center gap-2"
               >
                 <HiPlus className="w-4 h-4" />
-                Create Sprint
+                Crear Sprint
               </Button>
             )
           }
@@ -229,9 +229,9 @@ function SprintsPageContent() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-[var(--muted)] flex items-center justify-center">
               <HiRocketLaunch className="w-8 h-8 text-[var(--muted-foreground)]" />
             </div>
-            <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">No sprints yet</h3>
+            <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">Aún no hay sprints</h3>
             <p className="text-[var(--muted-foreground)] mb-6 max-w-md mx-auto">
-              Create your first sprint to start organizing your work into focused iterations.
+              Crea tu primer sprint para comenzar a organizar tu trabajo en iteraciones enfocadas.
             </p>
           </div>
         )}
@@ -255,10 +255,10 @@ function SprintsPageContent() {
             setDeletingSprint(null);
           }}
           onConfirm={handleDeleteSprint}
-          title="Delete Sprint"
-          message={`Are you sure you want to delete the sprint "${deletingSprint?.name || ""}"? This action cannot be undone.`}
-          confirmText={isDeleting ? "Deleting..." : "Delete"}
-          cancelText="Cancel"
+          title="Eliminar Sprint"
+          message={`¿Estás seguro de que deseas eliminar el sprint "${deletingSprint?.name || ""}"? Esta acción no se puede deshacer.`}
+          confirmText={isDeleting ? "Eliminando..." : "Eliminar"}
+          cancelText="Cancelar"
           type="danger"
         />
       </div>

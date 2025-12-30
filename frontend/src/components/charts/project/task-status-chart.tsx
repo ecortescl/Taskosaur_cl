@@ -31,7 +31,7 @@ export function TaskStatusChart({ data }: TaskStatusChartProps) {
   const chartData = sortedData?.map((item) => {
     const status = item.status;
     return {
-      name: status?.name || "Unknown",
+      name: status?.name || "Desconocido",
       value: item.count,
       color: status?.color || "#8B5CF6",
     };
@@ -75,8 +75,8 @@ export function TaskStatusChart({ data }: TaskStatusChartProps) {
 
   return (
     <ChartWrapper
-      title="Task Status Flow"
-      description="Current task distribution by status"
+      title="Flujo de Estado de Tareas"
+      description="Distribución actual de las tareas por estado"
       config={chartConfig}
       className="border-[var(--border)]"
     >

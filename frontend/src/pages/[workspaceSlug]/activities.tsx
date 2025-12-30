@@ -58,7 +58,7 @@ function WorkspacePagination({
   return (
     <div className="flex flex-col items-center gap-2 py-4 border-t border-[var(--border)]">
       <div className="text-sm text-[var(--muted-foreground)]">
-        Page {currentPage} of {totalPages}
+        Página {currentPage} de {totalPages}
       </div>
 
       <Pagination>
@@ -73,11 +73,10 @@ function WorkspacePagination({
                   onPageChange(currentPage - 1);
                 }
               }}
-              className={`${
-                currentPage === 1 || isLoading
-                  ? "pointer-events-none opacity-50"
-                  : "cursor-pointer hover:bg-[var(--accent)]"
-              }`}
+              className={`${currentPage === 1 || isLoading
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer hover:bg-[var(--accent)]"
+                }`}
             />
           </PaginationItem>
 
@@ -91,11 +90,10 @@ function WorkspacePagination({
                   onPageChange(currentPage + 1);
                 }
               }}
-              className={`${
-                currentPage === totalPages || isLoading
-                  ? "pointer-events-none opacity-50"
-                  : "cursor-pointer hover:bg-[var(--accent)]"
-              }`}
+              className={`${currentPage === totalPages || isLoading
+                ? "pointer-events-none opacity-50"
+                : "cursor-pointer hover:bg-[var(--accent)]"
+                }`}
             />
           </PaginationItem>
         </PaginationContent>
@@ -125,31 +123,31 @@ function WorkspaceActivityContent() {
   const filterOptions = [
     {
       value: "all",
-      label: "All Activity",
+      label: "Toda la Actividad",
       icon: HiClock,
       color: "bg-gray-500/10 text-gray-700",
     },
     {
       value: "comment",
-      label: "Comments",
+      label: "Comentarios",
       icon: HiChatBubbleLeft,
       color: "bg-blue-500/10 text-blue-700",
     },
     {
       value: "task",
-      label: "Tasks",
+      label: "Tareas",
       icon: HiClipboardDocumentCheck,
       color: "bg-green-500/10 text-green-700",
     },
     {
       value: "status",
-      label: "Status Changes",
+      label: "Cambios de Estado",
       icon: HiDocumentText,
       color: "bg-orange-500/10 text-orange-700",
     },
     {
       value: "assignment",
-      label: "Assignments",
+      label: "Asignaciones",
       icon: HiUserPlus,
       color: "bg-purple-500/10 text-purple-700",
     },
@@ -181,7 +179,7 @@ function WorkspaceActivityContent() {
           setIsLoading(true);
           ws = await getWorkspaceBySlug(workspaceSlug as string);
           if (!ws) {
-            setError("Workspace not found");
+            setError("Espacio de trabajo no encontrado");
             setIsLoading(false);
             fetchingRef.current = false;
             return;
@@ -206,16 +204,16 @@ function WorkspaceActivityContent() {
             id: item.id,
             user: item.user
               ? {
-                  id: item.user.id || "unknown",
-                  name: item.user.name || "Unknown User",
-                  email: item.user.email || "unknown@example.com",
-                  avatar: item.user.avatar || undefined,
-                }
+                id: item.user.id || "unknown",
+                name: item.user.name || "Unknown User",
+                email: item.user.email || "unknown@example.com",
+                avatar: item.user.avatar || undefined,
+              }
               : {
-                  id: "unknown",
-                  name: "Unknown User",
-                  email: "unknown@example.com",
-                },
+                id: "unknown",
+                name: "Usuario Desconocido",
+                email: "unknown@example.com",
+              },
             action: item.action,
             target: item.description,
             project: undefined,
@@ -237,11 +235,11 @@ function WorkspaceActivityContent() {
         }
       } catch (e) {
         if (e.status === 403) {
-          toast.error(e?.message || "User not authenticated");
+          toast.error(e?.message || "Usuario no autenticado");
           router.back();
           return;
         }
-        setError(e?.message ? e.message : "Failed to load workspace activity");
+        setError(e?.message ? e.message : "Error al cargar la actividad del espacio de trabajo");
       } finally {
         setIsLoading(false);
         setIsLoadingActivity(false);
@@ -299,7 +297,7 @@ function WorkspaceActivityContent() {
 
   if (isLoading) {
     return (
-      <InfoPanel title={"Workspace Activity"} subtitle={""}>
+      <InfoPanel title={"Actividad del Espacio de Trabajo"} subtitle={""}>
         <div className="activity-loading-container">
           {[...Array(5)].map((_, i) => (
             <div key={i} className="activity-loading-item">
@@ -322,7 +320,7 @@ function WorkspaceActivityContent() {
   if (!workspace) {
     return (
       <div className="min-h-screen bg-background transition-colors duration-200">
-        <EmptyState searchQuery="Workspace not found" priorityFilter="all" />
+        <EmptyState searchQuery="Espacio de trabajo no encontrado" priorityFilter="all" />
       </div>
     );
   }
@@ -331,8 +329,8 @@ function WorkspaceActivityContent() {
     <div className="dashboard-container flex flex-col gap-6">
       {/* Header (Modern Compact UI) */}
       <PageHeader
-        title="Activity Feed"
-        description={`Recent activity and updates in the "${workspace.name}" workspace`}
+        title="Muro de Actividad"
+        description={`Actividad reciente y actualizaciones en el espacio de trabajo "${workspace.name}"`}
         actions={
           <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-3">
             {/* Active-filter badge */}
@@ -347,7 +345,7 @@ function WorkspaceActivityContent() {
                   <button
                     onClick={() => handleFilterChange("all")}
                     className="ml-1 hover:bg-current/20 rounded-full p-0.5 transition-colors"
-                    aria-label="Clear filter"
+                    aria-label="Limpiar filtro"
                   >
                     <HiXMark className="w-3 h-3" />
                   </button>
@@ -357,13 +355,13 @@ function WorkspaceActivityContent() {
 
             {/* Filter dropdown trigger */}
             <DropdownMenu>
-              <Tooltip content="Filter activities" position="top" color="primary">
+              <Tooltip content="Filtrar actividades" position="top" color="primary">
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
                     size="sm"
                     className="w-9 h-9 p-0 border-[var(--border)] hover:bg-[var(--accent)] hover:border-[var(--primary)]/50 transition-all duration-200 relative"
-                    aria-label="Filter activities"
+                    aria-label="Filtrar actividades"
                   >
                     <SlidersHorizontal className="w-4 h-4" />
                     {activityFilter !== "all" && (
@@ -378,7 +376,7 @@ function WorkspaceActivityContent() {
                 className="w-56 border-[var(--border)] bg-[var(--background)]"
               >
                 <DropdownMenuLabel className="text-xs font-semibold text-[var(--muted-foreground)] uppercase tracking-wider px-3 py-2">
-                  Filter Activity
+                  Filtrar Actividad
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-[var(--border)]" />
 
@@ -389,16 +387,14 @@ function WorkspaceActivityContent() {
                     <DropdownMenuItem
                       key={option.value}
                       onClick={() => handleFilterChange(option.value as ActivityLog["type"])}
-                      className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 ${
-                        isActive
-                          ? "bg-[var(--accent)] text-[var(--accent-foreground)] font-medium"
-                          : "hover:bg-[var(--accent)]/50"
-                      }`}
+                      className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 ${isActive
+                        ? "bg-[var(--accent)] text-[var(--accent-foreground)] font-medium"
+                        : "hover:bg-[var(--accent)]/50"
+                        }`}
                     >
                       <div
-                        className={`flex items-center justify-center w-6 h-6 rounded-full transition-colors ${
-                          isActive ? option.color : "bg-[var(--muted)]/30"
-                        }`}
+                        className={`flex items-center justify-center w-6 h-6 rounded-full transition-colors ${isActive ? option.color : "bg-[var(--muted)]/30"
+                          }`}
                       >
                         <Icon className="w-3 h-3" />
                       </div>
@@ -418,7 +414,7 @@ function WorkspaceActivityContent() {
                       className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-[var(--accent)]/50 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all duration-200"
                     >
                       <HiXMark className="w-4 h-4" />
-                      <span>Clear Filter</span>
+                      <span>Limpiar Filtro</span>
                     </DropdownMenuItem>
                   </>
                 )}
@@ -431,7 +427,7 @@ function WorkspaceActivityContent() {
       {/* Activity Feed with Pagination */}
       <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] overflow-hidden">
         <ActivityFeedPanel
-          title="Workspace Activity"
+          title="Actividad del Espacio de Trabajo"
           activities={filteredActivities}
           isLoading={isLoadingActivity}
           error={error}
@@ -439,8 +435,8 @@ function WorkspaceActivityContent() {
           onClearFilter={activityFilter !== "all" ? () => handleFilterChange("all") : undefined}
           emptyMessage={
             activityFilter === "all"
-              ? "No activity yet"
-              : `No ${currentFilter.label.toLowerCase()} found`
+              ? "Aún no hay actividad"
+              : `No se encontraron ${currentFilter.label.toLowerCase()}`
           }
         />
 

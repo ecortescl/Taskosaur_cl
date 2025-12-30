@@ -18,7 +18,7 @@ const extractErrorMessage = (response: any) => {
   if (response?.message?.message) return response.message.message;
   if (typeof response?.message === "string") return response.message;
   if (Array.isArray(response?.message)) return response.message.join(", ");
-  return "Failed to change password. Please try again.";
+  return "Error al cambiar la contraseña. Por favor, inténtelo de nuevo.";
 };
 
 export default function ResetPasswordSection() {
@@ -47,7 +47,7 @@ export default function ResetPasswordSection() {
       setErrors((prev) => ({
         ...prev,
         newPassword:
-          "Password must be at least 8 characters and contain uppercase, lowercase, and a number.",
+          "La contraseña debe tener al menos 8 caracteres y contener una mayúscula, una minúscula y un número.",
       }));
       setLoading(false);
       return;
@@ -56,7 +56,7 @@ export default function ResetPasswordSection() {
     if (form.newPassword !== form.confirmPassword) {
       setErrors((prev) => ({
         ...prev,
-        confirmPassword: "Passwords do not match.",
+        confirmPassword: "Las contraseñas no coinciden.",
       }));
       setLoading(false);
       return;
@@ -70,7 +70,7 @@ export default function ResetPasswordSection() {
       });
 
       if (response.success) {
-        toast.success("Password changed successfully!");
+        toast.success("¡Contraseña cambiada con éxito!");
         setForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
       } else {
         const errorMsg = extractErrorMessage(response);
@@ -83,7 +83,7 @@ export default function ResetPasswordSection() {
         }
       }
     } catch {
-      toast.error("Failed to change password. Please try again.");
+      toast.error("Error al cambiar la contraseña. Por favor, inténtelo de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -93,10 +93,10 @@ export default function ResetPasswordSection() {
     <Card className="border-none bg-[var(--card)] gap-2">
       <CardHeader>
         <CardTitle className="text-sm font-medium text-[var(--foreground)]">
-          Reset Password
+          Restablecer Contraseña
         </CardTitle>
         <CardDescription className="text-[13px] text-[var(--muted-foreground)] tracking-wide">
-          Change your account password to keep your account secure.
+          Cambie la contraseña de su cuenta para mantenerla segura.
         </CardDescription>
       </CardHeader>
 
@@ -106,17 +106,16 @@ export default function ResetPasswordSection() {
             {/* Current Password */}
             <div className="space-y-1">
               <Label className="text-sm font-medium text-[var(--foreground)]">
-                Current Password <span className="text-red-500">*</span>
+                Contraseña Actual <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
                   type={showCurrentPassword ? "text" : "password"}
                   value={form.currentPassword}
                   onChange={(e) => setForm({ ...form, currentPassword: e.target.value })}
-                  placeholder="Enter current password"
-                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${
-                    errors.currentPassword ? "ring-2 ring-red-500" : ""
-                  }`}
+                  placeholder="Ingrese la contraseña actual"
+                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${errors.currentPassword ? "ring-2 ring-red-500" : ""
+                    }`}
                   required
                 />
                 <button
@@ -135,17 +134,16 @@ export default function ResetPasswordSection() {
             {/* New Password */}
             <div className="space-y-1">
               <Label className="text-sm font-medium text-[var(--foreground)]">
-                New Password <span className="text-red-500">*</span>
+                Nueva Contraseña <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
                   type={showNewPassword ? "text" : "password"}
                   value={form.newPassword}
                   onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
-                  placeholder="Enter new password"
-                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${
-                    errors.newPassword ? "ring-2 ring-red-500" : ""
-                  }`}
+                  placeholder="Ingrese la nueva contraseña"
+                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${errors.newPassword ? "ring-2 ring-red-500" : ""
+                    }`}
                   required
                 />
                 <button
@@ -160,7 +158,7 @@ export default function ResetPasswordSection() {
                 <p className="text-xs text-red-500">{errors.newPassword}</p>
               ) : (
                 <p className="text-[13px] ml-2 text-[var(--muted-foreground)]">
-                  Must be at least 8 characters with uppercase, lowercase, and number
+                  Debe tener al menos 8 caracteres con mayúscula, minúscula y número
                 </p>
               )}
             </div>
@@ -168,17 +166,16 @@ export default function ResetPasswordSection() {
             {/* Confirm Password */}
             <div className="space-y-1">
               <Label className="text-sm font-medium text-[var(--foreground)]">
-                Confirm Password <span className="text-red-500">*</span>
+                Confirmar Contraseña <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
                   type={showConfirmPassword ? "text" : "password"}
                   value={form.confirmPassword}
                   onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                  placeholder="Confirm new password"
-                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${
-                    errors.confirmPassword ? "ring-2 ring-red-500" : ""
-                  }`}
+                  placeholder="Confirme la nueva contraseña"
+                  className={`h-8 text-xs bg-[var(--background)] border-[var(--border)] ${errors.confirmPassword ? "ring-2 ring-red-500" : ""
+                    }`}
                   required
                 />
                 <button
@@ -205,10 +202,10 @@ export default function ResetPasswordSection() {
               {loading ? (
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Updating...
+                  Actualizando...
                 </div>
               ) : (
-                "Update Password"
+                "Actualizar Contraseña"
               )}
             </ActionButton>
           </div>

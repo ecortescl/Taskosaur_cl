@@ -42,9 +42,9 @@ export default function Breadcrumb() {
           const baseEntity = formatSegment(previousSegment);
           // Remove plural 's' if exists
           const singularEntity = baseEntity.endsWith("s") ? baseEntity.slice(0, -1) : baseEntity;
-          displayName = `${singularEntity} Details`;
+          displayName = `Detalles de ${singularEntity}`;
         } else {
-          displayName = "Details";
+          displayName = "Detalles";
         }
       }
 
@@ -80,7 +80,7 @@ export default function Breadcrumb() {
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href="/dashboard" className="breadcrumb-link">
-                  Home
+                  Inicio
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>

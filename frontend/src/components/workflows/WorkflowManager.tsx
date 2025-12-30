@@ -102,7 +102,7 @@ export default function WorkflowManager({
 
   const workflows = React.useMemo(() => {
     if (!Array.isArray(rawWorkflows)) {
-      setValidationErrors(["Invalid workflow data: expected array"]);
+      setValidationErrors(["Datos de workflow inválidos: se esperaba un array"]);
       return [];
     }
 
@@ -111,13 +111,13 @@ export default function WorkflowManager({
       .map((workflow, index) => {
         try {
           if (!validateWorkflow(workflow)) {
-            errors.push(`Workflow ${index + 1}: Invalid structure`);
+            errors.push(`Workflow ${index + 1}: Estructura inválida`);
           }
 
           const normalized = normalizeWorkflow(workflow);
           return normalized;
         } catch (err) {
-          errors.push(`Workflow ${index + 1}: Processing error`);
+          errors.push(`Workflow ${index + 1}: Error de procesamiento`);
           return null;
         }
       })
@@ -293,9 +293,9 @@ export default function WorkflowManager({
         };
 
         setSelectedWorkflow(updatedWorkflow as Workflow);
-        toast.success("Status deleted successfully");
+        toast.success("Estado eliminado con éxito");
       } catch (err: any) {
-        let errorMessage = "Failed to delete status";
+        let errorMessage = "Error al eliminar el estado";
         if (err instanceof Error) errorMessage = err.message;
         else if (err?.response?.data?.message) errorMessage = err.response.data.message;
         toast.error(errorMessage);
@@ -319,9 +319,9 @@ export default function WorkflowManager({
   }, [workflows]);
 
   const tabs = [
-    { id: "overview", label: "Overview", icon: HiEye },
+    { id: "overview", label: "Resumen", icon: HiEye },
     { id: "editor", label: "Editor", icon: HiPencil },
-    { id: "statuses", label: "Statuses", icon: HiCog },
+    { id: "statuses", label: "Estados", icon: HiCog },
   ];
 
   if (isLoading) {
@@ -335,7 +335,7 @@ export default function WorkflowManager({
           <HiExclamationTriangle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0" />
           <div className="flex-1">
             <h4 className="text-sm font-medium text-[var(--destructive)] mb-1">
-              Error loading workflows
+              Error al cargar los workflows
             </h4>
             <p className="text-sm text-[var(--destructive)]/80">{error}</p>
           </div>
@@ -347,7 +347,7 @@ export default function WorkflowManager({
               className="h-8 border-none bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 text-[var(--foreground)] transition-all duration-200"
             >
               <HiArrowPath className="w-4 h-4 mr-2" />
-              Retry
+              Reintentar
             </Button>
           )}
         </div>
@@ -362,7 +362,7 @@ export default function WorkflowManager({
           <HiExclamationTriangle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-medium text-[var(--destructive)] mb-2">
-              Workflow Data Issues
+              Problemas con los datos de Workflow
             </h4>
             <ul className="text-sm text-[var(--destructive)]/80 space-y-1">
               {validationErrors.map((error, index) => (
@@ -381,11 +381,11 @@ export default function WorkflowManager({
         <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-[var(--muted)] flex items-center justify-center">
           <HiViewGrid className="w-6 h-6 text-[var(--muted-foreground)]" />
         </div>
-        <h3 className="text-md font-semibold text-[var(--foreground)] mb-2">No workflows found</h3>
+        <h3 className="text-md font-semibold text-[var(--foreground)] mb-2">No se encontraron workflows</h3>
         <p className="text-sm text-[var(--muted-foreground)] mb-6">
           {isProjectLevel
-            ? "Create your first workflow for this project."
-            : "Create your first workflow template."}
+            ? "Crea tu primer workflow para este proyecto."
+            : "Crea tu primera plantilla de workflow."}
         </p>
         <Button
           onClick={() => setShowCreateForm(true)}
@@ -397,7 +397,7 @@ export default function WorkflowManager({
           ) : (
             <HiPlus className="w-4 h-4 mr-2" />
           )}
-          Create Workflow
+          Crear Workflow
         </Button>
       </div>
     );
@@ -416,7 +416,7 @@ export default function WorkflowManager({
           ) : (
             <HiPlus className="w-4 h-4" />
           )}
-          Create
+          Crear
         </Button>
       </div>
 
@@ -426,14 +426,14 @@ export default function WorkflowManager({
             <HiExclamationTriangle className="w-4 h-4 text-[var(--muted-foreground)] flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-[var(--foreground)] mb-1">
-                Some workflows have data issues:
+                Algunos workflows tienen problemas de datos:
               </p>
               <ul className="text-xs text-[var(--muted-foreground)] space-y-0.5">
                 {validationErrors.slice(0, 3).map((error, index) => (
                   <li key={index}>• {error}</li>
                 ))}
                 {validationErrors.length > 3 && (
-                  <li>• ... and {validationErrors.length - 3} more issues</li>
+                  <li>• ... y {validationErrors.length - 3} problemas más</li>
                 )}
               </ul>
             </div>
@@ -458,28 +458,27 @@ export default function WorkflowManager({
                   return (
                     <div
                       key={workflow.id}
-                      className={`p-3 rounded-lg border-none cursor-pointer transition-all duration-200 ${
-                        selectedWorkflow?.id === workflow.id
+                      className={`p-3 rounded-lg border-none cursor-pointer transition-all duration-200 ${selectedWorkflow?.id === workflow.id
                           ? "border-[var(--primary)] bg-[var(--primary)]/5"
                           : "border-[var(--border)] hover:bg-[var(--accent)]"
-                      }`}
+                        }`}
                       onClick={() => {
                         setSelectedWorkflow(workflow);
                       }}
                     >
                       <div className="flex items-center justify-between mb-2 gap-2">
                         <h4 className="text-sm font-medium text-[var(--foreground)] truncate">
-                          {workflow.name || "Unnamed Workflow"}
+                          {workflow.name || "Workflow sin nombre"}
                         </h4>
                         {workflow.isDefault && (
                           <Badge className="bg-[var(--primary)]/10  text-[var(--primary)] border-none text-xs flex items-center gap-1">
                             <HiCheck className="w-3 h-3" />
-                            Default
+                            Por Defecto
                           </Badge>
                         )}
                       </div>
                       <p className="text-xs text-[var(--muted-foreground)]">
-                        {statusCount} statuses • {transitionCount} transitions
+                        {statusCount} estados • {transitionCount} transiciones
                       </p>
                       {workflow.description && (
                         <p className="text-xs text-[var(--muted-foreground)] mt-2 line-clamp-2">
@@ -507,11 +506,10 @@ export default function WorkflowManager({
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
-                        className={`flex cursor-pointer items-center gap-2 px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ease-in-out ${
-                          isActive
+                        className={`flex cursor-pointer items-center gap-2 px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ease-in-out ${isActive
                             ? "border-b-[var(--primary)] text-[var(--primary)]"
                             : "border-b-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                        }`}
+                          }`}
                       >
                         <IconComponent className="size-3.5" />
                         {tab.label}
@@ -529,23 +527,23 @@ export default function WorkflowManager({
                         <div className="flex justify-between  items-start">
                           <div>
                             <h3 className="text-md font-semibold text-[var(--foreground)] mb-2">
-                              {selectedWorkflow.name || "Unnamed Workflow"}
+                              {selectedWorkflow.name || "Workflow sin nombre"}
                             </h3>
                             <p className="text-sm text-[var(--muted-foreground)] mb-3">
-                              {selectedWorkflow.description || "No description provided"}
+                              {selectedWorkflow.description || "Sin descripción"}
                             </p>
                             <div className="flex items-center gap-4 text-xs text-[var(--muted-foreground)]">
                               <span>
-                                Created:{" "}
+                                Creado:{" "}
                                 {selectedWorkflow.createdAt
                                   ? new Date(selectedWorkflow.createdAt).toLocaleDateString()
-                                  : "Unknown"}
+                                  : "Desconocido"}
                               </span>
                               <span>
-                                Updated:{" "}
+                                Actualizado:{" "}
                                 {selectedWorkflow.updatedAt
                                   ? new Date(selectedWorkflow.updatedAt).toLocaleDateString()
-                                  : "Unknown"}
+                                  : "Desconocido"}
                               </span>
                             </div>
                           </div>
@@ -559,11 +557,11 @@ export default function WorkflowManager({
                                 className="h-8 border-none bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 text-[var(--foreground)] transition-all duration-200"
                               >
                                 <Check className="w-3 h-3" />
-                                Set as Default
+                                Establecer por Defecto
                               </Button>
                             )}
                             {!selectedWorkflow.isDefault && (
-                              <Tooltip content="Delete workflow" position="top" color="primary">
+                              <Tooltip content="Eliminar workflow" position="top" color="primary">
                                 <Button
                                   variant="outline"
                                   size="sm"
@@ -602,7 +600,7 @@ export default function WorkflowManager({
                                     />
                                     <div>
                                       <div className="text-sm font-medium text-[var(--foreground)]">
-                                        {status.name || "Unnamed Status"}
+                                        {status.name || "Estado sin nombre"}
                                       </div>
                                     </div>
                                   </div>
@@ -615,7 +613,7 @@ export default function WorkflowManager({
                           </div>
                         ) : (
                           <p className="text-sm text-[var(--muted-foreground)]">
-                            No statuses configured for this workflow.
+                            No hay estados configurados para este workflow.
                           </p>
                         )}
                       </CardContent>
@@ -680,10 +678,10 @@ export default function WorkflowManager({
         isOpen={!!workflowToDelete}
         onClose={() => setWorkflowToDelete(null)}
         onConfirm={() => handleDeleteWorkflow(workflowToDelete!)}
-        title="Delete Workflow"
-        message="Are you sure you want to delete this workflow? This action cannot be undone."
-        confirmText="Delete"
-        cancelText="Cancel"
+        title="Eliminar Workflow"
+        message="¿Estás seguro de que deseas eliminar este workflow? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        cancelText="Cancelar"
       />
     </div>
   );

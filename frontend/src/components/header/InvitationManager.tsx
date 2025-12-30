@@ -97,7 +97,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
   }, [searchParams]);
 
   const formatInviteDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -112,10 +112,10 @@ export default function InvitationManager({ userId, className = "" }: Invitation
   };
 
   const getEntityType = (invite: Invitation) => {
-    if (invite.organizationId) return "Organization";
+    if (invite.organizationId) return "Organización";
     if (invite.workspaceId) return "Workspace";
-    if (invite.projectId) return "Project";
-    return "Entity";
+    if (invite.projectId) return "Proyecto";
+    return "Entidad";
   };
 
   const getEntityInitial = (invite: Invitation) => {
@@ -140,7 +140,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
         router.refresh();
       }
     } catch (error) {
-      toast.error(error?.message || "Failed to accept the invitation");
+      toast.error(error?.message || "Error al aceptar la invitación");
       console.error(`Failed to ${action} invitation:`, error);
     } finally {
       setProcessingInvite(false);
@@ -152,7 +152,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
   return (
     <>
       <DropdownMenu>
-        <Tooltip content="Invitations" position="bottom" color="primary">
+        <Tooltip content="Invitaciones" position="bottom" color="primary">
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className={`header-button-base ${className}`}>
               <TbMailPlus className="header-button-icon" />
@@ -165,7 +165,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                 </Badge>
               )}
               <span className="hidden max-[530px]:inline-block text-sm font-medium">
-                Invitations
+                Invitaciones
               </span>
             </Button>
           </DropdownMenuTrigger>
@@ -173,7 +173,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
         <DropdownMenuContent className="header-dropdown-menu-content" align="end" sideOffset={4}>
           <div className="header-dropdown-menu-header">
             <div className="header-dropdown-menu-title">
-              <span className="header-dropdown-menu-title-text">Invitations</span>
+              <span className="header-dropdown-menu-title-text">Invitaciones</span>
               <Badge variant="secondary" className="header-dropdown-menu-badge">
                 {pendingInvites.length}
               </Badge>
@@ -204,7 +204,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
             ) : pendingInvites.length === 0 ? (
               <div className="header-empty-state">
                 <TbMailPlus className="header-empty-icon" />
-                <p className="header-empty-text">No pending invitations</p>
+                <p className="header-empty-text">No hay invitaciones pendientes</p>
               </div>
             ) : (
               <div className="header-invitations-item-container">
@@ -222,11 +222,11 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                           <span className="header-invitations-item-meta-emphasis">
                             {getEntityType(invite)}
                           </span>{" "}
-                          • Role:{" "}
+                          • Rol:{" "}
                           <span className="header-invitations-item-meta-emphasis">
                             {invite.role}
                           </span>{" "}
-                          • Expires: {formatInviteDate(invite.expiresAt)}
+                          • Expira: {formatInviteDate(invite.expiresAt)}
                         </div>
                         <div className="header-invitations-item-actions">
                           <ActionButton
@@ -235,7 +235,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                             onClick={() => handleInviteAction(invite.token, "decline")}
                             disabled={processingInvite}
                           >
-                            Decline
+                            Rechazar
                           </ActionButton>
                           <ActionButton
                             primary
@@ -243,7 +243,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                             onClick={() => handleInviteAction(invite.token, "accept")}
                             disabled={processingInvite}
                           >
-                            Accept
+                            Aceptar
                           </ActionButton>
                         </div>
                       </div>
@@ -262,7 +262,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
           <DialogContent className="header-invitation-modal-content-wrapper">
             <DialogHeader>
               <DialogTitle className="header-invitation-modal-title">
-                Invitation to {getEntityName(inviteModal.data)}
+                Invitación a {getEntityName(inviteModal.data)}
               </DialogTitle>
             </DialogHeader>
 
@@ -277,7 +277,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                   {getEntityName(inviteModal.data)}
                 </h3>
                 <p className="header-invitation-modal-entity-meta">
-                  {getEntityType(inviteModal.data)} • Role: {inviteModal.data.role}
+                  {getEntityType(inviteModal.data)} • Rol: {inviteModal.data.role}
                 </p>
               </div>
 
@@ -290,7 +290,7 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                     </span>
                   </div>
                   <div className="header-invitation-modal-details-item">
-                    <span className="header-invitation-modal-details-label">Expires:</span>
+                    <span className="header-invitation-modal-details-label">Expira:</span>
                     <span className="header-invitation-modal-details-value">
                       {formatInviteDate(inviteModal.data.expiresAt)}
                     </span>
@@ -306,14 +306,14 @@ export default function InvitationManager({ userId, className = "" }: Invitation
                 onClick={() => handleInviteAction(inviteModal.token, "decline")}
                 className="header-invitation-modal-button-decline"
               >
-                Decline
+                Rechazar
               </Button>
               <Button
                 disabled={processingInvite}
                 onClick={() => handleInviteAction(inviteModal.token, "accept")}
                 className="header-invitation-modal-button-accept"
               >
-                {processingInvite ? "Processing..." : "Accept"}
+                {processingInvite ? "Procesando..." : "Aceptar"}
               </Button>
             </DialogFooter>
           </DialogContent>

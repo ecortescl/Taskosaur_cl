@@ -38,9 +38,9 @@ export function ActionValueSelector({
   showAvatar = false,
   showEmail = false,
   showColorIndicator = false,
-  placeholder = "Select option",
-  loadingText = "Loading...",
-  emptyText = "No options available",
+  placeholder = "Seleccionar opción",
+  loadingText = "Cargando...",
+  emptyText = "No hay opciones disponibles",
 }: ActionValueSelectorProps) {
   // Avatar component with fallback handling
   const Avatar = ({ src, label }: { src: string | null | undefined; label: string }) => {
@@ -89,7 +89,7 @@ export function ActionValueSelector({
   if (actionType === "markAsSpam") {
     return (
       <div className="flex-1 text-sm text-[var(--muted-foreground)]/60">
-        Message will be marked as spam
+        El mensaje se marcará como spam
       </div>
     );
   }
@@ -99,7 +99,7 @@ export function ActionValueSelector({
       <textarea
         value={value as string}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Enter auto-reply message template..."
+        placeholder="Ingresa la plantilla de respuesta automática..."
         className="flex-1 min-h-[80px] px-3 py-2 text-sm border border-[var(--border)] rounded-md bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2 resize-y"
         rows={3}
       />

@@ -29,12 +29,12 @@ export const DeleteConfirmModal = ({
           <HiExclamationTriangle className="h-6 w-6 text-[var(--destructive)]" />
         </div>
         <DialogTitle className="text-center text-lg font-semibold text-[var(--destructive)]">
-          Delete Sprint
+          Eliminar Sprint
         </DialogTitle>
         <DialogDescription className="text-center text-[var(--muted-foreground)]">
-          Are you sure you want to delete{" "}
-          <span className="font-semibold text-[var(--foreground)]">"{sprintName}"</span>? This
-          action cannot be undone and will remove all associated data.
+          ¿Está seguro de que desea eliminar{" "}
+          <span className="font-semibold text-[var(--foreground)]">"{sprintName}"</span>? Esta
+          acción no se puede deshacer y eliminará todos los datos asociados.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="gap-2 mt-4 flex flex-row">
@@ -44,7 +44,7 @@ export const DeleteConfirmModal = ({
           disabled={isDeleting}
           className="flex-1 h-10 border-none bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 text-[var(--foreground)]"
         >
-          Cancel
+          Cancelar
         </Button>
         <Button
           variant="destructive"
@@ -55,10 +55,10 @@ export const DeleteConfirmModal = ({
           {isDeleting ? (
             <>
               <div className="w-4 h-4 border-2 border-[var(--destructive-foreground)] border-t-transparent rounded-full animate-spin mr-2" />
-              Deleting...
+              Eliminando...
             </>
           ) : (
-            "Delete Sprint"
+            "Eliminar Sprint"
           )}
         </Button>
       </DialogFooter>

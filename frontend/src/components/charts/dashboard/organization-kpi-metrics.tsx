@@ -44,47 +44,47 @@ export function OrganizationKPIMetrics({ data, visibleCards = [] }: Organization
       id: "workspaces",
       label: "Total Workspaces",
       value: data?.totalWorkspaces,
-      description: `${data?.activeWorkspaces} active`,
+      description: `${data?.activeWorkspaces} activos`,
       icon: <Building2 className="h-4 w-4" />,
       visible: true,
     },
     {
       id: "projects",
-      label: "Total Projects",
+      label: "Total Proyectos",
       value: data?.totalProjects,
-      description: `${data?.activeProjects} active`,
+      description: `${data?.activeProjects} activos`,
       icon: <FolderOpen className="h-4 w-4" />,
       visible: true,
     },
     {
       id: "members",
-      label: "Team Members",
+      label: "Miembros del Equipo",
       value: data?.totalMembers,
-      description: "Organization members",
+      description: "Miembros de la organización",
       icon: <Users className="h-4 w-4" />,
       visible: true,
     },
     {
       id: "task-completion",
-      label: "Task Completion",
+      label: "Completitud de Tareas",
       value: `${(data?.taskCompletionRate ?? 0).toFixed(1)}%`,
-      description: `${data?.completedTasks ?? 0}/${data?.totalTasks ?? 0} tasks`,
+      description: `${data?.completedTasks ?? 0}/${data?.totalTasks ?? 0} tareas`,
       icon: <CheckCircle className="h-4 w-4" />,
       visible: true,
     },
     {
       id: "bug-resolution",
-      label: "Bug Resolution",
+      label: "Resolución de Bugs",
       value: `${(data?.bugResolutionRate ?? 0).toFixed(1)}%`,
-      description: `${data?.resolvedBugs ?? 0}/${data?.totalBugs ?? 0} resolved`,
+      description: `${data?.resolvedBugs ?? 0}/${data?.totalBugs ?? 0} resueltos`,
       icon: <Bug className="h-4 w-4" />,
       visible: false,
     },
     {
       id: "overdue-tasks",
-      label: "Overdue Tasks",
+      label: "Tareas Vencidas",
       value: data?.overdueTasks,
-      description: "Require attention",
+      description: "Requieren atención",
       icon:
         data?.overdueTasks === 0 ? (
           <CheckCircle className="h-4 w-4" />
@@ -95,17 +95,17 @@ export function OrganizationKPIMetrics({ data, visibleCards = [] }: Organization
     },
     {
       id: "active-sprints",
-      label: "Active Sprints",
+      label: "Sprints Activos",
       value: data?.activeSprints,
-      description: "Currently running",
+      description: "En ejecución",
       icon: <Zap className="h-4 w-4" />,
       visible: false,
     },
     {
       id: "productivity",
-      label: "Overall Productivity",
+      label: "Productividad General",
       value: `${data?.overallProductivity?.toFixed(1) || 0}%`,
-      description: "Task completion rate",
+      description: "Tasa de completitud de tareas",
       icon: <CheckCircle className="h-4 w-4" />,
       visible: false,
     },
@@ -132,13 +132,13 @@ export function OrganizationKPIMetrics({ data, visibleCards = [] }: Organization
             return {
               ...card,
               value: data?.totalWorkspaces,
-              description: `${data?.activeWorkspaces} active`,
+              description: `${data?.activeWorkspaces} activos`,
             };
           case "projects":
             return {
               ...card,
               value: data?.totalProjects,
-              description: `${data?.activeProjects} active`,
+              description: `${data?.activeProjects} activos`,
             };
           case "members":
             return {
@@ -149,13 +149,13 @@ export function OrganizationKPIMetrics({ data, visibleCards = [] }: Organization
             return {
               ...card,
               value: `${data?.taskCompletionRate?.toFixed(1) || 0}%`,
-              description: `${data?.completedTasks}/${data?.totalTasks} tasks`,
+              description: `${data?.completedTasks}/${data?.totalTasks} tareas`,
             };
           case "bug-resolution":
             return {
               ...card,
               value: `${data?.bugResolutionRate?.toFixed(1) || 0}%`,
-              description: `${data?.resolvedBugs}/${data?.totalBugs} resolved`,
+              description: `${data?.resolvedBugs}/${data?.totalBugs} resueltos`,
             };
           case "overdue-tasks":
             return {
@@ -192,13 +192,12 @@ export function OrganizationKPIMetrics({ data, visibleCards = [] }: Organization
     <div className="space-y-4">
       {/* KPI Cards Grid - No header or controls needed */}
       <div
-        className={`grid gap-4 ${
-          visibleCount <= 4
+        className={`grid gap-4 ${visibleCount <= 4
             ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
             : visibleCount <= 6
               ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
               : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8"
-        }`}
+          }`}
       >
         {visibleCardsFiltered.map((card) => (
           <StatCard key={card.id} label={card.label} value={card.value} icon={card.icon} />

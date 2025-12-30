@@ -34,10 +34,10 @@ function ForgotPasswordForm() {
       if (response.success) {
         setIsSuccess(true);
       } else {
-        setError(response.message || "Failed to send reset email. Please try again.");
+        setError(response.message || "No se pudo enviar el correo de restablecimiento. Por favor, inténtalo de nuevo.");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to send reset email. Please try again.");
+      setError(err.message || "No se pudo enviar el correo de restablecimiento. Por favor, inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
     }
@@ -62,8 +62,8 @@ function ForgotPasswordForm() {
         {/* Success Header */}
         <div className="login-form-header">
           <div className="login-form-header-content">
-            <h1 className="login-form-title">Check your email</h1>
-            <p className="login-form-subtitle">We've sent a password reset link to {email}</p>
+            <h1 className="login-form-title">Revisa tu correo</h1>
+            <p className="login-form-subtitle">Hemos enviado un enlace para restablecer tu contraseña a {email}</p>
           </div>
         </div>
 
@@ -76,10 +76,10 @@ function ForgotPasswordForm() {
             <CheckCircle2 className="login-field-icon text-green-600" />
             <AlertDescription className="font-medium">
               <span className="login-error-title text-green-800 dark:text-green-200">
-                Email Sent Successfully
+                Correo enviado con éxito
               </span>
               <span className="login-error-message text-green-700 dark:text-green-300">
-                Please check your inbox and click the reset link.
+                Por favor, revisa tu bandeja de entrada y haz clic en el enlace de restablecimiento.
               </span>
             </AlertDescription>
           </Alert>
@@ -94,7 +94,7 @@ function ForgotPasswordForm() {
           <Link href="/login">
             <Button variant="outline" className="login-signup-button">
               <ArrowLeft className="login-button-arrow" />
-              Back to Sign In
+              Volver al inicio de sesión
             </Button>
           </Link>
         </motion.div>
@@ -114,7 +114,7 @@ function ForgotPasswordForm() {
             }}
             className="login-signup-button"
           >
-            Try Different Email
+            Probar con otro correo
             <ArrowRight className="login-button-arrow" />
           </Button>
         </motion.div>
@@ -127,9 +127,9 @@ function ForgotPasswordForm() {
           className="login-footer"
         >
           <p className="login-footer-text">
-            Didn't receive the email? Check your spam folder or{" "}
+            ¿No recibiste el correo? Revisa tu carpeta de spam o{" "}
             <Link href="/support" className="login-footer-link">
-              contact support
+              contacta al soporte técnico
             </Link>
           </p>
         </motion.div>
@@ -147,9 +147,9 @@ function ForgotPasswordForm() {
       {/* Header */}
       <div className="login-form-header">
         <div className="login-form-header-content">
-          <h1 className="login-form-title">Reset your password</h1>
+          <h1 className="login-form-title">Restablece tu contraseña</h1>
           <p className="login-form-subtitle">
-            Enter your email address and we'll send you a reset link
+            Ingresa tu dirección de correo electrónico y te enviaremos un enlace de restablecimiento
           </p>
         </div>
       </div>
@@ -163,7 +163,7 @@ function ForgotPasswordForm() {
           <Alert variant="destructive" className="login-error-alert">
             <AlertCircle className="login-field-icon" />
             <AlertDescription className="font-medium">
-              <span className="login-error-title">Reset Failed</span>
+              <span className="login-error-title">Error al restablecer</span>
               <span className="login-error-message">{error}</span>
             </AlertDescription>
           </Alert>
@@ -181,7 +181,7 @@ function ForgotPasswordForm() {
         >
           <Label htmlFor="email" className="login-field-label">
             <Mail className="login-field-icon" />
-            <span>Email Address</span>
+            <span>Correo electrónico</span>
           </Label>
           <Input
             id="email"
@@ -191,7 +191,7 @@ function ForgotPasswordForm() {
             required
             value={email}
             onChange={handleChange}
-            placeholder="Enter your email address"
+            placeholder="Ingresa tu correo electrónico"
             className="login-input"
           />
         </motion.div>
@@ -210,11 +210,11 @@ function ForgotPasswordForm() {
             {isLoading ? (
               <>
                 <Loader2 className="login-loading-spinner" />
-                Sending reset link...
+                Enviando enlace...
               </>
             ) : (
               <>
-                Send Reset Link
+                Enviar enlace de restablecimiento
                 <ArrowRight className="login-button-arrow" />
               </>
             )}
@@ -233,7 +233,7 @@ function ForgotPasswordForm() {
           <div className="login-divider-border" />
         </div>
         <div className="login-divider-text-container">
-          <span className="login-divider-text">Remember your password?</span>
+          <span className="login-divider-text">¿Recuerdas tu contraseña?</span>
         </div>
       </motion.div>
 
@@ -246,7 +246,7 @@ function ForgotPasswordForm() {
         <Link href="/login">
           <Button variant="outline" className="login-signup-button">
             <ArrowLeft className="login-button-arrow" />
-            Back to Sign In
+            Volver al inicio de sesión
           </Button>
         </Link>
       </motion.div>
@@ -259,9 +259,9 @@ function ForgotPasswordForm() {
         className="login-footer"
       >
         <p className="login-footer-text">
-          Need help?{" "}
+          ¿Necesitas ayuda?{" "}
           <Link href="/support" className="login-footer-link">
-            Contact our support team
+            Contacta a nuestro equipo de soporte
           </Link>
         </p>
       </motion.div>

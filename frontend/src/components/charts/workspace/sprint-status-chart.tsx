@@ -9,10 +9,10 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  PLANNING: { label: "Planning", color: "#94A3B8" },
-  ACTIVE: { label: "Active", color: "#10B981" },
-  COMPLETED: { label: "Completed", color: "#3B82F6" },
-  CANCELLED: { label: "Cancelled", color: "#EF4444" },
+  PLANNING: { label: "Planificación", color: "#94A3B8" },
+  ACTIVE: { label: "Activo", color: "#10B981" },
+  COMPLETED: { label: "Completado", color: "#3B82F6" },
+  CANCELLED: { label: "Cancelado", color: "#EF4444" },
 };
 
 interface SprintStatusChartProps {
@@ -36,8 +36,8 @@ export function SprintStatusChart({ data }: SprintStatusChartProps) {
 
   return (
     <ChartWrapper
-      title="Sprint Status Overview"
-      description="Current sprint status across projects"
+      title="Resumen de Estado de Sprints"
+      description="Estado actual de los sprints en los proyectos"
       config={chartConfig}
       className="border-[var(--border)]"
     >

@@ -176,7 +176,7 @@ export default function OrganizationSelector({
           </span>
 
           <HiChevronDown className="header-org-selector-chevron max-[530px]:hidden" />
-          <span className="hidden max-[530px]:inline-block text-sm font-medium">Organizations</span>
+          <span className="hidden max-[530px]:inline-block text-sm font-medium">Organizaciones</span>
         </Button>
       </DropdownMenuTrigger>
 
@@ -191,7 +191,7 @@ export default function OrganizationSelector({
           <div className="header-org-profile-info">
             <div className="header-org-profile-name">{currentOrganization.name}</div>
             <div className="header-org-profile-meta">
-              {currentOrganization._count?.members ?? 0} members
+              {currentOrganization._count?.members ?? 0} miembros
               <Badge variant="secondary" className="header-org-profile-badge">
                 Org
               </Badge>
@@ -223,8 +223,8 @@ export default function OrganizationSelector({
               <div className="header-org-empty-icon-container">
                 <Building size={20} className="header-org-empty-icon" />
               </div>
-              <p className="header-org-empty-title">No organizations found</p>
-              <p className="header-org-empty-description">Contact your admin to get access</p>
+              <p className="header-org-empty-title">No se encontraron organizaciones</p>
+              <p className="header-org-empty-description">Contacta a tu administrador para obtener acceso</p>
             </div>
           ) : (
             <>
@@ -232,11 +232,10 @@ export default function OrganizationSelector({
                 <DropdownMenuItem
                   key={org.id}
                   onClick={() => handleOrganizationSelect(org)}
-                  className={`header-org-item ${
-                    currentOrganization.id === org.id
+                  className={`header-org-item ${currentOrganization.id === org.id
                       ? "header-org-item-active"
                       : "header-org-item-inactive"
-                  }`}
+                    }`}
                 >
                   <Avatar className="header-org-item-avatar">
                     <AvatarFallback className="header-org-item-avatar-fallback">
@@ -245,7 +244,7 @@ export default function OrganizationSelector({
                   </Avatar>
                   <div className="header-org-item-info">
                     <p className="header-org-item-name">{org.name}</p>
-                    <p className="header-org-item-members">{org._count?.members ?? 0} members</p>
+                    <p className="header-org-item-members">{org._count?.members ?? 0} miembros</p>
                   </div>
                   {currentOrganization.id === org.id && (
                     <HiCheck size={12} className="header-org-item-check" />
@@ -269,7 +268,7 @@ export default function OrganizationSelector({
                     <HiCog className="header-org-manage-icon" />
                   </div>
                   <div className="header-org-manage-text">
-                    <div className="header-org-manage-title">Manage Organizations</div>
+                    <div className="header-org-manage-title">Gestionar Organizaciones</div>
                   </div>
                 </DropdownMenuItem>
               </div>

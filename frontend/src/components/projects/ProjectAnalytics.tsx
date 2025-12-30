@@ -63,7 +63,7 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
   const [widgets, setWidgets] = useState<Widget[]>([
     {
       id: "kpi-metrics",
-      title: "KPI Metrics",
+      title: "Métricas KPI",
       component: ProjectKPIMetrics,
       dataKey: "kpiMetrics",
       visible: true,
@@ -72,7 +72,7 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
     },
     {
       id: "task-status",
-      title: "Task Status Flow",
+      title: "Flujo de Estado de Tareas",
       component: TaskStatusChart,
       dataKey: "taskStatus",
       visible: true,
@@ -81,7 +81,7 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
     },
     {
       id: "task-type",
-      title: "Task Type Distribution",
+      title: "Distribución de Tipos de Tarea",
       component: TaskTypeChart,
       dataKey: "taskType",
       visible: true,
@@ -90,7 +90,7 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
     },
     {
       id: "task-priority",
-      title: "Task Priority Distribution",
+      title: "Distribución de Prioridad de Tareas",
       component: TaskPriorityChart,
       dataKey: "taskPriority",
       visible: true,
@@ -99,7 +99,7 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
     },
     {
       id: "sprint-velocity",
-      title: "Sprint Velocity Trend",
+      title: "Tendencia de Velocidad del Sprint",
       component: SprintVelocityChart,
       dataKey: "sprintVelocity",
       visible: true,
@@ -161,9 +161,9 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
   useEffect(() => {
     if (error && !show404) {
       const is404Error = error.toLowerCase().includes('not found') ||
-                         error.toLowerCase().includes('404') ||
-                         error.toLowerCase().includes('project not found') ||
-                         error.toLowerCase().includes('workspace not found');
+        error.toLowerCase().includes('404') ||
+        error.toLowerCase().includes('project not found') ||
+        error.toLowerCase().includes('workspace not found');
 
       if (is404Error) {
         setShow404(true);
@@ -178,9 +178,9 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
   if (error) {
     // Check if it's a 404/not found error
     const is404Error = error.toLowerCase().includes('not found') ||
-                       error.toLowerCase().includes('404') ||
-                       error.toLowerCase().includes('project not found') ||
-                       error.toLowerCase().includes('workspace not found');
+      error.toLowerCase().includes('404') ||
+      error.toLowerCase().includes('project not found') ||
+      error.toLowerCase().includes('workspace not found');
 
     if (is404Error) {
       return <NotFound />;
@@ -192,9 +192,9 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
   {
     !data && !loading && !error && (
       <Alert>
-        <AlertDescription>No analytics data available for this organization.</AlertDescription>
+        <AlertDescription>No hay datos analíticos disponibles para esta organización.</AlertDescription>
         <Button onClick={handleFetchData} variant="outline" size="sm" className="mt-2">
-          Load Data
+          Cargar Datos
         </Button>
       </Alert>
     );
@@ -224,14 +224,14 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
     <div className="space-y-6" data-testid="project-content">
       {/* Header */}
       <PageHeader
-        title="Project Analytics"
-        description="Insights into your project performance and team productivity"
+        title="Analíticas del Proyecto"
+        description="Información sobre el rendimiento de tu proyecto y la productividad del equipo"
         actions={
           <div className="flex items-center gap-2">
-            <Tooltip content="Dashboard Settings" position="top" color="primary">
+            <Tooltip content="Configuración del Panel" position="top" color="primary">
               <DashboardSettingsDropdown
                 sections={settingSections}
-                description="Customize your dashboard widgets"
+                description="Personaliza los widgets de tu panel"
               />
             </Tooltip>
           </div>
@@ -242,12 +242,12 @@ export function ProjectAnalytics({ projectSlug }: ProjectAnalyticsProps) {
       {visibleCount === 0 && (
         <Card className="p-8 text-center">
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold">No widgets to display</h3>
+            <h3 className="text-lg font-semibold">No hay widgets para mostrar</h3>
             <p className="text-muted-foreground">
-              All widgets are currently hidden. Use the customize button to show widgets.
+              Todos los widgets están actualmente ocultos. Usa el botón de personalización para mostrar widgets.
             </p>
             <Button onClick={resetWidgets} variant="outline" className="mt-4">
-              Show All Widgets
+              Mostrar Todos los Widgets
             </Button>
           </div>
         </Card>

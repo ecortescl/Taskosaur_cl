@@ -19,11 +19,10 @@ const OrganizationSelectionCard = ({
 
   return (
     <Card
-      className={`organizations-selection-card ${
-        isSelected
+      className={`organizations-selection-card ${isSelected
           ? "organizations-selection-card-selected"
           : "organizations-selection-card-unselected"
-      }`}
+        }`}
       onClick={() => onSelect(organization)}
     >
       <CardContent className="organizations-selection-card-content">
@@ -52,11 +51,11 @@ const OrganizationSelectionCard = ({
                 <>
                   <div className="organizations-selection-card-stat">
                     <HiBuildingOffice2 size={12} />
-                    <span>{organization._count.members} members</span>
+                    <span>{organization._count.members} miembros</span>
                   </div>
                   <div className="organizations-selection-card-stat">
                     <HiRocketLaunch size={12} />
-                    <span>{organization._count.workspaces} workspaces</span>
+                    <span>{organization._count.workspaces} espacios de trabajo</span>
                   </div>
                 </>
               )}
@@ -73,13 +72,13 @@ const OrganizationSelectionCard = ({
                 {organization.settings.features.timeTracking && (
                   <Badge variant="secondary" className="organizations-selection-card-feature-badge">
                     <HiClock size={10} className="mr-1" />
-                    Time Tracking
+                    Seguimiento de Tiempo
                   </Badge>
                 )}
                 {organization.settings.features.automation && (
                   <Badge variant="secondary" className="organizations-selection-card-feature-badge">
                     <HiRocketLaunch size={10} className="mr-1" />
-                    Automation
+                    Automatización
                   </Badge>
                 )}
               </div>

@@ -17,12 +17,12 @@ interface KPIMetricsProps {
 export function KPIMetrics({ data }: KPIMetricsProps) {
   const kpiCards = [
     {
-      label: "Total Projects",
+      label: "Proyectos Totales",
       value: data?.totalProjects,
       icon: <CheckCircle className="h-4 w-4" />,
     },
     {
-      label: "Active Projects",
+      label: "Proyectos Activos",
       value: data?.activeProjects,
       icon: <TrendingUp className="h-4 w-4" />,
       statSuffix:
@@ -31,7 +31,7 @@ export function KPIMetrics({ data }: KPIMetricsProps) {
           : "0%",
     },
     {
-      label: "Completion Rate",
+      label: "Tasa de Completitud",
       value: `${data?.completionRate?.toFixed(1) || 0}%`,
       icon:
         data?.completionRate > 70 ? (
@@ -51,20 +51,20 @@ export function KPIMetrics({ data }: KPIMetricsProps) {
           className="text-xs"
         >
           {data?.completionRate > 70
-            ? "Excellent"
+            ? "Excelente"
             : data?.completionRate > 50
-              ? "Good"
-              : "Needs Focus"}
+              ? "Bueno"
+              : "Requiere Atención"}
         </Badge>
       ),
     },
     {
-      label: "Total Tasks",
+      label: "Tareas Totales",
       value: data?.totalTasks,
       icon: <CheckCircle className="h-4 w-4" />,
     },
     {
-      label: "Overdue Tasks",
+      label: "Tareas Vencidas",
       value: data?.overdueTasks,
       icon:
         data?.overdueTasks > 0 ? (
@@ -74,12 +74,12 @@ export function KPIMetrics({ data }: KPIMetricsProps) {
         ),
       statSuffix: (
         <Badge variant={data?.overdueTasks === 0 ? "default" : "outline"} className="text-xs">
-          {data?.overdueTasks === 0 ? "Perfect" : data?.overdueTasks < 10 ? "Good" : "Critical"}
+          {data?.overdueTasks === 0 ? "Perfecto" : data?.overdueTasks < 10 ? "Bueno" : "Crítico"}
         </Badge>
       ),
     },
     {
-      label: "Task Health",
+      label: "Salud de Tareas",
       value:
         data?.totalTasks > 0
           ? `${(((data?.totalTasks - data?.overdueTasks) / data?.totalTasks) * 100).toFixed(1)}%`
@@ -92,7 +92,7 @@ export function KPIMetrics({ data }: KPIMetricsProps) {
         ),
       statSuffix: (
         <Badge variant={data?.overdueTasks === 0 ? "default" : "outline"} className="text-xs">
-          {data?.overdueTasks === 0 ? "Perfect" : "Monitor"}
+          {data?.overdueTasks === 0 ? "Perfecto" : "Monitorear"}
         </Badge>
       ),
     },
@@ -106,7 +106,7 @@ export function KPIMetrics({ data }: KPIMetricsProps) {
           label={card.label}
           value={card.value}
           icon={card.icon}
-          // statSuffix={card.statSuffix as string}
+        // statSuffix={card.statSuffix as string}
         />
       ))}
     </div>

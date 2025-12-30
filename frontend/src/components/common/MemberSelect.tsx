@@ -32,7 +32,7 @@ function MemberSelect({
   onChange,
   members: initialMembers,
   disabled = false,
-  placeholder = "Select members...",
+  placeholder = "Seleccionar miembros...",
   editMode = false,
   type = "assignee",
   projectId,
@@ -81,15 +81,15 @@ function MemberSelect({
         // Normalize member data
         const normalizedMembers = Array.isArray(fetchedMembers)
           ? fetchedMembers
-              .filter((m) => m?.user)
-              .map((m) => ({
-                id: m.user.id,
-                firstName: m.user.firstName || "",
-                lastName: m.user.lastName || "",
-                email: m.user.email || "",
-                avatarUrl: m.user.avatar || m.user.avatarUrl,
-                role: m.role,
-              }))
+            .filter((m) => m?.user)
+            .map((m) => ({
+              id: m.user.id,
+              firstName: m.user.firstName || "",
+              lastName: m.user.lastName || "",
+              email: m.user.email || "",
+              avatarUrl: m.user.avatar || m.user.avatarUrl,
+              role: m.role,
+            }))
           : [];
 
         setMembers(normalizedMembers);
@@ -97,8 +97,8 @@ function MemberSelect({
         // Don't show error if request was aborted
         if (error.name !== "AbortError") {
           console.error("Failed to fetch project members:", error);
-          setSearchError("Failed to load members");
-          toast.error("Failed to load project members");
+          setSearchError("Error al cargar miembros");
+          toast.error("Error al cargar los miembros del proyecto");
         }
       } finally {
         setIsSearching(false);
@@ -142,10 +142,10 @@ function MemberSelect({
     displayText =
       selectedMembers.length === 1
         ? `${selectedMembers[0].firstName} ${selectedMembers[0].lastName}`
-        : `${selectedMembers.length} members selected`;
+        : `${selectedMembers.length} miembros seleccionados`;
   } else if (label && selectedMembers.length === 0) {
     const baseLabel = label.endsWith("s") ? label.slice(0, -1) : label;
-    displayText = `Select ${baseLabel.toLowerCase()}...`;
+    displayText = `Seleccionar ${baseLabel.toLowerCase()}...`;
   }
 
   if (editMode) {
@@ -155,7 +155,7 @@ function MemberSelect({
 
     const baseLabel = label.endsWith("s") ? label.slice(0, -1) : label;
     const displayLabel =
-      selectedMembers.length === 0 ? `No ${baseLabel.toLowerCase()} selected` : "";
+      selectedMembers.length === 0 ? `No se seleccionó ${baseLabel.toLowerCase()}` : "";
 
     return (
       <div className="space-y-2">
@@ -178,7 +178,7 @@ function MemberSelect({
             aria-label="Edit"
             style={{ lineHeight: 0 }}
           >
-            Edit
+            Editar
           </button>
         </div>
         <div className="flex items-center gap-2 min-h-[28px]">
@@ -233,7 +233,7 @@ function MemberSelect({
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)] pointer-events-none" />
                     <Input
-                      placeholder="Search members..."
+                      placeholder="Buscar miembros..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       className="mb-2 pl-9 h-9"
@@ -246,7 +246,7 @@ function MemberSelect({
                   {searchError ? (
                     <div className="p-2 text-sm text-red-500 text-center">{searchError}</div>
                   ) : members.length === 0 ? (
-                    <div className="p-2 text-sm text-muted-foreground">No members found.</div>
+                    <div className="p-2 text-sm text-muted-foreground">No se encontraron miembros.</div>
                   ) : (
                     members.map((member) => {
                       const isSelected = selectedMembers.some((m) => m.id === member.id);
@@ -328,7 +328,7 @@ function MemberSelect({
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)] pointer-events-none" />
               <Input
-                placeholder="Search members..."
+                placeholder="Buscar miembros..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="mb-2 pl-9 h-9"
@@ -341,7 +341,7 @@ function MemberSelect({
             {searchError ? (
               <div className="p-2 text-sm text-red-500 text-center">{searchError}</div>
             ) : members.length === 0 ? (
-              <div className="p-2 text-sm text-muted-foreground">No members found.</div>
+              <div className="p-2 text-sm text-muted-foreground">No se encontraron miembros.</div>
             ) : (
               members.map((member) => {
                 const isSelected = selectedMembers.some((m) => m.id === member.id);

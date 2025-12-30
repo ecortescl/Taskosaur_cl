@@ -21,7 +21,7 @@ function TaskDetailContent() {
   useEffect(() => {
     const fetchTask = async () => {
       if (!taskId || !isAuthenticated()) {
-        setError("Task ID required");
+        setError("ID de tarea requerido");
         setLoading(false);
         return;
       }
@@ -30,14 +30,14 @@ function TaskDetailContent() {
         const taskData = await getTaskById(taskId as string, isAuthenticated());
 
         if (!taskData) {
-          setError("Task not found");
+          setError("Tarea no encontrada");
           setLoading(false);
           return;
         }
 
         setTask(taskData);
       } catch (err) {
-        setError(err?.message ? err.message : "Failed to load task");
+        setError(err?.message ? err.message : "Error al cargar la tarea");
       } finally {
         setLoading(false);
       }
@@ -60,8 +60,8 @@ function TaskDetailContent() {
   if (error) {
     // Check if it's a 404/not found error
     const is404Error = error.toLowerCase().includes('not found') ||
-                       error.toLowerCase().includes('404') ||
-                       error.toLowerCase().includes('task not found');
+      error.toLowerCase().includes('404') ||
+      error.toLowerCase().includes('task not found');
 
     if (is404Error) {
       setShow404(true);

@@ -4,10 +4,10 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  PLANNING: { label: "Planning", color: "#94A3B8" },
-  ACTIVE: { label: "Active", color: "#10B981" },
-  COMPLETED: { label: "Completed", color: "#3B82F6" },
-  CANCELLED: { label: "Cancelled", color: "#EF4444" },
+  PLANNING: { label: "Planificación", color: "#94A3B8" },
+  ACTIVE: { label: "Activo", color: "#10B981" },
+  COMPLETED: { label: "Completado", color: "#3B82F6" },
+  CANCELLED: { label: "Cancelado", color: "#EF4444" },
 };
 
 interface SprintMetricsChartProps {
@@ -23,8 +23,8 @@ export function SprintMetricsChart({ data }: SprintMetricsChartProps) {
 
   return (
     <ChartWrapper
-      title="Sprint Status Overview"
-      description="Current sprint distribution across projects"
+      title="Resumen de Estado de Sprints"
+      description="Distribución actual de sprints en proyectos"
       config={chartConfig}
       className="border-[var(--border)]"
     >

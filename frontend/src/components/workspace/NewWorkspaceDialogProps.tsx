@@ -38,7 +38,7 @@ export default function NewWorkspaceDialog({
   children,
   open,
   onOpenChange,
-  triggerText = "New Workspace",
+  triggerText = "Nuevo Workspace",
   triggerVariant = "default",
   onWorkspaceCreated,
 }: NewWorkspaceDialogProps) {
@@ -90,12 +90,12 @@ export default function NewWorkspaceDialog({
       e.preventDefault();
 
       if (!workspaceContext) {
-        setError("Workspace context not available");
+        setError("Contexto del workspace no disponible");
         return;
       }
 
       if (!isFormValid()) {
-        setError("Please fill in all required fields");
+        setError("Por favor completa todos los campos requeridos");
         return;
       }
 
@@ -104,7 +104,7 @@ export default function NewWorkspaceDialog({
 
       try {
         if (!isAuthenticated()) {
-          throw new Error("Authentication required");
+          throw new Error("Autenticación requerida");
         }
 
         await workspaceContext.createWorkspace({
@@ -117,13 +117,13 @@ export default function NewWorkspaceDialog({
             await onWorkspaceCreated();
           } catch (refreshError) {
             console.error("Failed to refresh workspaces:", refreshError);
-            toast.warning("Workspace created but failed to refresh list. Please refresh the page.");
+            toast.warning("Workspace creado pero falló al actualizar la lista. Por favor actualiza la página.");
           }
         }
 
         handleOpenChange(false);
       } catch (error) {
-        const errMsg = error instanceof Error ? error.message : "Failed to create workspace";
+        const errMsg = error instanceof Error ? error.message : "Error al crear el workspace";
         setError(errMsg);
         toast.error(errMsg);
       } finally {
@@ -146,9 +146,9 @@ export default function NewWorkspaceDialog({
               <HiBuildingOffice2 className="projects-modal-icon-content" />
             </div>
             <div className="projects-modal-info">
-              <DialogTitle className="projects-modal-title">Create new workspace</DialogTitle>
+              <DialogTitle className="projects-modal-title">Crear nuevo workspace</DialogTitle>
               <DialogDescription className="projects-modal-description">
-                Provide basic information about your new workspace
+                Proporciona información básica sobre tu nuevo workspace
               </DialogDescription>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function NewWorkspaceDialog({
                 className="projects-form-label-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Workspace name <span className="projects-form-label-required">*</span>
+              Nombre del workspace <span className="projects-form-label-required">*</span>
             </Label>
             <Input
               id="workspace-name"
@@ -176,7 +176,7 @@ export default function NewWorkspaceDialog({
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter workspace name"
+              placeholder="Ingresa el nombre del workspace"
               disabled={isSubmitting}
               className="projects-form-input border-none"
               onFocus={(e) => {
@@ -192,7 +192,7 @@ export default function NewWorkspaceDialog({
                 className="projects-form-hint-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Choose a clear, descriptive name for your workspace.
+              Elige un nombre claro y descriptivo para tu workspace.
             </p>
           </div>
 
@@ -202,7 +202,7 @@ export default function NewWorkspaceDialog({
                 className="projects-form-label-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Description <span className="projects-form-label-required">*</span>
+              Descripción <span className="projects-form-label-required">*</span>
             </Label>
             <Textarea
               id="workspace-description"
@@ -211,7 +211,7 @@ export default function NewWorkspaceDialog({
               onChange={handleChange}
               required
               rows={4}
-              placeholder="Describe the purpose of this workspace..."
+              placeholder="Describe el propósito de este workspace..."
               disabled={isSubmitting}
               className="projects-form-textarea border-none"
               style={{}}
@@ -227,7 +227,7 @@ export default function NewWorkspaceDialog({
                 className="projects-form-hint-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Help team members understand what this workspace is for.
+              Ayuda a los miembros del equipo a entender para qué es este workspace.
             </p>
           </div>
 
@@ -238,16 +238,16 @@ export default function NewWorkspaceDialog({
               onClick={() => handleOpenChange(false)}
               disabled={isSubmitting}
             >
-              Cancel
+              Cancelar
             </ActionButton>
             <ActionButton type="submit" primary disabled={isSubmitting || !isFormValid()}>
               {isSubmitting ? (
                 <>
                   <div className="animate-spin -ml-1 mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                  Creating workspace...
+                  Creando workspace...
                 </>
               ) : (
-                "Create workspace"
+                "Crear workspace"
               )}
             </ActionButton>
           </div>

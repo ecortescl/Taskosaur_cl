@@ -9,11 +9,11 @@ interface EmptyStateProps {
 
 const EmptyState: React.FC<EmptyStateProps> = ({ searchQuery = "", priorityFilter = "all" }) => {
   const noTasksMessage =
-    searchQuery || priorityFilter !== "all" ? "No tasks found" : "No tasks yet";
+    searchQuery || priorityFilter !== "all" ? "No se encontraron tareas" : "Aún no hay tareas";
   const descriptionMessage =
     searchQuery || priorityFilter !== "all"
-      ? "Try adjusting your filters or search query."
-      : "Create your first task to get started with project management.";
+      ? "Intenta ajustar tus filtros o consulta de búsqueda."
+      : "Crea tu primera tarea para comenzar con la gestión de proyectos.";
 
   return (
     <Card className="border-none bg-[var(--card)]">

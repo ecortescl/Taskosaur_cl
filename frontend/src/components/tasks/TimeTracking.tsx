@@ -159,26 +159,26 @@ export default function TimeTracking({
     <div className="space-y-6">
       {/* Time Summary */}
       <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Time Summary</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Resumen de tiempo</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
               {formatTime(getTotalTimeSpent())}
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">Time Spent</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Tiempo invertido</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600 dark:text-green-400">
               {formatTime(task.originalEstimate || 0)}
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">Original Estimate</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Estimación original</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
               {formatTime(getTimeRemaining())}
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">Time Remaining</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Tiempo restante</div>
           </div>
         </div>
 
@@ -186,14 +186,13 @@ export default function TimeTracking({
         {task.originalEstimate && (
           <div className="mb-4">
             <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
-              <span>Progress</span>
+              <span>Progreso</span>
               <span>{Math.round(getProgressPercentage())}%</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  getProgressPercentage() > 100 ? "bg-red-500" : "bg-blue-500"
-                }`}
+                className={`h-2 rounded-full transition-all duration-300 ${getProgressPercentage() > 100 ? "bg-red-500" : "bg-blue-500"
+                  }`}
                 style={{ width: `${Math.min(100, getProgressPercentage())}%` }}
               />
             </div>
@@ -223,7 +222,7 @@ export default function TimeTracking({
                         d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h1m4 0h1M12 5v14m7-7H5"
                       />
                     </svg>
-                    Start Timer
+                    Iniciar Temporizador
                   </Button>
                 ) : (
                   <Button onClick={stopTimer} variant="secondary">
@@ -240,16 +239,16 @@ export default function TimeTracking({
                         d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    Stop Timer
+                    Detener Temporizador
                   </Button>
                 )}
                 <Button onClick={resetTimer} variant="outline">
-                  Reset
+                  Reiniciar
                 </Button>
               </div>
             </div>
             <Button onClick={() => setShowLogTime(true)} variant="outline">
-              Log Time
+              Registrar tiempo
             </Button>
           </div>
         </div>
@@ -258,9 +257,9 @@ export default function TimeTracking({
       {/* Time Entries */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Time Entries</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Entradas de tiempo</h3>
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            {task.timeEntries?.length || 0} entries
+            {task.timeEntries?.length || 0} entradas
           </span>
         </div>
 
@@ -279,7 +278,7 @@ export default function TimeTracking({
                         {formatTime(entry.timeSpent)}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
-                        on {new Date(entry.date).toLocaleDateString()}
+                        el {new Date(entry.date).toLocaleDateString()}
                       </span>
                     </div>
                     {entry.description && (
@@ -336,8 +335,8 @@ export default function TimeTracking({
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <p>No time entries</p>
-            <p className="text-sm">Start tracking time to see entries here</p>
+            <p>Sin entradas de tiempo</p>
+            <p className="text-sm">Comienza a registrar tiempo para ver entradas aquí</p>
           </div>
         )}
       </div>
@@ -346,12 +345,12 @@ export default function TimeTracking({
       {showLogTime && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Log Time</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Registrar tiempo</h3>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Time Spent (minutes) *
+                  Tiempo invertido (minutos) *
                 </label>
                 <input
                   type="number"
@@ -370,7 +369,7 @@ export default function TimeTracking({
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Description
+                  Descripción
                 </label>
                 <textarea
                   value={timeLogData.description}
@@ -379,13 +378,13 @@ export default function TimeTracking({
                   }
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="What did you work on?"
+                  placeholder="¿En qué trabajaste?"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Date
+                  Fecha
                 </label>
                 <input
                   type="date"
@@ -398,10 +397,10 @@ export default function TimeTracking({
 
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="secondary" onClick={() => setShowLogTime(false)}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleLogTime} disabled={timeLogData.timeSpent === 0}>
-                Log Time
+                Registrar tiempo
               </Button>
             </div>
           </div>
@@ -413,13 +412,13 @@ export default function TimeTracking({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Edit Time Entry
+              Editar entrada de tiempo
             </h3>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Time Spent (minutes) *
+                  Tiempo invertido (minutos) *
                 </label>
                 <input
                   type="number"
@@ -435,7 +434,7 @@ export default function TimeTracking({
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Description
+                  Descripción
                 </label>
                 <textarea
                   value={editData.description}
@@ -444,13 +443,13 @@ export default function TimeTracking({
                   }
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="What did you work on?"
+                  placeholder="¿En qué trabajaste?"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Date
+                  Fecha
                 </label>
                 <input
                   type="date"
@@ -463,10 +462,10 @@ export default function TimeTracking({
 
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="secondary" onClick={() => setEditingEntry(null)}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleUpdateTime} disabled={editData.timeSpent === 0}>
-                Update Time
+                Actualizar tiempo
               </Button>
             </div>
           </div>
@@ -479,10 +478,10 @@ export default function TimeTracking({
           isOpen={true}
           onClose={() => setTimeEntryToDelete(null)}
           onConfirm={() => handleDeleteTime(timeEntryToDelete)}
-          title="Delete Time Entry"
-          message={`Are you sure you want to delete this time entry of ${formatTime(timeEntryToDelete.timeSpent)}?`}
-          confirmText="Delete"
-          cancelText="Cancel"
+          title="Eliminar entrada de tiempo"
+          message={`¿Estás seguro de que deseas eliminar esta entrada de tiempo de ${formatTime(timeEntryToDelete.timeSpent)}?`}
+          confirmText="Eliminar"
+          cancelText="Cancelar"
           type="danger"
         />
       )}

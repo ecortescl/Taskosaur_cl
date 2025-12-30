@@ -170,7 +170,7 @@ export default function ProviderSelectionStep({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label className="pb-2 text-sm font-medium" htmlFor="emailAddress">
-            Email Address <span className="text-red-500">*</span>
+            Dirección de Email <span className="text-red-500">*</span>
           </Label>
           <Input
             id="emailAddress"
@@ -182,7 +182,7 @@ export default function ProviderSelectionStep({
                 emailAddress: e.target.value,
               }))
             }
-            placeholder="support@company.com"
+            placeholder="soporte@empresa.com"
             required
             className="h-10"
           />
@@ -190,14 +190,14 @@ export default function ProviderSelectionStep({
 
         <div>
           <Label className="pb-2 text-sm font-medium" htmlFor="displayName">
-            Display Name <span className="text-red-500">*</span>
+            Nombre para Mostrar <span className="text-red-500">*</span>
           </Label>
           <Input
             id="displayName"
             type="text"
             value={emailData.displayName}
             onChange={(e) => setEmailData((prev) => ({ ...prev, displayName: e.target.value }))}
-            placeholder="Support Team"
+            placeholder="Equipo de Soporte"
             required
             className="h-10"
           />
@@ -207,11 +207,11 @@ export default function ProviderSelectionStep({
       {/* Provider Selection - Second Row */}
       <div>
         <Label className="pb-2 text-sm font-medium" htmlFor="provider">
-          Provider <span className="text-red-500">*</span>
+          Proveedor <span className="text-red-500">*</span>
         </Label>
         <Select value={selectedProvider?.id || ""} onValueChange={handleProviderSelect}>
           <SelectTrigger className="w-full h-10 bg-[var(--background)] border-[var(--border)]">
-            <SelectValue placeholder="Select provider" className="bg-[var(--background)]" />
+            <SelectValue placeholder="Seleccionar proveedor" className="bg-[var(--background)]" />
           </SelectTrigger>
           <SelectContent className="bg-[var(--background)] border-[var(--border)]">
             {EMAIL_PROVIDERS.map((provider) => (
@@ -239,11 +239,11 @@ export default function ProviderSelectionStep({
               <Label className="pb-2 text-sm font-medium" htmlFor="password">
                 {selectedProvider.requiresAppPassword ? (
                   <>
-                    App Password <span className="text-red-500">*</span>
+                    Contraseña de Aplicación <span className="text-red-500">*</span>
                   </>
                 ) : (
                   <>
-                    Password <span className="text-red-500">*</span>
+                    Contraseña <span className="text-red-500">*</span>
                   </>
                 )}
               </Label>
@@ -260,8 +260,8 @@ export default function ProviderSelectionStep({
                 }
                 placeholder={
                   selectedProvider.requiresAppPassword
-                    ? "App-specific password"
-                    : "Your email password"
+                    ? "Contraseña específica de la aplicación"
+                    : "Tu contraseña de email"
                 }
                 className="h-10"
               />
@@ -274,13 +274,13 @@ export default function ProviderSelectionStep({
               {/* IMAP Configuration */}
               <div className="space-y-4">
                 <h4 className="text-sm font-semibold text-[var(--foreground)] pb-2 border-b border-[var(--border)]">
-                  IMAP Configuration (Incoming)
+                  Configuración IMAP (Entrante)
                 </h4>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="imapHost">
-                      IMAP Host <span className="text-red-500">*</span>
+                      Host IMAP <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="imapHost"
@@ -298,7 +298,7 @@ export default function ProviderSelectionStep({
 
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="imapPort">
-                      IMAP Port <span className="text-red-500">*</span>
+                      Puerto IMAP <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="imapPort"
@@ -317,7 +317,7 @@ export default function ProviderSelectionStep({
 
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="imapTlsMinVersion">
-                      Minimum TLS Version
+                      Versión mínima de TLS
                     </Label>
                     <Select
                       value={emailData.imapTlsMinVersion || "TLSv1.2"}
@@ -351,7 +351,7 @@ export default function ProviderSelectionStep({
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="imapUsername">
-                    IMAP Username <span className="text-red-500">*</span>
+                    Usuario IMAP <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="imapUsername"
@@ -369,7 +369,7 @@ export default function ProviderSelectionStep({
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="imapPassword">
-                    IMAP Password <span className="text-red-500">*</span>
+                    Contraseña IMAP <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="imapPassword"
@@ -381,7 +381,7 @@ export default function ProviderSelectionStep({
                         imapPassword: e.target.value,
                       }))
                     }
-                    placeholder="Your IMAP password"
+                    placeholder="Tu contraseña IMAP"
                     className="h-10"
                   />
                 </div>
@@ -400,7 +400,7 @@ export default function ProviderSelectionStep({
                       }
                     />
                     <Label htmlFor="imapUseSsl" className="text-sm font-normal cursor-pointer">
-                      Use SSL/TLS
+                      Usar SSL/TLS
                     </Label>
                   </div>
 
@@ -419,14 +419,14 @@ export default function ProviderSelectionStep({
                       htmlFor="imapTlsRejectUnauth"
                       className="text-sm font-normal cursor-pointer"
                     >
-                      Reject unauthorized certificates
+                      Rechazar certificados no autorizados
                     </Label>
                   </div>
                 </div>
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="imapServername">
-                    SNI Hostname (Optional)
+                    Hostname SNI (Opcional)
                   </Label>
                   <Input
                     id="imapServername"
@@ -437,7 +437,7 @@ export default function ProviderSelectionStep({
                         imapServername: e.target.value,
                       }))
                     }
-                    placeholder="Leave empty to use IMAP host"
+                    placeholder="Dejar vacío para usar el host IMAP"
                     className="h-10"
                   />
                   <p className="text-xs text-[var(--muted-foreground)] mt-1">
@@ -449,13 +449,13 @@ export default function ProviderSelectionStep({
               {/* SMTP Configuration */}
               <div className="space-y-4">
                 <h4 className="text-sm font-semibold text-[var(--foreground)] pb-2 border-b border-[var(--border)]">
-                  SMTP Configuration (Outgoing)
+                  Configuración SMTP (Saliente)
                 </h4>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="smtpHost">
-                      SMTP Host <span className="text-red-500">*</span>
+                      Host SMTP <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="smtpHost"
@@ -473,7 +473,7 @@ export default function ProviderSelectionStep({
 
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="smtpPort">
-                      SMTP Port <span className="text-red-500">*</span>
+                      Puerto SMTP <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="smtpPort"
@@ -492,7 +492,7 @@ export default function ProviderSelectionStep({
 
                   <div>
                     <Label className="pb-2 text-sm font-medium" htmlFor="smtpTlsMinVersion">
-                      Minimum TLS Version
+                      Versión mínima de TLS
                     </Label>
                     <Select
                       value={emailData.smtpTlsMinVersion || "TLSv1.2"}
@@ -504,7 +504,7 @@ export default function ProviderSelectionStep({
                       }
                     >
                       <SelectTrigger className="w-full h-10 bg-[var(--background)] border-[var(--border)] transition-colors">
-                        <SelectValue placeholder="Select TLS version" />
+                        <SelectValue placeholder="Seleccionar versión de TLS" />
                       </SelectTrigger>
                       <SelectContent className="bg-[var(--background)] border-[var(--border)]">
                         <SelectItem value="TLSv1" className="hover:bg-[var(--muted)]">
@@ -526,7 +526,7 @@ export default function ProviderSelectionStep({
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="smtpUsername">
-                    SMTP Username <span className="text-red-500">*</span>
+                    Usuario SMTP <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="smtpUsername"
@@ -544,7 +544,7 @@ export default function ProviderSelectionStep({
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="smtpPassword">
-                    SMTP Password <span className="text-red-500">*</span>
+                    Contraseña SMTP <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="smtpPassword"
@@ -556,7 +556,7 @@ export default function ProviderSelectionStep({
                         smtpPassword: e.target.value,
                       }))
                     }
-                    placeholder="Your SMTP password"
+                    placeholder="Tu contraseña SMTP"
                     className="h-10"
                   />
                 </div>
@@ -597,14 +597,14 @@ export default function ProviderSelectionStep({
                       htmlFor="smtpRequireTls"
                       className="text-sm font-normal cursor-pointer"
                     >
-                      Force STARTTLS (recommended)
+                      Forzar STARTTLS (recomendado)
                     </Label>
                   </div>
                 </div>
 
                 <div>
                   <Label className="pb-2 text-sm font-medium" htmlFor="smtpServername">
-                    SNI Hostname (Optional)
+                    Hostname SNI (Opcional)
                   </Label>
                   <Input
                     id="smtpServername"
@@ -615,11 +615,11 @@ export default function ProviderSelectionStep({
                         smtpServername: e.target.value,
                       }))
                     }
-                    placeholder="Leave empty to use SMTP host"
+                    placeholder="Dejar vacío para usar el host SMTP"
                     className="h-10"
                   />
                   <p className="text-xs text-[var(--muted-foreground)] mt-1">
-                    Required for TLS validation when connecting via IP address (Gmail, Office 365)
+                    Requerido para la validación TLS cuando se conecta a través de una dirección IP (Gmail, Office 365)
                   </p>
                 </div>
               </div>
@@ -631,12 +631,12 @@ export default function ProviderSelectionStep({
       <div className="flex gap-2 pt-4 justify-end">
         {selectedProvider && (
           <ActionButton primary onClick={handleContinue} disabled={!isStep1Valid()}>
-            Continue
+            Continuar
           </ActionButton>
         )}
 
         <ActionButton secondary onClick={handlePrevStep}>
-          Back
+          Volver
         </ActionButton>
       </div>
     </div>
@@ -646,16 +646,16 @@ export default function ProviderSelectionStep({
   const renderStep2 = () => (
     <div className="space-y-6 animate-fadeIn">
       <div>
-        <h3 className="text-lg font-semibold mb-2">Test Email Connection</h3>
+        <h3 className="text-lg font-semibold mb-2">Probar Conexión de Email</h3>
         <p className="text-sm text-[var(--muted-foreground)]/60">
-          Verify your email configuration before completing the setup
+          Verifica tu configuración de email antes de completar la configuración
         </p>
       </div>
 
       <div className="bg-[var(--muted)]/30 p-6 rounded-xl border border-[var(--border)]">
         <h4 className="text-base font-semibold mb-4 flex items-center">
           <HiCog className="w-5 h-5 mr-2 text-[var(--primary)]" />
-          Configuration Summary
+          Resumen de Configuración
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
           <div className="flex items-start space-x-2">
@@ -663,7 +663,7 @@ export default function ProviderSelectionStep({
             <span className="text-[var(--muted-foreground)]">{emailData.emailAddress}</span>
           </div>
           <div className="flex items-start space-x-2">
-            <span className="font-medium text-[var(--foreground)] min-w-[80px]">Provider:</span>
+            <span className="font-medium text-[var(--foreground)] min-w-[80px]">Proveedor:</span>
             <span className="text-[var(--muted-foreground)]">{selectedProvider?.name}</span>
           </div>
           <div className="flex items-start space-x-2">
@@ -682,16 +682,15 @@ export default function ProviderSelectionStep({
       </div>
 
       <p className="text-sm text-blue-800 flex items-center gap-2">
-        <HiExclamationCircle /> We'll test both incoming (IMAP) and outgoing (SMTP) connections to
-        ensure everything works properly.
+        <HiExclamationCircle /> Probaremos tanto las conexiones entrantes (IMAP) como las salientes (SMTP) para asegurar que todo funcione correctamente.
       </p>
 
       <div className="flex justify-end gap-2">
         <ActionButton onClick={handleTestConnection} disabled={setupLoading} primary>
-          {setupLoading ? <>Testing Connection...</> : <>Test Connection</>}
+          {setupLoading ? <>Probando Conexión...</> : <>Probar Conexión</>}
         </ActionButton>
         <ActionButton onClick={handlePrevStep} disabled={setupLoading} secondary>
-          Back
+          Volver
         </ActionButton>
       </div>
     </div>

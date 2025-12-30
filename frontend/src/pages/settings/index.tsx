@@ -41,7 +41,7 @@ function OrganizationSettingsPageContent() {
       setError(null);
 
       if (!currentUser?.id) {
-        setError("User not authenticated");
+        setError("Usuario no autenticado");
         return;
       }
 
@@ -50,7 +50,7 @@ function OrganizationSettingsPageContent() {
       setOrganizations(organizationsArray);
     } catch (err) {
       console.error("Error fetching organizations:", err);
-      setError(err instanceof Error ? err.message : "Failed to fetch organizations");
+      setError(err instanceof Error ? err.message : "Error al obtener las organizaciones");
     } finally {
       setIsLoading(false);
     }
@@ -86,10 +86,10 @@ function OrganizationSettingsPageContent() {
     try {
       const updatedMember = await setDefaultOrganization(organizationId);
       await fetchOrganizations();
-      toast.success("Default organization updated successfully");
+      toast.success("Organización por defecto actualizada con éxito");
     } catch (error) {
       console.error("Failed to set default organization:", error);
-      toast.error("Failed to set default organization. Please try again.");
+      toast.error("Error al establecer la organización por defecto. Por favor, inténtelo de nuevo.");
     }
   };
 
@@ -124,8 +124,8 @@ function OrganizationSettingsPageContent() {
         {/* Header */}
         <PageHeader
           icon={<HiCog className="w-5 h-5" />}
-          title="Organization Management"
-          description="Manage your organizations and switch between different tenants"
+          title="Gestión de Organizaciones"
+          description="Gestione sus organizaciones y cambie entre diferentes instancias"
           actions={
             !showCreateForm &&
             hasAccess && (
@@ -136,7 +136,7 @@ function OrganizationSettingsPageContent() {
                   className="h-9 bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90 transition-all duration-200 font-medium flex items-center gap-2 rounded-lg shadow-none border-none"
                 >
                   <HiPlus className="w-4 h-4" />
-                  Create Organization
+                  Crear Organización
                 </Button>
               </div>
             )
@@ -170,11 +170,10 @@ function OrganizationSettingsPageContent() {
                       router.push(`/settings/${organization.slug}`);
                     }
                   }}
-                  className={`${
-                    hasAccess
+                  className={`${hasAccess
                       ? "hover:border-[var(--primary)]/30 transition-colors duration-200"
                       : "cursor-default"
-                  }`}
+                    }`}
                   leading={
                     <div className="relative">
                       <div className="w-9 h-9 rounded-md bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/80 flex items-center justify-center text-[var(--primary-foreground)] font-semibold text-sm">
@@ -197,8 +196,8 @@ function OrganizationSettingsPageContent() {
                       <Tooltip
                         content={
                           organization.isDefault
-                            ? "Current default organization"
-                            : "Set as default organization"
+                            ? "Organización por defecto actual"
+                            : "Establecer como organización por defecto"
                         }
                         position="top"
                       >
@@ -214,8 +213,8 @@ function OrganizationSettingsPageContent() {
                           disabled={organization.isDefault}
                           aria-label={
                             organization.isDefault
-                              ? "Current default organization"
-                              : "Set as default organization"
+                              ? "Organización por defecto actual"
+                              : "Establecer como organización por defecto"
                           }
                           className={cn(
                             "h-6 w-6 p-0 rounded-full transition-all duration-200 flex-shrink-0",
@@ -248,7 +247,7 @@ function OrganizationSettingsPageContent() {
                   }
                   description={
                     <p className="text-xs text-[var(--muted-foreground)] line-clamp-2 h-10 capitalize">
-                      {organization.description || "No description provided"}
+                      {organization.description || "Sin descripción proporcionada"}
                     </p>
                   }
                   footer={
@@ -284,13 +283,13 @@ function OrganizationSettingsPageContent() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[var(--foreground)] mb-1.5">
-                About Organizations
+                Acerca de las Organizaciones
               </h3>
               <p className="text-xs text-[var(--muted-foreground)] leading-relaxed">
-                Organizations are your top-level containers for workspaces, projects, and teams.
-                Click the checkbox icon to set an organization as your default. Click on any
-                organization card to manage its settings (requires owner or administrator
-                permissions).
+                Las organizaciones son sus contenedores de nivel superior para workspaces, proyectos y equipos.
+                Haga clic en el icono de círculo para establecer una organización como predeterminada.
+                Haga clic en cualquier tarjeta de organización para gestionar su configuración
+                (requiere permisos de propietario o administrador).
               </p>
             </div>
           </div>

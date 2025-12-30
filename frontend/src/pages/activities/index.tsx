@@ -56,7 +56,7 @@ function ActivityPagination({
   return (
     <div className="flex flex-col items-center gap-2 py-4">
       <div className="text-sm text-[var(--muted-foreground)]">
-        Page {currentPage} of {totalPages}
+        Página {currentPage} de {totalPages}
       </div>
 
       <Pagination>
@@ -71,11 +71,10 @@ function ActivityPagination({
                   onPageChange(currentPage - 1);
                 }
               }}
-              className={`${
-                currentPage === 1 || isLoading
+              className={`${currentPage === 1 || isLoading
                   ? "pointer-events-none opacity-50"
                   : "cursor-pointer hover:bg-[var(--accent)]"
-              }`}
+                }`}
             />
           </PaginationItem>
 
@@ -89,11 +88,10 @@ function ActivityPagination({
                   onPageChange(currentPage + 1);
                 }
               }}
-              className={`${
-                currentPage === totalPages || isLoading
+              className={`${currentPage === totalPages || isLoading
                   ? "pointer-events-none opacity-50"
                   : "cursor-pointer hover:bg-[var(--accent)]"
-              }`}
+                }`}
             />
           </PaginationItem>
         </PaginationContent>
@@ -123,31 +121,31 @@ function ActivityPageContent() {
   const filterOptions = [
     {
       value: "all" as EntityTypeFilter,
-      label: "All Activity",
+      label: "Toda la Actividad",
       icon: HiClock,
       color: "text-[var(--muted-foreground)]",
     },
     {
       value: "Task" as EntityTypeFilter,
-      label: "Tasks",
+      label: "Tareas",
       icon: HiClipboardDocumentCheck,
       color: "text-blue-600",
     },
     {
       value: "Project" as EntityTypeFilter,
-      label: "Projects",
+      label: "Proyectos",
       icon: HiDocumentText,
       color: "text-green-600",
     },
     {
       value: "Workspace" as EntityTypeFilter,
-      label: "Workspaces",
+      label: "Espacios de Trabajo",
       icon: HiUserPlus,
       color: "text-purple-600",
     },
     {
       value: "User" as EntityTypeFilter,
-      label: "Users",
+      label: "Usuarios",
       icon: HiUser,
       color: "text-orange-600",
     },
@@ -179,7 +177,7 @@ function ActivityPageContent() {
       setPagination(response.pagination);
     } catch (error) {
       console.error("Error loading organization activities:", error);
-      setActivityError(error?.message ? error.message : "Failed to load activities");
+      setActivityError(error?.message ? error.message : "No se pudieron cargar las actividades");
     } finally {
       setIsLoadingActivity(false);
     }
@@ -203,7 +201,7 @@ function ActivityPageContent() {
         await loadActivities(pagination?.currentPage || 1, activeFilter);
       } catch (error) {
         console.error("Error refreshing activities:", error);
-        setActivityError(error?.message ? error.message : "Failed to refresh activities");
+        setActivityError(error?.message ? error.message : "No se pudieron actualizar las actividades");
       }
     }
   };
@@ -224,8 +222,8 @@ function ActivityPageContent() {
         <div className="flex flex-col gap-4">
           <PageHeader
             icon={<HiCalendar className="w-5 h-5" />}
-            title="Activity Feed"
-            description="Manage and track all your activities in one place."
+            title="Muro de Actividad"
+            description="Administra y haz seguimiento de todas tus actividades en un solo lugar."
             actions={
               <div className="flex items-center gap-2">
                 {activeFilter !== "all" && (
@@ -246,13 +244,13 @@ function ActivityPageContent() {
                 )}
 
                 <DropdownMenu>
-                  <Tooltip content="Filter activities" position="top" color="primary">
+                  <Tooltip content="Filtrar actividades" position="top" color="primary">
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
                         size="sm"
                         className="relative border-none bg-[var(--accent)] hover:bg-[var(--accent)]/80"
-                        aria-label="Filter activities"
+                        aria-label="Filtrar actividades"
                       >
                         <SlidersHorizontal className="w-4 h-4" />
                         {activeFilter !== "all" && (
@@ -267,7 +265,7 @@ function ActivityPageContent() {
                   >
                     <div className="p-2 border-b border-[var(--border)]">
                       <DropdownMenuLabel className="text-sm font-medium text-[var(--foreground)]">
-                        Filter by Type
+                        Filtrar por Tipo
                       </DropdownMenuLabel>
                     </div>
                     <div className="p-1">
@@ -281,16 +279,14 @@ function ActivityPageContent() {
                             className="flex items-center gap-2 p-2 rounded-md cursor-pointer hover:bg-[var(--accent)]"
                           >
                             <Icon
-                              className={`w-4 h-4 ${
-                                isActive ? option.color : "text-[var(--muted-foreground)]"
-                              }`}
+                              className={`w-4 h-4 ${isActive ? option.color : "text-[var(--muted-foreground)]"
+                                }`}
                             />
                             <span
-                              className={`text-sm ${
-                                isActive
+                              className={`text-sm ${isActive
                                   ? "text-[var(--foreground)] font-medium"
                                   : "text-[var(--muted-foreground)]"
-                              }`}
+                                }`}
                             >
                               {option.label}
                             </span>
@@ -309,7 +305,7 @@ function ActivityPageContent() {
                           >
                             <HiXMark className="w-4 h-4 text-[var(--muted-foreground)]" />
                             <span className="text-sm text-[var(--muted-foreground)]">
-                              Clear Filter
+                              Limpiar Filtro
                             </span>
                           </DropdownMenuItem>
                         </>
@@ -323,7 +319,7 @@ function ActivityPageContent() {
 
           <div className="bg-[var(--card)] rounded-lg border border-[var(--border)] overflow-hidden">
             <ActivityFeedPanel
-              title="Recent Activity"
+              title="Actividad Reciente"
               activities={activities}
               isLoading={isLoadingActivity}
               error={activityError}

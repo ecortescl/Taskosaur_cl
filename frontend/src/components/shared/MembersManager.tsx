@@ -119,17 +119,17 @@ const MembersManagerComponent = memo(function MembersManager({
   const { getCurrentUser } = useAuth();
 
   const workspaceRoles: MemberRole[] = [
-    { value: "SUPER_ADMIN", label: "Super Admin", variant: "secondary" },
-    { value: "MANAGER", label: "Manager", variant: "default" },
-    { value: "MEMBER", label: "Member", variant: "default" },
-    { value: "VIEWER", label: "Viewer", variant: "secondary" },
+    { value: "SUPER_ADMIN", label: "Super Administrador", variant: "secondary" },
+    { value: "MANAGER", label: "Gerente", variant: "default" },
+    { value: "MEMBER", label: "Miembro", variant: "default" },
+    { value: "VIEWER", label: "Observador", variant: "secondary" },
   ];
 
   const projectRoles: MemberRole[] = [
-    { value: "SUPER_ADMIN", label: "Super Admin", variant: "secondary" },
-    { value: "DEVELOPER", label: "Developer", variant: "default" },
-    { value: "MANAGER", label: "Manager", variant: "default" },
-    { value: "VIEWER", label: "Viewer", variant: "secondary" },
+    { value: "SUPER_ADMIN", label: "Super Administrador", variant: "secondary" },
+    { value: "DEVELOPER", label: "Desarrollador", variant: "default" },
+    { value: "MANAGER", label: "Gerente", variant: "default" },
+    { value: "VIEWER", label: "Observador", variant: "secondary" },
   ];
 
   const roles = type === "workspace" ? workspaceRoles : projectRoles;
@@ -187,7 +187,7 @@ const MembersManagerComponent = memo(function MembersManager({
     } catch (error: any) {
       markFetchError(fetchKey, error);
       if (mountedRef.current) {
-        setError(error?.message || `Failed to load ${type} members`);
+        setError(error?.message || `Error al cargar los miembros del ${type === "workspace" ? "workspace" : "proyecto"}`);
       }
     } finally {
       if (mountedRef.current) {
@@ -228,7 +228,7 @@ const MembersManagerComponent = memo(function MembersManager({
       setOrganizationMembers(normalized);
       setOrgMembersLoaded(true);
     } catch (error: any) {
-      setError(error?.message || "Failed to load organization members");
+      setError(error?.message || "Error al cargar los miembros de la organización");
     } finally {
       setIsLoadingOrgMembers(false);
     }
@@ -267,7 +267,7 @@ const MembersManagerComponent = memo(function MembersManager({
       setWorkspaceMembers(transformedMembers);
       setWorkspaceMembersLoaded(true);
     } catch (error: any) {
-      setError(error?.message || "Failed to load workspace members");
+      setError(error?.message || "Error al cargar los miembros del workspace");
     } finally {
       setIsLoadingWorkspaceMembers(false);
     }
@@ -333,7 +333,7 @@ const MembersManagerComponent = memo(function MembersManager({
       setSelectedRole(type === "workspace" ? "MEMBER" : "DEVELOPER");
       setError(null);
     } catch (error: any) {
-      setError(error?.message || `Failed to add ${type} member`);
+      setError(error?.message || `Error al añadir miembro al ${type === "workspace" ? "workspace" : "proyecto"}`);
     }
   };
 
@@ -358,7 +358,7 @@ const MembersManagerComponent = memo(function MembersManager({
 
       await invitationApi.createInvitation(inviteData);
 
-      setInviteMessage("Invitation sent successfully!");
+      setInviteMessage("¡Invitación enviada con éxito!");
       setInviteEmail("");
       setSelectedRole(type === "workspace" ? "MEMBER" : "DEVELOPER");
 
@@ -372,9 +372,9 @@ const MembersManagerComponent = memo(function MembersManager({
       const errorMessage = error?.response?.data?.message || error?.message;
 
       if (errorMessage) {
-        setInviteMessage(errorMessage + " for this " + type);
+        setInviteMessage(errorMessage + " para este " + (type === "workspace" ? "workspace" : "proyecto"));
       } else {
-        setInviteMessage(`❌ Failed to send invitation to ${type}`);
+        setInviteMessage(`❌ Error al enviar la invitación al ${type === "workspace" ? "workspace" : "proyecto"}`);
       }
     } finally {
       setInviteLoading(false);
@@ -395,7 +395,7 @@ const MembersManagerComponent = memo(function MembersManager({
       await fetchMembers();
       setError(null);
     } catch (error: any) {
-      setError(error?.message || `Failed to remove ${type} member`);
+      setError(error?.message || `Error al eliminar miembro del ${type === "workspace" ? "workspace" : "proyecto"}`);
     }
   };
 
@@ -417,7 +417,7 @@ const MembersManagerComponent = memo(function MembersManager({
       await fetchMembers();
       setError(null);
     } catch (error: any) {
-      setError(error?.message || `Failed to update ${type} member role`);
+      setError(error?.message || `Error al actualizar el rol del miembro en el ${type === "workspace" ? "workspace" : "proyecto"}`);
     }
   };
 
@@ -434,7 +434,7 @@ const MembersManagerComponent = memo(function MembersManager({
   const isLoadingMembers = type === "project" ? isLoadingWorkspaceMembers : isLoadingOrgMembers;
   const membersLoaded = type === "project" ? workspaceMembersLoaded : orgMembersLoaded;
 
-  const displayTitle = title || `${type === "workspace" ? "Workspace" : "Project"} Members`;
+  const displayTitle = title || `Miembros del ${type === "workspace" ? "Workspace" : "Proyecto"}`;
 
   if (isLoading) {
     return (
@@ -473,32 +473,32 @@ const MembersManagerComponent = memo(function MembersManager({
             <Dialog open={showInviteModal} onOpenChange={setShowInviteModal}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="members-manager-invite-button">
-                  Invite
+                  Invitar
                 </Button>
               </DialogTrigger>
               <DialogContent className="members-manager-modal">
                 <DialogHeader>
                   <DialogTitle className="members-manager-modal-title">
-                    Invite Member via Email
+                    Invitar Miembro por Email
                   </DialogTitle>
                 </DialogHeader>
                 <div className="members-manager-modal-content">
                   <div className="members-manager-modal-field">
                     <Label htmlFor="email" className="members-manager-modal-label">
-                      Email Address
+                      Dirección de Email
                     </Label>
                     <Input
                       id="email"
                       type="email"
                       value={inviteEmail}
                       onChange={(e) => setInviteEmail(e.target.value)}
-                      placeholder="Enter email address"
+                      placeholder="Ingrese dirección de email"
                       className="members-manager-modal-input"
                       disabled={inviteLoading}
                     />
                   </div>
                   <div className="members-manager-modal-field">
-                    <Label className="members-manager-modal-label">Role</Label>
+                    <Label className="members-manager-modal-label">Rol</Label>
                     <Select
                       value={selectedRole}
                       onValueChange={setSelectedRole}
@@ -520,11 +520,10 @@ const MembersManagerComponent = memo(function MembersManager({
                   {/* Show invite message */}
                   {inviteMessage && (
                     <div
-                      className={`members-manager-invite-message ${
-                        inviteMessage.includes("❌")
+                      className={`members-manager-invite-message ${inviteMessage.includes("❌")
                           ? "members-manager-invite-message-error"
                           : "members-manager-invite-message-success"
-                      }`}
+                        }`}
                     >
                       {inviteMessage}
                     </div>
@@ -542,14 +541,14 @@ const MembersManagerComponent = memo(function MembersManager({
                     }}
                     disabled={inviteLoading}
                   >
-                    Cancel
+                    Cancelar
                   </Button>
                   <Button
                     onClick={handleInviteMember}
                     disabled={!inviteEmail.trim() || inviteLoading}
                     className="members-manager-modal-submit"
                   >
-                    {inviteLoading ? "Sending..." : "Send Invite"}
+                    {inviteLoading ? "Enviando..." : "Enviar Invitación"}
                   </Button>
                 </div>
               </DialogContent>
@@ -570,18 +569,18 @@ const MembersManagerComponent = memo(function MembersManager({
                   }}
                 >
                   <HiPlus className="members-manager-add-button-icon" />
-                  Add Member
+                  Añadir Miembro
                 </Button>
               </DialogTrigger>
               <DialogContent className="members-manager-modal members-manager-modal-large">
                 <DialogHeader>
                   <DialogTitle className="members-manager-modal-title">
-                    Add Member to {type === "workspace" ? "Workspace" : "Project"}
+                    Añadir Miembro al {type === "workspace" ? "Workspace" : "Proyecto"}
                   </DialogTitle>
                 </DialogHeader>
                 <div className="members-manager-modal-content">
                   <div className="members-manager-modal-field">
-                    <Label className="members-manager-modal-label">Role</Label>
+                    <Label className="members-manager-modal-label">Rol</Label>
                     <Select value={selectedRole} onValueChange={setSelectedRole}>
                       <SelectTrigger className="members-manager-modal-select">
                         <SelectValue />
@@ -597,7 +596,7 @@ const MembersManagerComponent = memo(function MembersManager({
                   </div>
                   <div className="members-manager-modal-field">
                     <Label className="members-manager-modal-label">
-                      {type === "project" ? "Workspace Members" : "Organization Members"}
+                      {type === "project" ? "Miembros del Workspace" : "Miembros de la Organización"}
                     </Label>
                     {isLoadingMembers ? (
                       <div className="members-manager-modal-loading-list">
@@ -645,18 +644,18 @@ const MembersManagerComponent = memo(function MembersManager({
                               onClick={() => handleAddMember(member.user?.id || member.userId)}
                               className="members-manager-available-item-button"
                             >
-                              Add
+                              Añadir
                             </Button>
                           </div>
                         ))}
                         {getAvailableMembers().length === 0 && membersLoaded && (
                           <div className="members-manager-empty-available">
                             <p className="members-manager-empty-available-title">
-                              All {type === "project" ? "workspace" : "organization"} members are
-                              already part of this {type}
+                              Todos los miembros de la {type === "project" ? "workspace" : "organización"} ya
+                              forman parte de este {type === "workspace" ? "workspace" : "proyecto"}
                             </p>
                             <p className="members-manager-empty-available-subtitle">
-                              Use the "Invite" button to invite new members via email
+                              Use el botón "Invitar" para invitar nuevos miembros por email
                             </p>
                           </div>
                         )}
@@ -670,7 +669,7 @@ const MembersManagerComponent = memo(function MembersManager({
                     className="members-manager-modal-cancel"
                     onClick={() => setShowAddModal(false)}
                   >
-                    Cancel
+                    Cancelar
                   </Button>
                 </div>
               </DialogContent>
@@ -692,9 +691,9 @@ const MembersManagerComponent = memo(function MembersManager({
           {members.length === 0 ? (
             <div className="members-manager-empty">
               <HiUserPlus className="members-manager-empty-icon" />
-              <p className="members-manager-empty-title">No members yet</p>
+              <p className="members-manager-empty-title">Sin miembros aún</p>
               <p className="members-manager-empty-subtitle">
-                Add members to start collaborating on this {type}.
+                Añada miembros para empezar a colaborar en este {type === "workspace" ? "workspace" : "proyecto"}.
               </p>
             </div>
           ) : (
@@ -745,7 +744,7 @@ const MembersManagerComponent = memo(function MembersManager({
                         className="members-manager-role-dropdown-remove"
                       >
                         <HiTrash className="members-manager-role-dropdown-remove-icon" />
-                        Remove member
+                        Eliminar miembro
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

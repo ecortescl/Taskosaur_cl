@@ -118,7 +118,7 @@ export default function ProjectSelector({
               <div className="layout-project-selector-loading" />
             ) : (
               <div className="layout-project-selector-title">
-                {currentProject ? currentProject.name : "Select Project"}
+                {currentProject ? currentProject.name : "Seleccionar Proyecto"}
               </div>
             )}
           </div>
@@ -136,9 +136,8 @@ export default function ProjectSelector({
           <DropdownMenuItem
             key={project.id}
             onClick={() => handleProjectSelect(project)}
-            className={`layout-project-selector-item ${
-              currentProject?.id === project.id ? "layout-project-selector-item-selected" : ""
-            }`}
+            className={`layout-project-selector-item ${currentProject?.id === project.id ? "layout-project-selector-item-selected" : ""
+              }`}
           >
             <Avatar className="layout-project-selector-item-avatar">
               <AvatarFallback
@@ -152,7 +151,7 @@ export default function ProjectSelector({
             <div className="layout-project-selector-item-content">
               <div className="layout-project-selector-item-name">{project.name}</div>
               <div className="layout-project-selector-item-description">
-                {project.description || "No description"}
+                {project.description || "Sin descripción"}
               </div>
             </div>
 

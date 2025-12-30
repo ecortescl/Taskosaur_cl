@@ -9,11 +9,11 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  STORY: { label: "Story", color: "#10B981" },
-  TASK: { label: "Task", color: "#3B82F6" },
+  STORY: { label: "Historia", color: "#10B981" },
+  TASK: { label: "Tarea", color: "#3B82F6" },
   BUG: { label: "Bug", color: "#EF4444" },
-  EPIC: { label: "Epic", color: "#8B5CF6" },
-  FEATURE: { label: "Feature", color: "#F59E0B" },
+  EPIC: { label: "Épica", color: "#8B5CF6" },
+  FEATURE: { label: "Funcionalidad", color: "#F59E0B" },
 };
 
 interface TaskTypeChartProps {
@@ -31,8 +31,8 @@ export function TaskTypeChart({ data }: TaskTypeChartProps) {
 
   return (
     <ChartWrapper
-      title="Task Type Distribution"
-      description={`${totalTasks} total tasks across organization`}
+      title="Distribución de Tipo de Tarea"
+      description={`${totalTasks} tareas en total en la organización`}
       config={chartConfig}
       className="border-[var(--border)]"
     >

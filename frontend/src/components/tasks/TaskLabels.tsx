@@ -49,7 +49,7 @@ export default function TaskLabels({
 
   const handleAddLabel = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!hasAccess) return toast.error("You don't have access to update the task label");
+    if (!hasAccess) return toast.error("No tienes acceso para actualizar la etiqueta de la tarea");
 
     if (!newLabelName.trim()) return;
 
@@ -58,7 +58,7 @@ export default function TaskLabels({
       await onAddLabel(newLabelName.trim(), newLabelColor);
       resetForm();
     } catch (error) {
-      console.error("Failed to add label:", error);
+      console.error("Error al agregar etiqueta:", error);
     } finally {
       setLoadingLabels(false);
     }
@@ -71,26 +71,26 @@ export default function TaskLabels({
   };
 
   const handleRemoveLabel = async (labelId: string) => {
-    if (!hasAccess) return toast.error("You don't have access to update the task label");
+    if (!hasAccess) return toast.error("No tienes acceso para actualizar la etiqueta de la tarea");
 
     try {
       setLoadingLabels(true);
       await onRemoveLabel(labelId);
     } catch (error) {
-      console.error("Failed to remove label:", error);
+      console.error("Error al eliminar etiqueta:", error);
     } finally {
       setLoadingLabels(false);
     }
   };
 
   const handleAssignLabel = async (label: TaskLabel) => {
-    if (!hasAccess) return toast.error("You don't have access to update the task label");
+    if (!hasAccess) return toast.error("No tienes acceso para actualizar la etiqueta de la tarea");
 
     try {
       setLoadingLabels(true);
       await onAssignExistingLabel(label);
     } catch (error) {
-      console.error("Failed to assign label:", error);
+      console.error("Error al asignar etiqueta:", error);
     } finally {
       setLoadingLabels(false);
     }
@@ -118,18 +118,18 @@ export default function TaskLabels({
       {labels.length > 0 ? (
         <div>
           <div className="flex items-center justify-between mb-1">
-            <div className="text-sm font-medium text-[var(--foreground)]">Current labels:</div>
+            <div className="text-sm font-medium text-[var(--foreground)]">Etiquetas actuales:</div>
             {hasAccess && (
               <button
                 type="button"
                 className="rounded transition flex items-center cursor-pointer"
                 onClick={() => setIsEditing((prev) => !prev)}
                 tabIndex={0}
-                aria-label="Edit"
+                aria-label="Editar"
                 style={{ lineHeight: 0 }}
               >
                 <HiPencil className="w-3 h-3 text-[var(--muted-foreground)]" />
-                <span className="sr-only">Edit</span>
+                <span className="sr-only">Editar</span>
               </button>
             )}
           </div>
@@ -158,7 +158,7 @@ export default function TaskLabels({
             {/* Left side: icon + text */}
             <div className="flex items-center gap-2 text-[var(--muted-foreground)] text-sm">
               <HiTag className="size-3 text-[var(--muted-foreground)]" />
-              <span>No current labels</span>
+              <span>Sin etiquetas actuales</span>
             </div>
 
             {/* Right side: edit icon (only if access) */}
@@ -168,10 +168,10 @@ export default function TaskLabels({
                 className="rounded transition flex items-center cursor-pointer p-1 text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xs"
                 onClick={() => setIsEditing((prev) => !prev)}
                 tabIndex={0}
-                aria-label="Edit"
+                aria-label="Editar"
                 style={{ lineHeight: 0 }}
               >
-                Edit
+                Editar
               </button>
             )}
           </div>
@@ -184,7 +184,7 @@ export default function TaskLabels({
           {/* Available labels */}
           {unassignedLabels.length > 0 && (
             <div className="">
-              <div className="text-sm font-medium text-[var(--foreground)]">Available labels:</div>
+              <div className="text-sm font-medium text-[var(--foreground)]">Etiquetas disponibles:</div>
               <div className="flex flex-wrap gap-2">
                 {unassignedLabels.map((label) => (
                   <ActionButton
@@ -214,7 +214,7 @@ export default function TaskLabels({
                     htmlFor="label-name"
                     className="text-sm font-medium text-[var(--foreground)]"
                   >
-                    Label name
+                    Nombre de etiqueta
                   </Label>
                   <Input
                     id="label-name"
@@ -223,7 +223,7 @@ export default function TaskLabels({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setNewLabelName(e.target.value)
                     }
-                    placeholder="Enter label name"
+                    placeholder="Ingresa nombre de etiqueta"
                     autoFocus
                     maxLength={50}
                     className="h-9 border-input bg-background text-[var(--foreground)]"
@@ -239,11 +239,10 @@ export default function TaskLabels({
                         type="button"
                         variant="ghost"
                         onClick={() => setNewLabelColor(color.value)}
-                        className={`w-10 h-10 p-0 rounded-full border-2 transition-all duration-200 ${
-                          newLabelColor === color.value
+                        className={`w-10 h-10 p-0 rounded-full border-2 transition-all duration-200 ${newLabelColor === color.value
                             ? "border-[var(--primary)]  "
                             : "border-[var(--border)] "
-                        }`}
+                          }`}
                         style={{ backgroundColor: color.value }}
                         title={color.name}
                       />
@@ -252,9 +251,9 @@ export default function TaskLabels({
 
                   {/* Preview */}
                   <div className="flex items-center gap-2 pt-2">
-                    <span className="text-xs text-[var(--muted-foreground)]">Preview:</span>
+                    <span className="text-xs text-[var(--muted-foreground)]">Vista previa:</span>
                     <DynamicBadge
-                      label={newLabelName || "Label preview"}
+                      label={newLabelName || "Vista previa"}
                       bgColor={newLabelColor}
                       size="md"
                     />
@@ -268,7 +267,7 @@ export default function TaskLabels({
                     primary
                     className="flex-1 cursor-pointer"
                   >
-                    Add Label
+                    Agregar Etiqueta
                   </ActionButton>
                   <ActionButton
                     type="button"
@@ -277,7 +276,7 @@ export default function TaskLabels({
                     secondary
                     className="cursor-pointer"
                   >
-                    Cancel
+                    Cancelar
                   </ActionButton>
                 </div>
               </form>
@@ -290,7 +289,7 @@ export default function TaskLabels({
               secondary
               className="w-full justify-center cursor-pointer mt-2"
             >
-              Add new label
+              Agregar nueva etiqueta
             </ActionButton>
           )}
         </>

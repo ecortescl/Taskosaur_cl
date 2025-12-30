@@ -121,18 +121,18 @@ export function NewProjectModal({
   const VISIBILITY_OPTIONS = [
     {
       value: "PRIVATE",
-      label: "Private",
-      description: "Only members can access this project",
+      label: "Privado",
+      description: "Solo los miembros pueden acceder a este proyecto",
     },
     {
       value: "INTERNAL",
-      label: "Internal",
-      description: "Workspace members can view, members can edit",
+      label: "Interno",
+      description: "Miembros del espacio de trabajo pueden ver, miembros pueden editar",
     },
     {
       value: "PUBLIC",
-      label: "Public",
-      description: "Anyone can view, members can edit",
+      label: "Público",
+      description: "Cualquiera puede ver, miembros pueden editar",
     },
   ];
 
@@ -204,17 +204,17 @@ export function NewProjectModal({
                 setFormData((prev) => ({ ...prev, workspace }));
               }
             } catch (error) {
-              throw new Error("Failed to load current workspace");
+              throw new Error("Error al cargar el espacio de trabajo actual");
             }
           }
         }
       }
     } catch (error) {
       if (requestIdRef.current === requestId) {
-        const errorMessage = error instanceof Error ? error.message : "Failed to load workspaces";
+        const errorMessage = error instanceof Error ? error.message : "Error al cargar espacios de trabajo";
         setError(errorMessage);
         toast.error(errorMessage);
-        console.error("Failed to load workspaces:", error);
+        console.error("Error al cargar espacios de trabajo:", error);
         setAllWorkspaces([]);
       }
     } finally {
@@ -241,11 +241,11 @@ export function NewProjectModal({
           }
         } else {
           setWorkflows([]);
-          console.warn("No current organization ID found.");
+          console.warn("No se encontró ID de organización actual.");
         }
       } catch (err) {
         setWorkflows([]);
-        console.error("Error fetching workflows:", err);
+        console.error("Error al obtener flujos de trabajo:", err);
       }
     };
     fetchWorkflows();
@@ -279,13 +279,13 @@ export function NewProjectModal({
       };
 
       await createProject(projectData);
-      toast.success(`Project "${formData.name}" created successfully!`);
+      toast.success(`¡Proyecto "${formData.name}" creado exitosamente!`);
       handleClose();
       document.body.style.pointerEvents = "auto";
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to create project";
+      const errorMessage = error instanceof Error ? error.message : "Error al crear proyecto";
       toast.error(errorMessage);
-      console.error("Failed to create project:", error);
+      console.error("Error al crear proyecto:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -340,9 +340,9 @@ export function NewProjectModal({
               <HiFolderPlus className="projects-modal-icon-content" />
             </div>
             <div className="projects-modal-info">
-              <DialogTitle className="projects-modal-title">Create new project</DialogTitle>
+              <DialogTitle className="projects-modal-title">Crear nuevo proyecto</DialogTitle>
               <p className="projects-modal-description">
-                Organize your tasks and collaborate with your team
+                Organiza tus tareas y colabora con tu equipo
               </p>
             </div>
           </div>
@@ -362,7 +362,7 @@ export function NewProjectModal({
                   className="h-9 w-24 mt-2"
                   disabled={isSubmitting}
                 >
-                  Try Again
+                  Intentar de nuevo
                 </ActionButton>
               </AlertDescription>
             </Alert>
@@ -375,11 +375,11 @@ export function NewProjectModal({
                 className="projects-form-label-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Project name <span className="projects-form-label-required">*</span>
+              Nombre del proyecto <span className="projects-form-label-required">*</span>
             </Label>
             <Input
               id="name"
-              placeholder="Enter project name"
+              placeholder="Ingresa nombre del proyecto"
               value={formData.name}
               onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
               className="projects-form-input border-none"
@@ -431,7 +431,7 @@ export function NewProjectModal({
                 className="projects-form-label-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Workflow <span className="projects-form-label-required">*</span>
+              Flujo de trabajo <span className="projects-form-label-required">*</span>
             </Label>
             <Popover open={workflowOpen} onOpenChange={setWorkflowOpen} modal={true}>
               <PopoverTrigger asChild>
@@ -456,7 +456,7 @@ export function NewProjectModal({
                   }}
                 >
                   <span className="projects-workspace-selected">
-                    {selectedWorkflow?.name || "Select workflow"}
+                    {selectedWorkflow?.name || "Seleccionar flujo de trabajo"}
                   </span>
                   <HiChevronDown className="projects-workspace-dropdown-icon" />
                 </Button>
@@ -464,15 +464,15 @@ export function NewProjectModal({
               <PopoverContent className="projects-workspace-popover border-none" align="start">
                 <Command className="projects-workspace-command border-none">
                   <CommandInput
-                    placeholder="Search workflows..."
+                    placeholder="Buscar flujos de trabajo..."
                     value={workflowSearch}
                     onValueChange={setWorkflowSearch}
                     className="projects-workspace-command-input border-none"
                   />
                   <CommandEmpty className="projects-workspace-command-empty">
                     {filteredWorkflows.length === 0 && workflowSearch
-                      ? "No workflows found."
-                      : "Type to search workflows"}
+                      ? "No se encontraron flujos de trabajo."
+                      : "Escribe para buscar flujos de trabajo"}
                   </CommandEmpty>
                   <CommandGroup className="projects-workspace-command-group">
                     {filteredWorkflows.map((workflow) => (
@@ -514,7 +514,7 @@ export function NewProjectModal({
                 className="projects-form-hint-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Choose a workflow for your project's process.
+              Elige un flujo de trabajo para el proceso de tu proyecto.
             </p>
           </div>
 
@@ -525,7 +525,7 @@ export function NewProjectModal({
                 className="projects-form-label-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Visibility <span className="projects-form-label-required">*</span>
+              Visibilidad <span className="projects-form-label-required">*</span>
             </Label>
             <Popover open={visibilityOpen} onOpenChange={setVisibilityOpen} modal={true}>
               <PopoverTrigger asChild>
@@ -551,7 +551,7 @@ export function NewProjectModal({
                 >
                   <span className="projects-workspace-selected">
                     {VISIBILITY_OPTIONS.find((v) => v.value === formData.visibility)?.label ||
-                      "Select visibility"}
+                      "Seleccionar visibilidad"}
                   </span>
                   <HiChevronDown className="projects-workspace-dropdown-icon" />
                 </Button>
@@ -559,7 +559,7 @@ export function NewProjectModal({
               <PopoverContent className="projects-workspace-popover border-none" align="start">
                 <Command className="projects-workspace-command border-none">
                   <CommandEmpty className="projects-workspace-command-empty">
-                    No visibility options found.
+                    No se encontraron opciones de visibilidad.
                   </CommandEmpty>
                   <CommandGroup className="projects-workspace-command-group">
                     {VISIBILITY_OPTIONS.map((option) => (
@@ -595,7 +595,7 @@ export function NewProjectModal({
                 className="projects-form-hint-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Control who can access this project.
+              Controla quién puede acceder a este proyecto.
             </p>
           </div>
 
@@ -607,7 +607,7 @@ export function NewProjectModal({
                   className="projects-form-label-icon"
                   style={{ color: "var(--dynamic-primary)" }}
                 />
-                Workspace <span className="projects-form-label-required">*</span>
+                Espacio de trabajo <span className="projects-form-label-required">*</span>
               </Label>
               <Popover open={workspaceOpen} onOpenChange={setWorkspaceOpen} modal={true}>
                 <PopoverTrigger asChild>
@@ -635,11 +635,11 @@ export function NewProjectModal({
                     disabled={isLoadingWorkspaces}
                   >
                     {isLoadingWorkspaces ? (
-                      <span className="projects-workspace-loading">Loading workspaces...</span>
+                      <span className="projects-workspace-loading">Cargando espacios de trabajo...</span>
                     ) : formData.workspace ? (
                       <span className="projects-workspace-selected">{formData.workspace.name}</span>
                     ) : (
-                      <span className="projects-workspace-placeholder">Select workspace</span>
+                      <span className="projects-workspace-placeholder">Seleccionar espacio de trabajo</span>
                     )}
                     <HiChevronDown className="projects-workspace-dropdown-icon" />
                   </Button>
@@ -647,17 +647,17 @@ export function NewProjectModal({
                 <PopoverContent className="projects-workspace-popover border-none" align="start">
                   <Command className="projects-workspace-command border-none">
                     <CommandInput
-                      placeholder="Search workspaces..."
+                      placeholder="Buscar espacios de trabajo..."
                       value={workspaceSearch}
                       onValueChange={setWorkspaceSearch}
                       className="projects-workspace-command-input border-none"
                     />
                     <CommandEmpty className="projects-workspace-command-empty">
                       {isLoadingWorkspaces
-                        ? "Loading workspaces..."
+                        ? "Cargando espacios de trabajo..."
                         : filteredWorkspaces.length === 0 && workspaceSearch
-                          ? "No workspaces found."
-                          : "Type to search workspaces"}
+                          ? "No se encontraron espacios de trabajo."
+                          : "Escribe para buscar espacios de trabajo"}
                     </CommandEmpty>
                     <CommandGroup className="projects-workspace-command-group">
                       {filteredWorkspaces.map((workspace) => (
@@ -693,7 +693,7 @@ export function NewProjectModal({
                   className="projects-form-label-icon"
                   style={{ color: "var(--dynamic-primary)" }}
                 />
-                Workspace
+                Espacio de trabajo
               </Label>
               <Input
                 value={formData.workspace.name}
@@ -710,7 +710,7 @@ export function NewProjectModal({
                   className="projects-form-hint-icon"
                   style={{ color: "var(--dynamic-primary)" }}
                 />
-                Project will be created in this workspace.
+                El proyecto se creará en este espacio de trabajo.
               </p>
             </div>
           )}
@@ -722,11 +722,11 @@ export function NewProjectModal({
                 className="projects-form-label-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Description
+              Descripción
             </Label>
             <Textarea
               id="description"
-              placeholder="Describe what this project is about..."
+              placeholder="Describe de qué trata este proyecto..."
               value={formData.description}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -752,7 +752,7 @@ export function NewProjectModal({
                 className="projects-form-hint-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Help your team understand the project's goals and scope.
+              Ayuda a tu equipo a entender los objetivos y alcance del proyecto.
             </p>
           </div>
 
@@ -763,7 +763,7 @@ export function NewProjectModal({
                 className="projects-form-label-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Project Colors
+              Colores del Proyecto
             </Label>
             <Popover open={categoryOpen} onOpenChange={setCategoryOpen} modal={true}>
               <PopoverTrigger asChild>
@@ -796,7 +796,7 @@ export function NewProjectModal({
                       style={{ backgroundColor: selectedCategory?.color }}
                     />
                     <span className="projects-workspace-selected">
-                      {selectedCategory?.label || "Select category"}
+                      {selectedCategory?.label || "Seleccionar categoría"}
                     </span>
                   </div>
                   <HiChevronDown className="projects-workspace-dropdown-icon" />
@@ -805,7 +805,7 @@ export function NewProjectModal({
               <PopoverContent className="projects-workspace-popover border-none" align="start">
                 <Command className="projects-workspace-command border-none">
                   <CommandEmpty className="projects-workspace-command-empty">
-                    No categories found.
+                    No se encontraron categorías.
                   </CommandEmpty>
                   <CommandGroup className="projects-workspace-command-group">
                     {PROJECT_CATEGORIES.map((category) => (
@@ -841,17 +841,17 @@ export function NewProjectModal({
                 className="projects-form-hint-icon"
                 style={{ color: "var(--dynamic-primary)" }}
               />
-              Choose a category to help organize and identify your project.
+              Elige una categoría para organizar e identificar tu proyecto.
             </p>
           </div>
 
           {/* Submit Buttons */}
           <div className="projects-form-actions flex gap-2 justify-end mt-6">
             <ActionButton type="button" secondary onClick={handleClose} disabled={isSubmitting}>
-              Cancel
+              Cancelar
             </ActionButton>
             <ActionButton type="submit" primary disabled={!isValid || isSubmitting}>
-              {isSubmitting ? "Creating project..." : "Create project"}
+              {isSubmitting ? "Creando proyecto..." : "Crear proyecto"}
             </ActionButton>
           </div>
         </form>

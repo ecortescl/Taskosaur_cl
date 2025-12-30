@@ -41,7 +41,7 @@ export function WorkspaceHeader({ workspace, workspaceSlug }: WorkspaceHeaderPro
           </div>
           <p className="text-sm text-[var(--muted-foreground)] max-w-md">
             {workspace.description ||
-              `Collaborate on projects and manage tasks for ${workspace.name}.`}
+              `Colabora en proyectos y gestiona tareas para ${workspace.name}.`}
           </p>
         </div>
       </div>
@@ -55,7 +55,7 @@ export function WorkspaceHeader({ workspace, workspaceSlug }: WorkspaceHeaderPro
             className="h-9 border-none bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 text-[var(--foreground)] flex items-center gap-2"
           >
             <HiCog className="dashboard-icon-sm" />
-            Settings
+            Configuración
           </Button>
         </Link>
         <Button
@@ -63,7 +63,7 @@ export function WorkspaceHeader({ workspace, workspaceSlug }: WorkspaceHeaderPro
           onClick={() => setIsNewProjectModalOpen(true)}
         >
           <HiPlus className="dashboard-icon-sm" />
-          New Project
+          Nuevo Proyecto
         </Button>
 
         <NewProjectModal

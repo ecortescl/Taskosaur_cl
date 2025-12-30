@@ -80,8 +80,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
   const mockStatuses: TaskStatus[] = [
     {
       id: "status-1",
-      name: "Sprint Backlog",
-      description: "Tasks planned for this sprint",
+      name: "Backlog del Sprint",
+      description: "Tareas planificadas para este sprint",
       color: "#64748b",
       category: "TODO" as any,
       order: 1,
@@ -90,8 +90,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "status-2",
-      name: "In Progress",
-      description: "Tasks currently being worked on",
+      name: "En Progreso",
+      description: "Tareas en las que se está trabajando actualmente",
       color: "#f59e0b",
       category: "IN_PROGRESS" as any,
       order: 2,
@@ -100,8 +100,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "status-3",
-      name: "Testing",
-      description: "Tasks being tested",
+      name: "En Pruebas",
+      description: "Tareas que están siendo probadas",
       color: "#3b82f6",
       category: "IN_PROGRESS" as any,
       order: 3,
@@ -110,8 +110,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "status-4",
-      name: "Done",
-      description: "Completed tasks",
+      name: "Finalizado",
+      description: "Tareas completadas",
       color: "#10b981",
       category: "DONE" as any,
       order: 4,
@@ -123,8 +123,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
   const mockSprints: Sprint[] = [
     {
       id: "sprint-1",
-      name: "Sprint 1 - Authentication",
-      goal: "Implement user authentication and basic security features",
+      name: "Sprint 1 - Autenticación",
+      goal: "Implementar la autenticación de usuarios y características básicas de seguridad",
       startDate: "2024-01-15",
       endDate: "2024-01-29",
       status: "ACTIVE" as any,
@@ -137,7 +137,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     {
       id: "sprint-2",
       name: "Sprint 2 - Dashboard",
-      goal: "Build the main dashboard and navigation",
+      goal: "Construir el panel principal y la navegación",
       startDate: "2024-01-30",
       endDate: "2024-02-13",
       status: "PLANNED" as any,
@@ -152,8 +152,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
   const mockSprintTasks: Task[] = [
     {
       id: "task-1",
-      title: "Setup JWT authentication",
-      description: "Implement JWT token-based authentication system",
+      title: "Configurar autenticación JWT",
+      description: "Implementar el sistema de autenticación basado en tokens JWT",
       type: "STORY" as any,
       priority: "HIGH" as any,
       taskNumber: 1,
@@ -183,8 +183,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "task-2",
-      title: "Create login/register forms",
-      description: "Design and implement user-friendly login and registration forms",
+      title: "Crear formularios de login/registro",
+      description: "Diseñar e implementar formularios amigables para el usuario",
       type: "STORY" as any,
       priority: "HIGH" as any,
       taskNumber: 2,
@@ -215,8 +215,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "task-3",
-      title: "Implement password reset",
-      description: "Add forgot password and reset password functionality",
+      title: "Implementar restablecimiento de contraseña",
+      description: "Añadir funcionalidad de olvido y restablecimiento de contraseña",
       type: "STORY" as any,
       priority: "MEDIUM" as any,
       taskNumber: 3,
@@ -246,8 +246,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
     },
     {
       id: "task-4",
-      title: "Add email verification",
-      description: "Implement email verification for new user accounts",
+      title: "Añadir verificación por email",
+      description: "Implementar verificación por email para nuevas cuentas de usuario",
       type: "STORY" as any,
       priority: "LOW" as any,
       taskNumber: 4,
@@ -315,15 +315,15 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
 
   // Helper function for consistent date formatting to prevent hydration issues
   const formatDate = (dateString: string) => {
-    if (!currentDate) return "Loading...";
+    if (!currentDate) return "Cargando...";
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      return new Date(dateString).toLocaleDateString("es-419", {
         month: "short",
         day: "numeric",
         year: "numeric",
       });
     } catch {
-      return "Invalid date";
+      return "Fecha inválida";
     }
   };
 
@@ -337,14 +337,14 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
         prevTasks.map((task) =>
           task.id === taskId
             ? {
-                ...task,
-                statusId: newStatusId,
-                status: statuses.find((s) => s.id === newStatusId) || task.status,
-                completedAt:
-                  statuses.find((s) => s.id === newStatusId)?.category === "DONE"
-                    ? currentDate?.toISOString() || new Date().toISOString()
-                    : undefined,
-              }
+              ...task,
+              statusId: newStatusId,
+              status: statuses.find((s) => s.id === newStatusId) || task.status,
+              completedAt:
+                statuses.find((s) => s.id === newStatusId)?.category === "DONE"
+                  ? currentDate?.toISOString() || new Date().toISOString()
+                  : undefined,
+            }
             : task
         )
       );
@@ -406,8 +406,8 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
         <div className="sprints-empty-icon-container">
           <HiLightningBolt className="sprints-empty-icon" />
         </div>
-        <h3 className="sprints-empty-title">No Sprint Selected</h3>
-        <p className="sprints-empty-description">Please select a sprint to view the board</p>
+        <h3 className="sprints-empty-title">Ningún Sprint Seleccionado</h3>
+        <p className="sprints-empty-description">Por favor, seleccione un sprint para ver el tablero</p>
       </div>
     );
   }
@@ -438,7 +438,13 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                   <h2 className="sprints-header-title">{currentSprint.name}</h2>
                   <Badge className={sprintStatusConfig.className}>
                     <StatusIcon className="w-3 h-3 mr-1" />
-                    {currentSprint.status}
+                    {currentSprint.status === "ACTIVE"
+                      ? "ACTIVO"
+                      : currentSprint.status === "PLANNED"
+                        ? "PLANIFICADO"
+                        : currentSprint.status === "COMPLETED"
+                          ? "COMPLETADO"
+                          : currentSprint.status}
                   </Badge>
                 </div>
                 <p className="sprints-header-goal">{currentSprint.goal}</p>
@@ -449,11 +455,11 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                   </div>
                   <div className="sprints-header-meta-item">
                     <HiClipboardDocumentList className="sprints-header-meta-icon" />
-                    {completedTasks}/{tasks.length} tasks
+                    {completedTasks}/{tasks.length} tareas
                   </div>
                   <div className="sprints-header-meta-item">
                     <HiFlag className="sprints-header-meta-icon" />
-                    {completedStoryPoints}/{totalStoryPoints} points
+                    {completedStoryPoints}/{totalStoryPoints} puntos
                   </div>
                 </div>
               </div>
@@ -470,7 +476,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
               {currentSprint.status === "PLANNING" && (
                 <Button onClick={handleStartSprint} className="sprints-start-button">
                   <HiPlay className="sprints-button-icon" />
-                  Start Sprint
+                  Iniciar Sprint
                 </Button>
               )}
 
@@ -481,7 +487,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                   className="sprints-complete-button"
                 >
                   <HiCheck className="sprints-button-icon" />
-                  Complete Sprint
+                  Completar Sprint
                 </Button>
               )}
             </div>
@@ -521,7 +527,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                 <p className="sprints-stats-value">
                   {completedTasks}/{tasks.length}
                 </p>
-                <p className="sprints-stats-label">Tasks Completed</p>
+                <p className="sprints-stats-label">Tareas Completadas</p>
               </div>
             </div>
           </CardContent>
@@ -537,7 +543,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                 <p className="sprints-stats-value">
                   {completedStoryPoints}/{totalStoryPoints}
                 </p>
-                <p className="sprints-stats-label">Story Points</p>
+                <p className="sprints-stats-label">Puntos de Historia</p>
               </div>
             </div>
           </CardContent>
@@ -553,7 +559,7 @@ export default function SprintBoard({ projectId, sprintId }: SprintBoardProps) {
                 <p className="sprints-stats-value">
                   {tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0}%
                 </p>
-                <p className="sprints-stats-label">Completion Rate</p>
+                <p className="sprints-stats-label">Tasa de Completitud</p>
               </div>
             </div>
           </CardContent>

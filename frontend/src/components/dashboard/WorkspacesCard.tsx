@@ -32,9 +32,9 @@ export function WorkspacesCard({
   workspaces,
   maxDisplay = 3,
   emptyStateConfig = {
-    title: "Create workspace",
-    description: "Start organizing your projects",
-    buttonText: "New Workspace",
+    title: "Crear workspace",
+    description: "Empieza a organizar tus proyectos",
+    buttonText: "Nuevo Workspace",
     buttonHref: "/workspaces/new",
   },
 }: WorkspacesCardProps) {
@@ -91,7 +91,7 @@ export function WorkspacesCard({
 
   return (
     <>
-      <InfoPanel title={title} subtitle={subtitle} viewAllHref="/workspaces" viewAllText="View all">
+      <InfoPanel title={title} subtitle={subtitle} viewAllHref="/workspaces" viewAllText="Ver todos">
         {renderWorkspaceContent()}
       </InfoPanel>
 

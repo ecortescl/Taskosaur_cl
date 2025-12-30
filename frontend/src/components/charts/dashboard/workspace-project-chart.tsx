@@ -4,9 +4,9 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  high: { label: ">10 Projects", color: "#10B981" },
-  medium: { label: "6-10 Projects", color: "#F59E0B" },
-  low: { label: "<=5 Projects", color: "#3B82F6" },
+  high: { label: ">10 Proyectos", color: "#10B981" },
+  medium: { label: "6-10 Proyectos", color: "#F59E0B" },
+  low: { label: "<=5 Proyectos", color: "#3B82F6" },
 };
 
 interface WorkspaceProjectChartProps {
@@ -35,8 +35,8 @@ export function WorkspaceProjectChart({ data }: WorkspaceProjectChartProps) {
 
   return (
     <ChartWrapper
-      title="Projects per Workspace"
-      description="Project distribution across workspaces"
+      title="Proyectos por Workspace"
+      description="Distribución de proyectos en workspaces"
       config={chartConfig}
       className="border-[var(--border)]"
     >

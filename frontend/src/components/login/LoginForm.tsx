@@ -52,7 +52,7 @@ export function LoginForm() {
       await login({ email: formData.email, password: formData.password });
       router.push("/dashboard");
     } catch (err) {
-      setError("Invalid email or password. Please try again.");
+      setError("Correo electrónico o contraseña inválidos. Por favor, intenta de nuevo.");
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -73,13 +73,11 @@ export function LoginForm() {
         <div className="signup-mobile-logo">
           <div className="signup-mobile-logo-icon">
             <Image
-              src="/taskosaur-logo.svg"
-              alt="Taskosaur Logo"
+              src="https://landing-quiebre-test.vercel.app/Logo_quiebre_calado.svg"
+              alt="QUIEBRE.CL Logo"
               width={50}
               height={50}
-              className={`size-10 ${
-                resolvedTheme === "light" ? " filter invert brightness-200" : ""
-              }`}
+              className="size-10"
             />
           </div>
         </div>
@@ -88,14 +86,14 @@ export function LoginForm() {
           <h1 className="login-form-title">
             {/* Show as flex row on max-md, block on md+ */}
             <div className="md:hidden">
-              Welcome back to
-              <span className="flex items-center justify-center ">Taskosaur </span>
+              Bienvenido de nuevo a
+              <span className="flex items-center justify-center ">QUIEBRE.CL </span>
             </div>
 
             {/* Block for md+ */}
-            <span className="hidden md:block">Welcome back</span>
+            <span className="hidden md:block">Bienvenido de nuevo</span>
           </h1>
-          <p className="login-form-subtitle">Login to continue your productive journey</p>
+          <p className="login-form-subtitle">Inicia sesión para continuar tu viaje productivo</p>
         </div>
       </div>
 
@@ -107,7 +105,7 @@ export function LoginForm() {
         >
           <Alert variant="destructive" className="login-error-alert">
             <AlertDescription className="font-medium">
-              <span className="login-error-title">Authentication Failed</span>
+              <span className="login-error-title">Autenticación Fallida</span>
               <span className="login-error-message">{error}</span>
             </AlertDescription>
           </Alert>
@@ -125,7 +123,7 @@ export function LoginForm() {
         >
           <Label htmlFor="email" className="login-field-label">
             <Mail className="login-field-icon" />
-            <span>Email Address</span>
+            <span>Correo Electrónico</span>
           </Label>
           <Input
             id="email"
@@ -135,7 +133,7 @@ export function LoginForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email address"
+            placeholder="Ingresa tu correo electrónico"
             className="login-input"
           />
         </motion.div>
@@ -149,7 +147,7 @@ export function LoginForm() {
         >
           <Label htmlFor="password" className="login-field-label">
             <Lock className="login-field-icon" />
-            <span>Password</span>
+            <span>Contraseña</span>
           </Label>
           <div className="login-password-container">
             <Input
@@ -160,7 +158,7 @@ export function LoginForm() {
               required
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Ingresa tu contraseña"
               className="login-password-input"
             />
             <Button
@@ -169,7 +167,7 @@ export function LoginForm() {
               size="sm"
               onClick={() => setShowPassword(!showPassword)}
               className="login-password-toggle"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
@@ -197,11 +195,11 @@ export function LoginForm() {
               className="login-remember-me-checkbox"
             />
             <Label htmlFor="rememberMe" className="login-remember-me-label">
-              Remember me
+              Recordarme
             </Label>
           </div>
           <Link href="/forgot-password" className="login-forgot-password-link">
-            Forgot password?
+            ¿Olvidaste tu contraseña?
           </Link>
         </motion.div>
 
@@ -215,11 +213,11 @@ export function LoginForm() {
             {isLoading ? (
               <>
                 <Loader2 className="login-loading-spinner" />
-                Logging you in...
+                Iniciando sesión...
               </>
             ) : (
               <>
-                Log In
+                Iniciar Sesión
                 <ArrowRight className="login-button-arrow" />
               </>
             )}
@@ -227,34 +225,7 @@ export function LoginForm() {
         </motion.div>
       </form>
 
-      {/* Divider */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="login-divider-container"
-      >
-        <div className="login-divider-line">
-          <div className="login-divider-border" />
-        </div>
-        <div className="login-divider-text-container">
-          <span className="login-divider-text">New to Taskosaur?</span>
-        </div>
-      </motion.div>
 
-      {/* Sign Up Link */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-      >
-        <Link href="/register">
-          <Button variant="outline" className="login-signup-button">
-            Create New Account
-            <ArrowRight className="login-button-arrow" />
-          </Button>
-        </Link>
-      </motion.div>
 
       {/* Footer */}
       <motion.div
@@ -264,13 +235,13 @@ export function LoginForm() {
         className="login-footer"
       >
         <p className="login-footer-text">
-          By signing in, you agree to our{" "}
+          Al iniciar sesión, aceptas nuestros{" "}
           <Link href="/terms-of-service" className="login-footer-link">
-            Terms of Service
+            Términos de Servicio
           </Link>{" "}
-          and{" "}
+          y{" "}
           <Link href="/privacy-policy" className="login-footer-link">
-            Privacy Policy
+            Política de Privacidad
           </Link>
         </p>
       </motion.div>

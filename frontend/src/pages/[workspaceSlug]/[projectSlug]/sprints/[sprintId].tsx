@@ -74,10 +74,10 @@ const SprintTasksTable = () => {
   const [availableStatuses, setAvailableStatuses] = useState<any[]>([]);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [availablePriorities] = useState([
-    { id: "LOW", name: "Low", value: "LOW", color: "#6b7280" },
-    { id: "MEDIUM", name: "Medium", value: "MEDIUM", color: "#f59e0b" },
-    { id: "HIGH", name: "High", value: "HIGH", color: "#ef4444" },
-    { id: "HIGHEST", name: "Highest", value: "HIGHEST", color: "#dc2626" },
+    { id: "LOW", name: "Baja", value: "LOW", color: "#6b7280" },
+    { id: "MEDIUM", name: "Media", value: "MEDIUM", color: "#f59e0b" },
+    { id: "HIGH", name: "Alta", value: "HIGH", color: "#ef4444" },
+    { id: "HIGHEST", name: "Muy Alta", value: "HIGHEST", color: "#dc2626" },
   ]);
 
   const [sortField, setSortField] = useState<SortField>(() => {
@@ -259,7 +259,7 @@ const SprintTasksTable = () => {
       );
       setAvailableStatuses(uniqueStatuses);
     } catch (err: any) {
-      setLocalError(err?.message || "Failed to fetch tasks");
+      setLocalError(err?.message || "Error al obtener las tareas");
     } finally {
       setIsInitialLoad(false);
     }
@@ -518,10 +518,10 @@ const SprintTasksTable = () => {
       selected: selectedAssignees.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.assignees)
-              ? task.assignees.some((assignee) => assignee.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.assignees)
+            ? task.assignees.some((assignee) => assignee.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -535,10 +535,10 @@ const SprintTasksTable = () => {
       selected: selectedReporters.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.reporters)
-              ? task.reporters.some((reporter) => reporter.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.reporters)
+            ? task.reporters.some((reporter) => reporter.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -554,7 +554,7 @@ const SprintTasksTable = () => {
     () => [
       createSection({
         id: "status",
-        title: "Status",
+        title: "Estado",
         icon: CheckSquare,
         data: statusFilters,
         selectedIds: selectedStatuses,
@@ -565,7 +565,7 @@ const SprintTasksTable = () => {
       }),
       createSection({
         id: "priority",
-        title: "Priority",
+        title: "Prioridad",
         icon: Flame,
         data: priorityFilters,
         selectedIds: selectedPriorities,
@@ -576,7 +576,7 @@ const SprintTasksTable = () => {
       }),
       createSection({
         id: "assignee",
-        title: "Assignee",
+        title: "Responsable",
         icon: User,
         data: assigneeFilters,
         selectedIds: selectedAssignees,
@@ -587,7 +587,7 @@ const SprintTasksTable = () => {
       }),
       createSection({
         id: "reporter",
-        title: "Reporter",
+        title: "Informador",
         icon: Users,
         data: reporterFilters,
         selectedIds: selectedReporters,
@@ -620,23 +620,23 @@ const SprintTasksTable = () => {
 
   const handleAddColumn = (columnId: string) => {
     const columnConfigs: Record<string, { label: string; type: ColumnConfig["type"] }> = {
-      description: { label: "Description", type: "text" },
-      taskNumber: { label: "Task Number", type: "number" },
-      timeline: { label: "Timeline", type: "dateRange" },
-      completedAt: { label: "Completed Date", type: "date" },
-      storyPoints: { label: "Story Points", type: "number" },
-      originalEstimate: { label: "Original Estimate", type: "number" },
-      remainingEstimate: { label: "Remaining Estimate", type: "number" },
-      reporter: { label: "Reporter", type: "user" },
-      updatedBy: { label: "Updated By", type: "user" },
-      createdAt: { label: "Created Date", type: "date" },
-      updatedAt: { label: "Updated Date", type: "date" },
+      description: { label: "Descripción", type: "text" },
+      taskNumber: { label: "Número de Tarea", type: "number" },
+      timeline: { label: "Cronograma", type: "dateRange" },
+      completedAt: { label: "Fecha de Finalización", type: "date" },
+      storyPoints: { label: "Puntos de Historia", type: "number" },
+      originalEstimate: { label: "Estimación Original", type: "number" },
+      remainingEstimate: { label: "Estimación Restante", type: "number" },
+      reporter: { label: "Informador", type: "user" },
+      updatedBy: { label: "Actualizado Por", type: "user" },
+      createdAt: { label: "Fecha de Creación", type: "date" },
+      updatedAt: { label: "Fecha de Actualización", type: "date" },
       sprint: { label: "Sprint", type: "text" },
-      parentTask: { label: "Parent Task", type: "text" },
-      childTasksCount: { label: "Child Tasks", type: "number" },
-      commentsCount: { label: "Comments", type: "number" },
-      attachmentsCount: { label: "Attachments", type: "number" },
-      timeEntries: { label: "Time Entries", type: "number" },
+      parentTask: { label: "Tarea Padre", type: "text" },
+      childTasksCount: { label: "Tareas Hijas", type: "number" },
+      commentsCount: { label: "Comentarios", type: "number" },
+      attachmentsCount: { label: "Adjuntos", type: "number" },
+      timeEntries: { label: "Entradas de Tiempo", type: "number" },
     };
 
     const config = columnConfigs[columnId];
@@ -744,7 +744,7 @@ const SprintTasksTable = () => {
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              No workflow found. Create workflow statuses to use the Kanban view.
+              No se encontró ningún flujo de trabajo. Crea estados de flujo de trabajo para usar la vista Kanban.
             </p>
           </div>
         );
@@ -779,8 +779,8 @@ const SprintTasksTable = () => {
       {/* Sticky PageHeader */}
       <div className="sticky top-0 z-50">
         <PageHeader
-          title="Sprint Tasks"
-          description={`Manage and track all tasks in this sprint. ${pagination.totalCount} total tasks`}
+          title="Tareas del Sprint"
+          description={`Gestiona y realiza un seguimiento de todas las tareas en este sprint. ${pagination.totalCount} tareas en total`}
           actions={
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 gap-2">
               <div className="flex items-center gap-2">
@@ -788,7 +788,7 @@ const SprintTasksTable = () => {
                   <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                   <Input
                     type="text"
-                    placeholder="Search tasks..."
+                    placeholder="Buscar tareas..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     className="pl-10 rounded-md border border-[var(--border)]"
@@ -805,10 +805,10 @@ const SprintTasksTable = () => {
                 {currentView === "list" && isAuth && (
                   <FilterDropdown
                     sections={filterSections}
-                    title="Advanced Filters"
+                    title="Filtros Avanzados"
                     activeFiltersCount={totalActiveFilters}
                     onClearAllFilters={clearAllFilters}
-                    placeholder="Filter results..."
+                    placeholder="Filtrar resultados..."
                     dropdownWidth="w-56"
                     showApplyButton={false}
                   />
@@ -835,13 +835,12 @@ const SprintTasksTable = () => {
                       key={mode}
                       type="button"
                       onClick={() => setGanttViewMode(mode)}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${
-                        ganttViewMode === mode
-                          ? "bg-blue-500 text-white"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
-                      }`}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${ganttViewMode === mode
+                        ? "bg-blue-500 text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
+                        }`}
                     >
-                      {mode}
+                      {mode === "days" ? "Días" : mode === "weeks" ? "Semanas" : "Meses"}
                     </button>
                   ))}
                 </div>
@@ -866,7 +865,7 @@ const SprintTasksTable = () => {
               )}
               {currentView === "kanban" && isAuthenticated() && hasAccess && (
                 <div className="flex items-center gap-2">
-                  <Tooltip content="Manage Columns" position="top" color="primary">
+                  <Tooltip content="Gestionar Columnas" position="top" color="primary">
                     <ColumnManager
                       currentView={currentView}
                       availableColumns={columns}
@@ -893,7 +892,7 @@ const SprintTasksTable = () => {
             pageSize={pageSize}
             onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
-            itemType="tasks"
+            itemType="tareas"
           />
         </div>
       )}

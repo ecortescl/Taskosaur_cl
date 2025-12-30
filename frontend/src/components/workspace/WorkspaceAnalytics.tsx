@@ -87,15 +87,15 @@ export function WorkspaceAnalytics({ workspaceSlug }: WorkspaceAnalyticsProps) {
   }
 
   if (analyticsError) {
-    return <ErrorState error="Error loading organization analytics:" onRetry={handleFetchData} />;
+    return <ErrorState error="Error al cargar las analíticas de la organización:" onRetry={handleFetchData} />;
   }
 
   if (!analyticsData) {
     return (
       <Alert className="flex items-center justify-between">
-        <AlertDescription>No analytics data available for this organization.</AlertDescription>
+        <AlertDescription>No hay datos de analítica disponibles para esta organización.</AlertDescription>
         <Button onClick={handleFetchData} variant="outline" size="sm" className="ml-4 shrink-0">
-          Load Data
+          Cargar datos
         </Button>
       </Alert>
     );
@@ -125,14 +125,14 @@ export function WorkspaceAnalytics({ workspaceSlug }: WorkspaceAnalyticsProps) {
   return (
     <div className="space-y-6" data-testid="workspace-content">
       <PageHeader
-        title="Workspace Analytics"
-        description="Insights into your workspace performance and metrics"
+        title="Analítica del Workspace"
+        description="Información sobre el rendimiento y métricas de tu workspace"
         actions={
           <div className="flex items-center gap-2">
-            <Tooltip content="Dashboard Settings" position="top" color="primary">
+            <Tooltip content="Configuración del Dashboard" position="top" color="primary">
               <DashboardSettingsDropdown
                 sections={settingSections}
-                description="Customize your dashboard widgets"
+                description="Personaliza tus widgets"
               />
             </Tooltip>
           </div>
@@ -142,12 +142,12 @@ export function WorkspaceAnalytics({ workspaceSlug }: WorkspaceAnalyticsProps) {
       {analyticsData && visibleCount === 0 && (
         <Card className="p-8 text-center">
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold">No widgets to display</h3>
+            <h3 className="text-lg font-semibold">No hay widgets para mostrar</h3>
             <p className="text-muted-foreground">
-              All widgets are currently hidden. Use the customize button to show widgets.
+              Todos los widgets están ocultos actualmente. Usa el botón de personalizar para mostrarlos.
             </p>
             <Button onClick={resetWidgets} variant="outline" className="mt-4">
-              Show All Widgets
+              Mostrar todos los widgets
             </Button>
           </div>
         </Card>

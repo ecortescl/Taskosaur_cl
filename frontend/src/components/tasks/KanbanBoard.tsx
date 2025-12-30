@@ -103,16 +103,16 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
         tasks: statusColumn.tasks.map((task) =>
           task.id === currentTask.id
             ? {
-                ...task,
-                title: currentTask.title,
-                description: currentTask.description,
-                priority: currentTask.priority as any,
-                dueDate: currentTask.dueDate,
-                assignees: currentTask.assignees,
-                reporters: currentTask.reporters,
-                labels: (currentTask as any).labels || (currentTask as any).tags || task.labels,
-                updatedAt: currentTask.updatedAt,
-              }
+              ...task,
+              title: currentTask.title,
+              description: currentTask.description,
+              priority: currentTask.priority as any,
+              dueDate: currentTask.dueDate,
+              assignees: currentTask.assignees,
+              reporters: currentTask.reporters,
+              labels: (currentTask as any).labels || (currentTask as any).tags || task.labels,
+              updatedAt: currentTask.updatedAt,
+            }
             : task
         ),
       }));
@@ -132,7 +132,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
         onTaskMove?.(task.id, toStatusId);
         onRefresh?.();
       } catch (err) {
-        console.error("Failed to move task:", err);
+        console.error("Error al mover la tarea:", err);
       }
     },
   });
@@ -155,7 +155,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
       });
       onRefresh?.();
     } catch (err) {
-      console.error("Failed to create task:", err);
+      console.error("Error al crear la tarea:", err);
     }
   };
 
@@ -189,7 +189,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
         setLoadingStatuses((prev) => new Set(prev).add(statusId));
         await onLoadMore(statusId, currentPage + 1);
       } catch (error) {
-        console.error(`Failed to load more tasks for status ${statusId}:`, error);
+        console.error(`Error al cargar más tareas para el estado ${statusId}:`, error);
       } finally {
         setLoadingStatuses((prev) => {
           const newSet = new Set(prev);

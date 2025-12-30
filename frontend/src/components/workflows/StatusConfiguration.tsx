@@ -74,9 +74,9 @@ export default function StatusConfiguration({
       setShowCreateModal(false);
       resetForm();
 
-      toast.success("Status created successfully");
+      toast.success("Estado creado con éxito");
     } catch (error: any) {
-      let errorMessage = "Failed to create status";
+      let errorMessage = "Error al crear el estado";
       if (error instanceof Error) {
         errorMessage = error.message;
       } else if (
@@ -136,9 +136,9 @@ export default function StatusConfiguration({
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-md font-semibold text-[var(--foreground)]">Status Configuration</h3>
+          <h3 className="text-md font-semibold text-[var(--foreground)]">Configuración de Estados</h3>
           <p className="text-[var(--muted-foreground)] text-sm">
-            Manage individual statuses for {workflow.name}
+            Gestiona los estados individuales para {workflow.name}
           </p>
         </div>
         <Button
@@ -146,7 +146,7 @@ export default function StatusConfiguration({
           className="h-8 bg-[var(--primary)] hover:bg-[var(--primary)]/90 text-[var(--primary-foreground)] shadow-sm hover:shadow-md transition-all duration-200 font-medium flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
-          <p className="hidden md:flex">Add Status</p>
+          <p className="hidden md:flex">Añadir Estado</p>
         </Button>
       </div>
 
@@ -155,11 +155,11 @@ export default function StatusConfiguration({
         <div className="min-w-max">
           {/* Header */}
           <div className="grid grid-cols-12 gap-4 p-4 border-b border-[var(--border)] bg-[var(--muted)] text-sm font-medium">
-            <div className="col-span-3">Status</div>
-            <div className="col-span-2">Category</div>
-            <div className="col-span-1">Order</div>
-            <div className="col-span-4">Description</div>
-            <div className="col-span-2">Actions</div>
+            <div className="col-span-3">Estado</div>
+            <div className="col-span-2">Categoría</div>
+            <div className="col-span-1">Orden</div>
+            <div className="col-span-4">Descripción</div>
+            <div className="col-span-2">Acciones</div>
           </div>
           {/* Body */}
           <div className="divide-y divide-[var(--border)]">
@@ -177,7 +177,7 @@ export default function StatusConfiguration({
                           {status.name}
                           {status.isDefault && (
                             <span className="text-xs ml-2 bg-[var(--muted)] text-[var(--muted-foreground)] border-[var(--border)] p-1 px-2 rounded-lg">
-                              Default
+                              Por Defecto
                             </span>
                           )}
                         </div>
@@ -191,9 +191,13 @@ export default function StatusConfiguration({
                       )}`}
                       variant="secondary"
                     >
-                      {status?.category && status.category === "IN_PROGRESS"
-                        ? "IN PROGRESS"
-                        : (status.category ?? StatusCategory.TODO)}
+                      {status?.category === "IN_PROGRESS"
+                        ? "EN PROGRESO"
+                        : status?.category === "TODO"
+                          ? "POR HACER"
+                          : status?.category === "DONE"
+                            ? "HECHO"
+                            : (status?.category ?? "POR HACER")}
                     </Badge>
                   </div>
                   <div className="col-span-1">
@@ -204,15 +208,15 @@ export default function StatusConfiguration({
                   <div className="col-span-4">
                     <p className="text-sm text-[var(--foreground)] line-clamp-2">
                       {typeof (status as any).description === "string" &&
-                      (status as any).description.trim()
+                        (status as any).description.trim()
                         ? (status as any).description
-                        : "No description"}
+                        : "Sin descripción"}
                     </p>
                   </div>
                   <div className="col-span-2">
                     <div className="flex items-center space-x-2">
                       {!status.isDefault && (
-                        <Tooltip content="Delete" position="top" color="danger">
+                        <Tooltip content="Eliminar" position="top" color="danger">
                           <button
                             onClick={() => setShowDeleteModal(toTaskStatus(status))}
                             className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
@@ -253,21 +257,21 @@ export default function StatusConfiguration({
         >
           <DialogContent className="w-full max-w-[90vw] sm:max-w-[600px] bg-[var(--card)] border-none shadow-lg">
             <DialogHeader>
-              <DialogTitle>Create New Status</DialogTitle>
+              <DialogTitle>Crear Nuevo Estado</DialogTitle>
             </DialogHeader>
 
             <div className="space-y-4">
               {/* Name */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-[var(--foreground)]">
-                  Name <span className="text-red-500">*</span>
+                  Nombre <span className="text-red-500">*</span>
                 </label>
                 <Input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                   className="h-10 border-input bg-background text-[var(--foreground)]"
-                  placeholder="Status name"
+                  placeholder="Nombre del estado"
                   disabled={isCreating}
                 />
               </div>
@@ -275,7 +279,7 @@ export default function StatusConfiguration({
               {/* Description */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-[var(--foreground)]">
-                  Description
+                  Descripción
                 </label>
                 <Textarea
                   value={formData.description}
@@ -287,7 +291,7 @@ export default function StatusConfiguration({
                   }
                   rows={3}
                   className="border-input bg-background text-[var(--foreground)]"
-                  placeholder="Status description"
+                  placeholder="Descripción del estado"
                   disabled={isCreating}
                 />
               </div>
@@ -295,7 +299,7 @@ export default function StatusConfiguration({
               {/* Category */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-[var(--foreground)]">
-                  Category <span className="text-red-500">*</span>
+                  Categoría <span className="text-red-500">*</span>
                 </label>
                 <Select
                   value={formData.category}
@@ -308,12 +312,12 @@ export default function StatusConfiguration({
                   disabled={isCreating}
                 >
                   <SelectTrigger className="w-full px-3 border border-[var(--border)] input-selection dark-input-background focus-ring">
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Seleccionar categoría" />
                   </SelectTrigger>
                   <SelectContent className="bg-[var(--card)] border border-[var(--border)]">
-                    <SelectItem value={StatusCategory.TODO}>To Do</SelectItem>
-                    <SelectItem value={StatusCategory.IN_PROGRESS}>In Progress</SelectItem>
-                    <SelectItem value={StatusCategory.DONE}>Done</SelectItem>
+                    <SelectItem value={StatusCategory.TODO}>Por Hacer</SelectItem>
+                    <SelectItem value={StatusCategory.IN_PROGRESS}>En Progreso</SelectItem>
+                    <SelectItem value={StatusCategory.DONE}>Hecho</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -340,11 +344,10 @@ export default function StatusConfiguration({
                       <button
                         key={color}
                         onClick={() => !isCreating && setFormData((prev) => ({ ...prev, color }))}
-                        className={`w-6 h-6 rounded-full border-2 ${
-                          formData.color === color
+                        className={`w-6 h-6 rounded-full border-2 ${formData.color === color
                             ? "border-gray-900 dark:border-white"
                             : "border-gray-300 dark:border-gray-600"
-                        } ${isCreating ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+                          } ${isCreating ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
                         style={{ backgroundColor: color }}
                         disabled={isCreating}
                       />
@@ -363,7 +366,7 @@ export default function StatusConfiguration({
                 }}
                 disabled={isCreating}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button
                 variant="default"
@@ -409,10 +412,10 @@ export default function StatusConfiguration({
           isOpen={true}
           onClose={() => setShowDeleteModal(null)}
           onConfirm={() => handleDelete(showDeleteModal)}
-          title="Delete Status"
-          message={`Are you sure you want to delete the status "${showDeleteModal.name}"? This action cannot be undone.`}
-          confirmText="Delete"
-          cancelText="Cancel"
+          title="Eliminar Estado"
+          message={`¿Estás seguro de que deseas eliminar el estado "${showDeleteModal.name}"? Esta acción no se puede deshacer.`}
+          confirmText="Eliminar"
+          cancelText="Cancelar"
           type="danger"
         />
       )}

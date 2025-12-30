@@ -40,7 +40,7 @@ export const SprintTasksPanel: React.FC<SprintTasksPanelProps> = ({
       try {
         const organizationId = getCurrentOrganizationId();
         if (!organizationId) {
-          throw new Error("No organization selected. Please select an organization first.");
+          throw new Error("No hay ninguna organización seleccionada. Por favor, seleccione una organización primero.");
         }
         const result = await getTasksBySprint(organizationId, sprintId);
         const mapped = (result || []).map((task: any) => ({
@@ -66,7 +66,7 @@ export const SprintTasksPanel: React.FC<SprintTasksPanelProps> = ({
         }));
         setTasks(mapped);
       } catch (err: any) {
-        setError(err?.message || "Failed to fetch tasks");
+        setError(err?.message || "Error al obtener las tareas");
       } finally {
         setLoading(false);
       }
@@ -89,9 +89,9 @@ export const SprintTasksPanel: React.FC<SprintTasksPanelProps> = ({
                 <HiClipboardDocumentList className="sprints-tasks-header-icon-inner" />
               </div>
               <div>
-                <h2 className="sprints-tasks-header-title">Sprint Tasks</h2>
+                <h2 className="sprints-tasks-header-title">Tareas del Sprint</h2>
                 <p className="sprints-tasks-header-subtitle">
-                  {sprintName} • {tasks.length} tasks
+                  {sprintName} • {tasks.length} tareas
                 </p>
               </div>
             </div>

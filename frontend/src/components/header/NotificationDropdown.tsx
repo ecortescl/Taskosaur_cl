@@ -41,7 +41,7 @@ export default function NotificationDropdown({
 }: NotificationDropdownProps) {
   // Use context for Unread Count to keep it in sync globally
   const { unreadCount: globalUnreadCount, refreshNotifications } = useNotification();
-  
+
   // Local state for the dropdown list items
   const [notifications, setNotifications] = useState<Notification[]>([]);
   // We ignore local unreadCount in favor of global one for the badge
@@ -54,7 +54,7 @@ export default function NotificationDropdown({
     // When dropdown opens, fetch the list AND refresh global count
     const fetchNotifications = async () => {
       if (!dropdownOpen || !userId || !organizationId) return;
-      
+
       // trigger global refresh
       refreshNotifications();
 
@@ -73,7 +73,7 @@ export default function NotificationDropdown({
 
         setNotifications(response.notifications);
       } catch (error) {
-        console.error("Failed to fetch notifications:", error);
+        console.error("Error al obtener notificaciones:", error);
         setNotifications([]);
       } finally {
         setLoading(false);
@@ -91,11 +91,11 @@ export default function NotificationDropdown({
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInMinutes < 1) return "Just now";
-    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInDays < 7) return `${diffInDays}d ago`;
-    return date.toLocaleDateString();
+    if (diffInMinutes < 1) return "Recién";
+    if (diffInMinutes < 60) return `${diffInMinutes}m atrás`;
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+    if (diffInDays < 7) return `${diffInDays}d atrás`;
+    return date.toLocaleDateString('es-419');
   };
 
   const getNotificationUserInitials = (user?: Notification["createdByUser"]) => {
@@ -123,15 +123,15 @@ export default function NotificationDropdown({
     try {
       setMarkingAsRead(notificationId);
       await notificationApi.markNotificationAsRead(notificationId);
-      
+
       // Update local list
       setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
-      
+
       // Refresh global count
       refreshNotifications();
 
     } catch (error) {
-      console.error("Failed to mark notification as read:", error);
+      console.error("Error al marcar como leída:", error);
     } finally {
       setMarkingAsRead(null);
     }
@@ -148,24 +148,24 @@ export default function NotificationDropdown({
 
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-      <Tooltip content="Notifications" position="bottom" color="primary">
+      <Tooltip content="Notificaciones" position="bottom" color="primary">
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
             className={`header-notification-button relative w-10 h-10 rounded-full hover:bg-[var(--accent)] ${className}`}
-            aria-label="Notifications"
+            aria-label="Notificaciones"
           >
             <div className="relative">
               <HiBell className="w-6 h-6 text-[var(--muted-foreground)]" />
               {globalUnreadCount > 0 && (
-              <Badge
-                variant="destructive"
-                className="header-notification-badge  header-notification-badge-red"
-              >
-                {globalUnreadCount > 99 ? "99+" : (globalUnreadCount ?? 0)}
-              </Badge>
-            )}
+                <Badge
+                  variant="destructive"
+                  className="header-notification-badge  header-notification-badge-red"
+                >
+                  {globalUnreadCount > 99 ? "99+" : (globalUnreadCount ?? 0)}
+                </Badge>
+              )}
             </div>
           </Button>
         </DropdownMenuTrigger>
@@ -175,7 +175,7 @@ export default function NotificationDropdown({
         {/* Header */}
         <div className="header-dropdown-menu-header">
           <div className="header-dropdown-menu-title">
-            <span className="header-dropdown-menu-title-text">Notifications</span>
+            <span className="header-dropdown-menu-title-text">Notificaciones</span>
             <Badge variant="secondary" className="header-dropdown-menu-badge">
               {globalUnreadCount}
             </Badge>
@@ -204,16 +204,15 @@ export default function NotificationDropdown({
           ) : notifications.length === 0 ? (
             <div className="header-empty-state">
               <HiBell className="header-empty-icon" />
-              <p className="header-empty-text">No new notifications</p>
+              <p className="header-empty-text">No hay notificaciones nuevas</p>
             </div>
           ) : (
             <div className="header-notifications-item-container">
               {notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`header-notifications-item ${
-                    markingAsRead === notification.id ? "header-notifications-item-disabled" : ""
-                  }`}
+                  className={`header-notifications-item ${markingAsRead === notification.id ? "header-notifications-item-disabled" : ""
+                    }`}
                   onClick={() => handleMarkAsRead(notification.id)}
                 >
                   <div className="header-notifications-item-layout">
@@ -234,12 +233,12 @@ export default function NotificationDropdown({
 
                         {(notification.priority === "HIGH" ||
                           notification.priority === "URGENT") && (
-                          <div
-                            className={`header-notifications-item-priority ${getPriorityColor(
-                              notification.priority
-                            )}`}
-                          ></div>
-                        )}
+                            <div
+                              className={`header-notifications-item-priority ${getPriorityColor(
+                                notification.priority
+                              )}`}
+                            ></div>
+                          )}
                       </div>
 
                       <div className="header-notifications-item-message">
@@ -268,7 +267,7 @@ export default function NotificationDropdown({
               onClick={handleViewAllNotifications}
               className="header-notifications-view-all"
             >
-              {notifications.length > 0 ? "View All" : "View Old Notifications"}
+              {notifications.length > 0 ? "Ver Todo" : "Ver Notificaciones Anteriores"}
             </ActionButton>
           </div>
         )}

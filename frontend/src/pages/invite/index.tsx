@@ -24,7 +24,7 @@ export default function InviteRedirect() {
 
         if (!res.isValid) {
           router.replace(
-            `/invite/invalid?msg=${encodeURIComponent(res.message ?? "Invalid invitation")}`
+            `/invite/invalid?msg=${encodeURIComponent(res.message ?? "Invitación inválida")}`
           );
           return;
         }
@@ -39,7 +39,7 @@ export default function InviteRedirect() {
           // invited email already has an account
           if (isAuthenticated()) {
             // logged-in → straight to dashboard
-            await invitationApi.acceptInvitation(token as string).catch(() => {});
+            await invitationApi.acceptInvitation(token as string).catch(() => { });
             router.replace("/dashboard");
           } else {
             // not logged-in → go to login with email pre-filled

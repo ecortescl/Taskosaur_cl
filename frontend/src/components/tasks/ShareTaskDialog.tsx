@@ -48,7 +48,7 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
       const data = await shareApi.getSharesForTask(taskId);
       setShares(data);
     } catch (error) {
-      toast.error('Failed to load share links');
+      toast.error('Error al cargar enlaces compartidos');
     } finally {
       setLoading(false);
     }
@@ -62,12 +62,12 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
         expiresInDays: parseInt(expiryDays),
       });
       setShares([newShare, ...shares]);
-      toast.success('Public link created');
-      
+      toast.success('Enlace público creado');
+
       // Auto copy
       copyToClipboard(newShare.shareUrl, newShare.id);
     } catch (error) {
-      toast.error('Failed to create share link');
+      toast.error('Error al crear el enlace compartido');
     } finally {
       setCreating(false);
     }
@@ -77,16 +77,16 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
     try {
       await shareApi.revokeShare(shareId);
       setShares(shares.filter(s => s.id !== shareId));
-      toast.success('Link revoked');
+      toast.success('Enlace revocado');
     } catch (error) {
-      toast.error('Failed to revoke link');
+      toast.error('Error al revocar enlace');
     }
   };
 
   const copyToClipboard = (url: string, id: string) => {
     navigator.clipboard.writeText(url);
     setCopiedId(id);
-    toast.success('Link copied to clipboard');
+    toast.success('Enlace copiado al portapapeles');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -108,35 +108,35 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="w-full sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share to Web</DialogTitle>
+          <DialogTitle>Compartir en la web</DialogTitle>
           <DialogDescription>
-            Publish this task to the web. Anyone with the link can view it.
+            Publica esta tarea en la web. Cualquiera con el enlace podrá verla.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 py-4 min-w-0">
           <div className="space-y-4">
             <div className="grid gap-2">
-              <Label htmlFor="expiry">Link expires in</Label>
+              <Label htmlFor="expiry">Enlace expira en</Label>
               <div className="flex gap-2">
                 <Select value={expiryDays} onValueChange={setExpiryDays}>
                   <SelectTrigger id="expiry" className="w-[180px]">
-                    <SelectValue placeholder="Select expiry" />
+                    <SelectValue placeholder="Seleccionar duración" />
                   </SelectTrigger>
                   <SelectContent className='bg-gray-50/85 '>
-                    <SelectItem value="1">1 day</SelectItem>
-                    <SelectItem value="3">3 days</SelectItem>
-                    <SelectItem value="7">7 days</SelectItem>
-                    <SelectItem value="14">14 days</SelectItem>
-                    <SelectItem value="30">30 days</SelectItem>
+                    <SelectItem value="1">1 día</SelectItem>
+                    <SelectItem value="3">3 días</SelectItem>
+                    <SelectItem value="7">7 días</SelectItem>
+                    <SelectItem value="14">14 días</SelectItem>
+                    <SelectItem value="30">30 días</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button 
-                  onClick={handleCreateShare} 
+                <Button
+                  onClick={handleCreateShare}
                   disabled={creating}
                   className="flex-1"
                 >
-                  {creating ? 'Creating...' : 'Create Public Link'}
+                  {creating ? 'Creando...' : 'Crear Enlace Público'}
                 </Button>
               </div>
             </div>
@@ -144,21 +144,21 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
 
           {shares.length > 0 && (
             <div className="space-y-3">
-              <Label>Active Links ({shares.length})</Label>
+              <Label>Enlaces Activos ({shares.length})</Label>
               <ScrollArea className="h-[200px] w-full rounded-md border p-3" orientation='both'>
                 <div className="space-y-3">
                   {shares.map((share) => (
-                    <div 
-                      key={share.id} 
+                    <div
+                      key={share.id}
                       className="flex flex-col gap-2 rounded-lg border bg-card p-3 shadow-sm min-w-0"
                     >
                       <div className="flex items-center justify-between min-w-0">
                         <div className="flex items-center gap-2">
                           <Badge variant={isExpired(share.expiresAt) ? "destructive" : "secondary"}>
-                            {isExpired(share.expiresAt) ? 'Expired' : 'Active'}
+                            {isExpired(share.expiresAt) ? 'Expirado' : 'Activo'}
                           </Badge>
                           <span className="text-xs text-muted-foreground">
-                            Expires {formatDate(share.expiresAt)}
+                            Expira {formatDate(share.expiresAt)}
                           </span>
                         </div>
                         <Button
@@ -166,15 +166,15 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
                           size="icon"
                           className="h-6 w-6 text-destructive hover:bg-destructive/10"
                           onClick={() => handleRevokeShare(share.id)}
-                          title="Revoke link"
+                          title="Revocar enlace"
                         >
                           <HiTrash className="h-4 w-4" />
                         </Button>
                       </div>
-                      
+
                       <div className="flex items-center gap-2 rounded-md bg-muted p-2">
                         <HiLink className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                        <div className="flex-1 min-w-0"> 
+                        <div className="flex-1 min-w-0">
                           <p className="truncate text-xs font-mono text-muted-foreground w-full">
                             {share.shareUrl}
                           </p>
@@ -202,7 +202,7 @@ export default function ShareTaskDialog({ taskId, isOpen, onClose }: ShareTaskDi
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Done
+            Listo
           </Button>
         </DialogFooter>
       </DialogContent>

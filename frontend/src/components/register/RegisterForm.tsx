@@ -90,19 +90,19 @@ export function RegisterForm() {
     setError("");
 
     if (!isPasswordValid) {
-      setError("Password must meet all requirements");
+      setError("La contraseña debe cumplir todos los requisitos");
       setIsLoading(false);
       return;
     }
 
     if (!passwordsMatch) {
-      setError("Passwords do not match");
+      setError("Las contraseñas no coinciden");
       setIsLoading(false);
       return;
     }
 
     if (!formData.acceptTerms) {
-      setError("You must accept the terms and conditions");
+      setError("Debes aceptar los términos y condiciones");
       setIsLoading(false);
       return;
     }
@@ -120,13 +120,13 @@ export function RegisterForm() {
       if (response.access_token) {
         router.push("/dashboard");
       } else {
-        router.push("/login?message=Registration successful! Please log in.");
+        router.push("/login?message=¡Registro exitoso! Por favor, inicia sesión.");
       }
     } catch (err: any) {
       if (err.message) {
         setError(err.message);
       } else {
-        setError("An error occurred during registration. Please try again.");
+        setError("Ocurrió un error durante el registro. Por favor, inténtalo de nuevo.");
       }
     } finally {
       setIsLoading(false);
@@ -150,15 +150,14 @@ export function RegisterForm() {
               alt="Taskosaur Logo"
               width={50}
               height={50}
-              className={`size-10 ${
-                resolvedTheme === "light" ? " filter invert brightness-200" : ""
-              }`}
+              className={`size-10 ${resolvedTheme === "light" ? " filter invert brightness-200" : ""
+                }`}
             />
           </div>
         </div>
 
-        <h1 className="signup-form-title">Create Account</h1>
-        <p className="signup-form-subtitle">Join thousands of teams using Taskosaur</p>
+        <h1 className="signup-form-title">Crear Cuenta</h1>
+        <p className="signup-form-subtitle">Unéte a miles de equipos usando Taskosaur</p>
       </div>
 
       {/* Error Alert */}
@@ -171,7 +170,7 @@ export function RegisterForm() {
           <Alert variant="destructive" className="signup-error-alert">
             <AlertCircle className="signup-error-icon" />
             <AlertDescription className="font-medium">
-              <span className="signup-error-title">Registration Failed</span>
+              <span className="signup-error-title">Registro Fallido</span>
               <span className="signup-error-message">{error}</span>
             </AlertDescription>
           </Alert>
@@ -190,7 +189,7 @@ export function RegisterForm() {
           <div className="signup-field-container">
             <Label htmlFor="firstName" className="signup-field-label">
               <User className="signup-field-icon" />
-              <span>First Name</span>
+              <span>Nombre</span>
             </Label>
             <Input
               id="firstName"
@@ -200,13 +199,13 @@ export function RegisterForm() {
               required
               value={formData.firstName}
               onChange={handleChange}
-              placeholder="John"
+              placeholder="Juan"
               className="signup-input"
             />
           </div>
           <div className="signup-field-container">
             <Label htmlFor="lastName" className="signup-field-label-simple">
-              Last Name
+              Apellido
             </Label>
             <Input
               id="lastName"
@@ -216,7 +215,7 @@ export function RegisterForm() {
               required
               value={formData.lastName}
               onChange={handleChange}
-              placeholder="Doe"
+              placeholder="Pérez"
               className="signup-input"
             />
           </div>
@@ -231,7 +230,7 @@ export function RegisterForm() {
         >
           <Label htmlFor="email" className="signup-field-label">
             <Mail className="signup-field-icon" />
-            <span>Email Address</span>
+            <span>Correo Electrónico</span>
           </Label>
           <Input
             id="email"
@@ -241,7 +240,7 @@ export function RegisterForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            placeholder="john.doe@company.com"
+            placeholder="juan.perez@empresa.com"
             className="signup-input"
           />
         </motion.div>
@@ -255,7 +254,7 @@ export function RegisterForm() {
         >
           <Label htmlFor="password" className="signup-field-label">
             <Lock className="signup-field-icon" />
-            <span>Password</span>
+            <span>Contraseña</span>
           </Label>
           <div className="signup-password-container">
             <Input
@@ -266,10 +265,9 @@ export function RegisterForm() {
               required
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a strong password"
-              className={`signup-password-input ${
-                formData.password && !isPasswordValid ? "border-red-500 ring-1 ring-red-500" : ""
-              }`}
+              placeholder="Crea una contraseña segura"
+              className={`signup-password-input ${formData.password && !isPasswordValid ? "border-red-500 ring-1 ring-red-500" : ""
+                }`}
             />
             <Button
               type="button"
@@ -277,7 +275,7 @@ export function RegisterForm() {
               size="sm"
               onClick={() => setShowPassword(!showPassword)}
               className="signup-password-toggle"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
@@ -365,7 +363,7 @@ export function RegisterForm() {
         >
           <Label htmlFor="confirmPassword" className="signup-field-label">
             <Lock className="signup-field-icon" />
-            <span>Confirm Password</span>
+            <span>Confirmar Contraseña</span>
           </Label>
           <div className="signup-password-container">
             <Input
@@ -376,12 +374,11 @@ export function RegisterForm() {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Confirm your password"
-              className={`signup-password-input ${
-                formData.confirmPassword && !passwordsMatch
+              placeholder="Confirma tu contraseña"
+              className={`signup-password-input ${formData.confirmPassword && !passwordsMatch
                   ? "border-red-500 ring-1 ring-red-500"
                   : ""
-              }`}
+                }`}
             />
             <Button
               type="button"
@@ -389,7 +386,7 @@ export function RegisterForm() {
               size="sm"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="signup-password-toggle"
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
@@ -398,9 +395,8 @@ export function RegisterForm() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`signup-password-match ${
-                passwordsMatch ? "signup-password-match-valid" : "signup-password-match-invalid"
-              }`}
+              className={`signup-password-match ${passwordsMatch ? "signup-password-match-valid" : "signup-password-match-invalid"
+                }`}
             >
               <CheckCircle2
                 className={
@@ -409,7 +405,7 @@ export function RegisterForm() {
                     : "signup-password-match-icon-invalid"
                 }
               />
-              <span>{passwordsMatch ? "Passwords match" : "Passwords do not match"}</span>
+              <span>{passwordsMatch ? "Las contraseñas coinciden" : "Las contraseñas no coinciden"}</span>
             </motion.div>
           )}
         </motion.div>
@@ -435,13 +431,13 @@ export function RegisterForm() {
             className="signup-terms-checkbox"
           />
           <Label htmlFor="acceptTerms" className="signup-terms-label">
-            I agree to the{" "}
+            Acepto los{" "}
             <Link href="/terms-of-service" className="signup-terms-link">
-              Terms of Service
+              Términos de Servicio
             </Link>{" "}
             and{" "}
             <Link href="/privacy-policy" className="signup-terms-link">
-              Privacy Policy
+              Política de Privacidad
             </Link>
           </Label>
         </motion.div>
@@ -466,11 +462,11 @@ export function RegisterForm() {
             {isLoading ? (
               <>
                 <Loader2 className="signup-loading-spinner" />
-                Creating account...
+                Creando cuenta...
               </>
             ) : (
               <>
-                Create Account
+                Crear Cuenta
                 <ArrowRight className="signup-button-arrow" />
               </>
             )}
@@ -490,7 +486,7 @@ export function RegisterForm() {
             <div className="signup-divider-border" />
           </div>
           <div className="signup-divider-text-container">
-            <span className="signup-divider-text">Already have an account?</span>
+            <span className="signup-divider-text">¿Ya tienes una cuenta?</span>
           </div>
         </div>
       </motion.div>
@@ -503,7 +499,7 @@ export function RegisterForm() {
       >
         <Link href="/login">
           <Button variant="outline" className="signup-signin-button">
-            Log In to Existing Account
+            Iniciar Sesión en Cuenta Existente
             <ArrowRight className="signup-button-arrow" />
           </Button>
         </Link>
@@ -517,13 +513,13 @@ export function RegisterForm() {
         className="signup-footer"
       >
         <p className="signup-footer-text">
-          By creating an account, you agree to our{" "}
+          Al crear una cuenta, aceptas nuestros{" "}
           <Link href="/terms-of-service" className="signup-footer-link">
-            Terms of Service
+            Términos de Servicio
           </Link>{" "}
           and{" "}
           <Link href="/privacy-policy" className="signup-footer-link">
-            Privacy Policy
+            Política de Privacidad
           </Link>
         </p>
       </motion.div>

@@ -65,7 +65,7 @@ function ProjectSettingsContent() {
     toast.info("Refreshing project data...");
     const fetchProject = async () => {
       if (!workspaceSlug || !projectSlug || !isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         return;
       }
@@ -74,7 +74,7 @@ function ProjectSettingsContent() {
         setLoading(true);
         const workspaceData = await getWorkspaceBySlug(workspaceSlug as string);
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           return;
         }
@@ -83,7 +83,7 @@ function ProjectSettingsContent() {
         const projectData = workspaceProjects.find((p) => p.slug === projectSlug);
 
         if (!projectData) {
-          setError("Project not found");
+          setError("Proyecto no encontrado");
           setLoading(false);
           return;
         }
@@ -97,7 +97,7 @@ function ProjectSettingsContent() {
           visibility: projectData.visibility || "PRIVATE",
         });
       } catch (err) {
-        setError(err?.message ? err.message : "Failed to load project");
+        setError(err?.message ? err.message : "Error al cargar el proyecto");
       } finally {
         setLoading(false);
       }
@@ -120,8 +120,8 @@ function ProjectSettingsContent() {
     {
       name: "archive",
       type: "archive" as const,
-      label: "Archive Project",
-      description: "Archive this project and make it read-only",
+      label: "Archivar Proyecto",
+      description: "Archiva este proyecto y hazlo de solo lectura",
       handler: async () => {
         try {
           const result = await archiveProject(project.id);
@@ -139,11 +139,11 @@ function ProjectSettingsContent() {
               await router.replace('/');
             }
           } else {
-            toast.error("Failed to archive project");
+            toast.error("Error al archivar el proyecto");
           }
         } catch (error) {
           console.error("Archive error:", error);
-          toast.error("Failed to archive project");
+          toast.error("Error al archivar el proyecto");
           throw error;
         }
       },
@@ -152,8 +152,8 @@ function ProjectSettingsContent() {
     {
       name: "delete",
       type: "delete" as const,
-      label: "Delete Project",
-      description: "Permanently delete this project and all its data",
+      label: "Eliminar Proyecto",
+      description: "Elimina permanentemente este proyecto y todos sus datos",
       handler: async () => {
         try {
           await deleteProject(project.id);
@@ -172,7 +172,7 @@ function ProjectSettingsContent() {
           }
         } catch (error) {
           console.error("Delete error:", error);
-          toast.error("Failed to delete project");
+          toast.error("Error al eliminar el proyecto");
           throw error;
         }
       },
@@ -184,7 +184,7 @@ function ProjectSettingsContent() {
     let isActive = true;
     const fetchProject = async () => {
       if (!workspaceSlug || !projectSlug || !isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         router.push("/login");
         return;
@@ -197,7 +197,7 @@ function ProjectSettingsContent() {
         if (!isActive) return;
 
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           router.replace("/workspaces");
           return;
@@ -209,7 +209,7 @@ function ProjectSettingsContent() {
         if (!isActive) return;
 
         if (!projectData) {
-          setError("Project not found");
+          setError("Proyecto no encontrado");
           setLoading(false);
           const safeSlug = sanitizeSlug(workspaceSlug);
           if (!safeSlug) {
@@ -237,7 +237,7 @@ function ProjectSettingsContent() {
       } catch (err) {
         if (!isActive) return;
 
-        const errorMessage = err?.message ? err.message : "Failed to load project";
+        const errorMessage = err?.message ? err.message : "Error al cargar el proyecto";
         setError(errorMessage);
 
         if (errorMessage.includes("not found") || errorMessage.includes("404")) {
@@ -273,7 +273,7 @@ function ProjectSettingsContent() {
 
     // Validate slug format
     if (formData.slug && !/^[a-z0-9-]+$/.test(formData.slug)) {
-      toast.error("Project slug can only contain lowercase letters, numbers, and hyphens");
+      toast.error("El slug del proyecto solo puede contener letras minúsculas, números y guiones");
       return;
     }
 
@@ -303,9 +303,9 @@ function ProjectSettingsContent() {
         }
       }
 
-      toast.success("Project settings updated successfully!");
+      toast.success("¡Ajustes del proyecto actualizados con éxito!");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to update project");
+      toast.error(err instanceof Error ? err.message : "Error al actualizar el proyecto");
     } finally {
       setSaving(false);
     }
@@ -361,15 +361,15 @@ function ProjectSettingsContent() {
 
   const tabs = [
     { id: "general", name: "General", icon: HiCog },
-    { id: "email", name: "Email Setup", icon: HiEnvelope },
-    { id: "rules", name: "Rules", icon: IoWarning },
+    { id: "email", name: "Configuración de Email", icon: HiEnvelope },
+    { id: "rules", name: "Reglas", icon: IoWarning },
   ];
 
   return (
     <div className="dashboard-container space-y-6">
       <PageHeader
-        title="Project Settings"
-        description="Manage your project configuration and preferences"
+        title="Ajustes del Proyecto"
+        description="Gestiona la configuración y preferencias de tu proyecto"
       />
 
       {success && (
@@ -397,11 +397,10 @@ function ProjectSettingsContent() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex cursor-pointer items-center gap-2 px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ease-in-out ${
-                      isActive
-                        ? "border-b-[var(--primary)] text-[var(--primary)]"
-                        : "border-b-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                    }`}
+                    className={`flex cursor-pointer items-center gap-2 px-3 py-2 border-b-2 text-sm font-medium transition-all duration-200 ease-in-out ${isActive
+                      ? "border-b-[var(--primary)] text-[var(--primary)]"
+                      : "border-b-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                      }`}
                   >
                     <IconComponent className="w-4 h-4" />
                     <span>{tab.name}</span>
@@ -418,45 +417,45 @@ function ProjectSettingsContent() {
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
                       <Cog className="w-5 h-5 mr-2" />
-                      General Information
+                      Información General
                     </CardTitle>
                     <p className="text-sm text-[var(--muted-foreground)]">
-                      Manage general information of your project
+                      Gestiona la información general de tu proyecto
                     </p>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Project Name</Label>
+                      <Label htmlFor="name">Nombre del Proyecto</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
-                        placeholder="Enter project name"
+                        placeholder="Ingresa el nombre del proyecto"
                         disabled={saving || !hasAccess}
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="slug">Project Slug</Label>
+                      <Label htmlFor="slug">Slug del Proyecto</Label>
                       <Input
                         id="slug"
                         value={formData.slug}
                         onChange={(e) => handleInputChange("slug", e.target.value)}
-                        placeholder="project-slug"
+                        placeholder="slug-del-proyecto"
                         disabled={saving || !hasAccess}
                       />
                       <p className="text-xs text-[var(--muted-foreground)]">
-                        Used in URLs. Only lowercase letters, numbers, and hyphens are allowed.
+                        Se usa en las URLs. Solo se permiten letras minúsculas, números y guiones.
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="description">Description</Label>
+                      <Label htmlFor="description">Descripción</Label>
                       <Textarea
                         id="description"
                         value={formData.description}
                         onChange={(e) => handleInputChange("description", e.target.value)}
-                        placeholder="Describe your project..."
+                        placeholder="Describe tu proyecto..."
                         rows={3}
                         disabled={saving || !hasAccess}
                       />
@@ -465,7 +464,7 @@ function ProjectSettingsContent() {
                     <div className="grid grid-cols-2 gap-4">
                       {/* Status */}
                       <div className="space-y-2">
-                        <Label htmlFor="status">Status</Label>
+                        <Label htmlFor="status">Estado</Label>
                         <Select
                           value={formData.status}
                           onValueChange={(value) => handleInputChange("status", value)}
@@ -473,24 +472,23 @@ function ProjectSettingsContent() {
                         >
                           <SelectTrigger
                             id="status"
-                            className={`w-full border border-[var(--border)] ${
-                              !hasAccess || saving ? "cursor-not-allowed" : "cursor-pointer"
-                            }`}
+                            className={`w-full border border-[var(--border)] ${!hasAccess || saving ? "cursor-not-allowed" : "cursor-pointer"
+                              }`}
                           >
-                            <SelectValue placeholder="Select status" />
+                            <SelectValue placeholder="Seleccionar estado" />
                           </SelectTrigger>
                           <SelectContent className="bg-[var(--card)] border border-[var(--border)] ">
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="ACTIVE">
-                              Active
+                              Activo
                             </SelectItem>
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="ON_HOLD">
-                              On Hold
+                              En Espera
                             </SelectItem>
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="COMPLETED">
-                              Completed
+                              Completado
                             </SelectItem>
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="ARCHIVED">
-                              Archived
+                              Archivado
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -498,7 +496,7 @@ function ProjectSettingsContent() {
 
                       {/* Visibility */}
                       <div className="space-y-2">
-                        <Label htmlFor="visibility">Visibility</Label>
+                        <Label htmlFor="visibility">Visibilidad</Label>
                         <Select
                           value={formData.visibility}
                           onValueChange={(value) => handleInputChange("visibility", value)}
@@ -506,27 +504,25 @@ function ProjectSettingsContent() {
                         >
                           <SelectTrigger
                             id="visibility"
-                            className={`w-full border border-[var(--border)] ${
-                              !hasAccess || saving ? "cursor-not-allowed" : "cursor-pointer"
-                            }`}
+                            className={`w-full border border-[var(--border)] ${!hasAccess || saving ? "cursor-not-allowed" : "cursor-pointer"
+                              }`}
                           >
-                            <SelectValue placeholder="Select visibility" />
+                            <SelectValue placeholder="Seleccionar visibilidad" />
                           </SelectTrigger>
                           <SelectContent className="bg-[var(--card)] border border-[var(--border)]">
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="PRIVATE">
-                              Private - Only members
+                              Privado - Solo miembros
                             </SelectItem>
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="INTERNAL">
-                              Internal - Workspace members can view
+                              Interno - Miembros del espacio de trabajo pueden ver
                             </SelectItem>
                             <SelectItem className="hover:bg-[var(--hover-bg)]" value="PUBLIC">
-                              Public - Anyone can view
+                              Público - Cualquiera puede ver
                             </SelectItem>
                           </SelectContent>
                         </Select>
                         <p className="text-xs text-[var(--muted-foreground)]">
-                          Control who can access this project. Members always have full access based
-                          on their role.
+                          Controla quién puede acceder a este proyecto. Los miembros siempre tienen acceso completo basado en su rol.
                         </p>
                       </div>
                     </div>
@@ -538,7 +534,7 @@ function ProjectSettingsContent() {
                           disabled={saving || !formData.name.trim() || !hasAccess}
                           primary
                         >
-                          {saving ? "Saving..." : "Save Changes"}
+                          {saving ? "Guardando..." : "Guardar Cambios"}
                         </ActionButton>
                       </div>
                     )}
@@ -549,9 +545,9 @@ function ProjectSettingsContent() {
                   <div className="flex items-start gap-3">
                     <HiExclamationTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
                     <div className="flex-1">
-                      <h4 className="font-medium text-red-800 dark:text-red-400">Danger Zone</h4>
+                      <h4 className="font-medium text-red-800 dark:text-red-400">Zona de Peligro</h4>
                       <p className="text-sm text-red-700 dark:text-red-500 mb-4">
-                        These actions cannot be undone. Please proceed with caution.
+                        Estas acciones no se pueden deshacer. Por favor procede con precaución.
                       </p>
                       <DangerZoneModal
                         entity={{
@@ -567,7 +563,7 @@ function ProjectSettingsContent() {
                           className="bg-red-600 hover:bg-red-700 text-white"
                           disabled={!hasAccess}
                         >
-                          Delete Project
+                          Eliminar Proyecto
                         </ActionButton>
                       </DangerZoneModal>
                     </div>

@@ -36,15 +36,15 @@ interface ProjectsContentProps {
 }
 
 const formatDate = (dateString: string) => {
-  if (!dateString) return "Unknown";
+  if (!dateString) return "Desconocido";
   try {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("es-419", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
   } catch {
-    return "Unknown";
+    return "Desconocido";
   }
 };
 
@@ -135,15 +135,15 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
   const formatStatus = (status: string) => {
     switch (status?.toUpperCase()) {
       case "ACTIVE":
-        return "Active";
+        return "Activo";
       case "PLANNING":
-        return "Planning";
+        return "Planificación";
       case "ON_HOLD":
-        return "On Hold";
+        return "En espera";
       case "COMPLETED":
-        return "Completed";
+        return "Completado";
       default:
-        return "Active";
+        return "Activo";
     }
   };
 
@@ -200,7 +200,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
     () => [
       createSection({
         id: "status",
-        title: "Status",
+        title: "Estado",
         icon: CheckSquare,
         data: statusFilters,
         selectedIds: selectedStatuses,
@@ -213,7 +213,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
       }),
       createSection({
         id: "priority",
-        title: "Priority",
+        title: "Prioridad",
         icon: Flame,
         data: priorityFilters,
         selectedIds: selectedPriorities,
@@ -318,17 +318,16 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
       } catch (error: any) {
         if (requestIdRef.current === requestId && isMountedRef.current) {
           if (error.status === 403) {
-            toast.error(error?.message || "User not authenticated");
+            toast.error(error?.message || "Usuario no autenticado");
             router.back();
             return;
           }
           if (error.message?.includes("401") || error.message?.includes("Unauthorized")) {
-            toast.error("Authentication required. Please log in again.");
+            toast.error("Autenticación requerida. Por favor inicia sesión nuevamente.");
           } else {
             toast.error(
-              `Failed to load ${
-                contextType === "workspace" ? "workspace" : "organization"
-              } projects`
+              `Error al cargar los proyectos ${contextType === "workspace" ? "del workspace" : "de la organización"
+              }`
             );
           }
         }
@@ -452,10 +451,10 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
     try {
       await refreshProjects();
       await fetchData(1, true);
-      toast.success("Project created successfully!");
+      toast.success("¡Proyecto creado exitosamente!");
     } catch (error) {
       console.error("Error refreshing projects after creation:", error);
-      toast.error("Project created but failed to refresh list");
+      toast.error("Proyecto creado pero falló al actualizar la lista");
     }
   }, [refreshProjects]);
 
@@ -476,7 +475,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
   }
 
   const displayTitle =
-    contextType === "workspace" && workspace ? `${workspace.name} Projects` : title;
+    contextType === "workspace" && workspace ? `${workspace.name} - Proyectos` : title;
 
   return (
     <div className="dashboard-container">
@@ -494,7 +493,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                     <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                     <Input
                       type="text"
-                      placeholder="Search projects..."
+                      placeholder="Buscar proyectos..."
                       value={searchInput}
                       onChange={handleSearchChange}
                       className="pl-10 rounded-md border border-[var(--border)]"
@@ -514,13 +513,13 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                     )}
                   </div>
                   <div className="flex-shrink-0">
-                    <Tooltip content="Advanced Filters" position="top" color="primary">
+                    <Tooltip content="Filtros Avanzados" position="top" color="primary">
                       <FilterDropdown
                         sections={filterSections}
-                        title="Advanced Filters"
+                        title="Filtros Avanzados"
                         activeFiltersCount={totalActiveFilters}
                         onClearAllFilters={clearAllFilters}
-                        placeholder="Filter projects..."
+                        placeholder="Filtrar proyectos..."
                         dropdownWidth="w-56"
                         showApplyButton={false}
                       />
@@ -536,7 +535,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                       onClick={() => setIsNewProjectModalOpen(true)}
                       className="w-full"
                     >
-                      Create Project
+                      Crear Proyecto
                     </ActionButton>
                   </div>
                 )}
@@ -545,7 +544,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
               {hasAccess && (
                 <div className="hidden md:block">
                   <ActionButton primary showPlusIcon onClick={() => setIsNewProjectModalOpen(true)}>
-                    Create Project
+                    Crear Proyecto
                   </ActionButton>
                 </div>
               )}
@@ -569,13 +568,12 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
               searchInput || totalActiveFilters > 0 ? (
                 <EmptyState
                   icon={<HiSearch size={24} />}
-                  title="No projects found"
-                  description={`No projects match your current search${
-                    totalActiveFilters > 0 ? " and filters" : ""
-                  }. Try adjusting your criteria.`}
+                  title="No se encontraron proyectos"
+                  description={`No hay proyectos que coincidan con tu búsqueda${totalActiveFilters > 0 ? " y filtros" : ""
+                    }. Intenta ajustar tus criterios.`}
                   action={
                     <ActionButton primary onClick={clearAllFilters}>
-                      Clear Filters
+                      Limpiar Filtros
                     </ActionButton>
                   }
                 />
@@ -591,7 +589,7 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                         showPlusIcon
                         onClick={() => setIsNewProjectModalOpen(true)}
                       >
-                        Create Project
+                        Crear Proyecto
                       </ActionButton>
                     )
                   }
@@ -618,13 +616,13 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                         footer={
                           <div className="flex items-center justify-between w-full">
                             <div className="flex items-center gap-4">
-                              <Tooltip content="Number of Tasks" position="top" color="primary">
+                              <Tooltip content="Número de Tareas" position="top" color="primary">
                                 <span className="flex items-center gap-1">
                                   <HiClipboardDocumentList size={12} />
                                   {project._count?.tasks || 0}
                                 </span>
                               </Tooltip>
-                              <Tooltip content="Start Date" position="top" color="primary">
+                              <Tooltip content="Fecha de Inicio" position="top" color="primary">
                                 <span className="flex items-center gap-1">
                                   <HiCalendarDays size={12} />
                                   {formatDate(project.updatedAt)}
@@ -652,11 +650,11 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                         {isFetching ? (
                           <>
                             <div className="w-4 h-4 border-2 border-[var(--primary)] border-t-transparent rounded-full animate-spin" />
-                            <span>Loading...</span>
+                            <span>Cargando...</span>
                           </>
                         ) : (
                           <>
-                            <span>Load More</span>
+                            <span>Cargar Más</span>
                             <HiChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
                           </>
                         )}
@@ -669,13 +667,11 @@ const ProjectsContent: React.FC<ProjectsContentProps> = ({
                 {projects.length > 0 && (
                   <div className="fixed bottom-0 left-[50%] md:left-[55%] -translate-x-1/2 w-full min-h-[48px] flex items-center justify-center pb-4 pointer-events-none">
                     <p className="text-sm text-[var(--muted-foreground)] pointer-events-auto">
-                      Showing {projects.length} project
-                      {projects.length !== 1 ? "s" : ""}
-                      {searchInput && ` matching "${searchInput}"`}
+                      Mostrando {projects.length} proyecto{projects.length !== 1 ? "s" : ""}
+                      {searchInput && ` que coinciden con "${searchInput}"`}
                       {totalActiveFilters > 0 &&
-                        ` with ${totalActiveFilters} filter${
-                          totalActiveFilters !== 1 ? "s" : ""
-                        } applied`}
+                        ` con ${totalActiveFilters} filtro${totalActiveFilters !== 1 ? "s" : ""
+                        } aplicado${totalActiveFilters !== 1 ? "s" : ""}`}
                     </p>
                   </div>
                 )}

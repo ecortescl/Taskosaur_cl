@@ -46,7 +46,7 @@ const SearchManager = () => {
       if (trimmed.length < 2) {
         setResults([]);
         setSelectedIndex(0);
-        setError("Query must be at least 2 characters long");
+        setError("La consulta debe tener al menos 2 caracteres");
         setTotalResults(0);
         return;
       }
@@ -60,7 +60,7 @@ const SearchManager = () => {
         setTotalResults(response?.total || (response?.results?.length ?? 0));
         setSelectedIndex(0);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Search failed");
+        setError(err instanceof Error ? err.message : "Búsqueda fallida");
         setResults([]);
         setTotalResults(0);
       } finally {
@@ -256,11 +256,32 @@ const SearchManager = () => {
     }
   };
 
+  const getResultTypeText = (type) => {
+    switch (type) {
+      case "workspace":
+        return "Workspace";
+      case "project":
+        return "Proyecto";
+      case "task":
+        return "Tarea";
+      case "user":
+        return "Usuario";
+      case "sprint":
+        return "Sprint";
+      case "comment":
+        return "Comentario";
+      case "label":
+        return "Etiqueta";
+      default:
+        return type;
+    }
+  };
+
   const TriggerButton = () => (
-    <Tooltip content="Search" position="bottom" color="primary">
+    <Tooltip content="Buscar" position="bottom" color="primary">
       <Button onClick={openSearch} className="header-mode-toggle shadow-none">
         <HiMagnifyingGlass className="header-mode-toggle-icon" />
-        <span className="hidden max-[530px]:inline-block text-sm font-medium">Search</span>
+        <span className="hidden max-[530px]:inline-block text-sm font-medium">Buscar</span>
       </Button>
     </Tooltip>
   );
@@ -282,7 +303,7 @@ const SearchManager = () => {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search anything..."
+            placeholder="Buscar cualquier cosa..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 bg-transparent text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none"
@@ -302,7 +323,7 @@ const SearchManager = () => {
                 setError(null);
               }}
               className="ml-2 p-1 rounded-lg hover:bg-[var(--accent)]/50 transition-colors duration-200 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-              aria-label="Clear search"
+              aria-label="Limpiar búsqueda"
             >
               <HiXMark className="w-4 h-4" />
             </button>
@@ -311,20 +332,19 @@ const SearchManager = () => {
 
         {/* Results Section */}
         <div
-          className={`max-h-80 overflow-y-auto flex-1 ${
-            loading ||
+          className={`max-h-80 overflow-y-auto flex-1 ${loading ||
             error ||
             (searchTerm && !loading && !error && results.length === 0) ||
             (searchTerm === "" && !loading && !error)
-              ? "flex flex-col justify-center items-center"
-              : ""
-          }`}
+            ? "flex flex-col justify-center items-center"
+            : ""
+            }`}
         >
           {/* Loading state */}
           {loading && (
             <div className="flex flex-col items-center justify-center w-full h-full px-4 py-8 text-center text-[var(--muted-foreground)]">
               <div className="text-4xl mb-2 opacity-50">⏳</div>
-              <div className="text-sm font-medium mb-1">Searching...</div>
+              <div className="text-sm font-medium mb-1">Buscando...</div>
             </div>
           )}
           {/* Error state */}
@@ -338,8 +358,8 @@ const SearchManager = () => {
           {searchTerm && !loading && !error && results.length === 0 && (
             <div className="flex flex-col items-center justify-center w-full h-full px-4 py-8 text-center text-[var(--muted-foreground)]">
               <div className="text-4xl mb-2 opacity-50">🔍</div>
-              <div className="text-sm font-medium mb-1">No results found</div>
-              <div className="text-xs">Try a different search term</div>
+              <div className="text-sm font-medium mb-1">No se encontraron resultados</div>
+              <div className="text-xs">Intenta con otro término de búsqueda</div>
             </div>
           )}
           {/* Results list */}
@@ -348,11 +368,10 @@ const SearchManager = () => {
               {paginatedResults.map((result, index) => (
                 <div
                   key={result.id || index}
-                  className={`flex items-center px-4 py-1 cursor-pointer transition-all duration-150 border-l-4 ${
-                    index === selectedIndex
-                      ? "bg-[var(--accent)] border-[var(--primary)] text-[var(--accent-foreground)]"
-                      : "border-transparent hover:bg-[var(--accent)]/30 text-[var(--foreground)]"
-                  }`}
+                  className={`flex items-center px-4 py-1 cursor-pointer transition-all duration-150 border-l-4 ${index === selectedIndex
+                    ? "bg-[var(--accent)] border-[var(--primary)] text-[var(--accent-foreground)]"
+                    : "border-transparent hover:bg-[var(--accent)]/30 text-[var(--foreground)]"
+                    }`}
                   onClick={() => handleResultSelect(result)}
                   style={{ minHeight: "32px" }}
                 >
@@ -366,7 +385,7 @@ const SearchManager = () => {
                     <div className="text-[13px] opacity-70 truncate">
                       {result.context?.workspace?.name && `${result.context.workspace.name} • `}
                       {result.context?.project?.name && `${result.context.project.name} • `}
-                      {result.type}
+                      {getResultTypeText(result.type)}
                     </div>
                   </div>
                   <div className="text-xs opacity-50 ml-2 cursor-pointer">
@@ -381,16 +400,16 @@ const SearchManager = () => {
             <div className="flex flex-col items-center justify-center w-full h-full px-4 py-8 text-center text-[var(--muted-foreground)]">
               <div className="text-5xl mb-2 opacity-60">✨</div>
               <div className="text-base font-medium mb-1 text-[var(--foreground)]">
-                Spotlight Search
+                Búsqueda Rápida
               </div>
-              <div className="text-xs mb-2">Start typing to search across your workspace</div>
+              <div className="text-xs mb-2">Comienza a escribir para buscar en tu espacio de trabajo</div>
               <div className="text-xs opacity-50 flex items-center gap-2 mt-2">
                 <span className="inline-flex items-center gap-1 bg-[var(--muted)]/30 px-1 py-0.5 rounded">
-                  <span>⌘K to open</span>
+                  <span>⌘K para abrir</span>
                 </span>
                 <span className="mx-1">•</span>
                 <span className="inline-flex items-center gap-1 bg-[var(--muted)]/30 px-1 py-0.5 rounded">
-                  <span>ESC to close</span>
+                  <span>ESC para cerrar</span>
                 </span>
               </div>
             </div>
@@ -408,7 +427,7 @@ const SearchManager = () => {
                 className="px-2 py-1 text-xs rounded bg-[var(--muted)]/30 hover:bg-[var(--muted)]/50 disabled:opacity-50"
                 onClick={() => setPage(page - 1)}
                 disabled={page === 1 || loading}
-                aria-label="Previous page"
+                aria-label="Página anterior"
               >
                 ←
               </button>
@@ -421,7 +440,7 @@ const SearchManager = () => {
                 className="px-2 py-1 text-xs rounded bg-[var(--muted)]/30 hover:bg-[var(--muted)]/50 disabled:opacity-50"
                 onClick={() => setPage(page + 1)}
                 disabled={page === totalPages || loading}
-                aria-label="Next page"
+                aria-label="Página siguiente"
               >
                 →
               </button>
@@ -432,7 +451,7 @@ const SearchManager = () => {
 
           <span className="flex items-center gap-1">
             <span className="bg-[var(--muted)]/30 px-1 py-0.5 rounded">ESC</span>
-            close
+            Cerrar
           </span>
         </div>
       </div>

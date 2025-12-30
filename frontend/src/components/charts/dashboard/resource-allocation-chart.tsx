@@ -12,13 +12,13 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  ADMIN: { label: "Admin", color: "#DC2626" },
-  MANAGER: { label: "Manager", color: "#EA580C" },
-  MEMBER: { label: "Member", color: "#3B82F6" },
-  GUEST: { label: "Guest", color: "#10B981" },
+  ADMIN: { label: "Administrador", color: "#DC2626" },
+  MANAGER: { label: "Gerente", color: "#EA580C" },
+  MEMBER: { label: "Miembro", color: "#3B82F6" },
+  GUEST: { label: "Invitado", color: "#10B981" },
   // Add any other roles your system might have
-  CONTRIBUTOR: { label: "Contributor", color: "#8B5CF6" },
-  VIEWER: { label: "Viewer", color: "#94A3B8" },
+  CONTRIBUTOR: { label: "Colaborador", color: "#8B5CF6" },
+  VIEWER: { label: "Visualizador", color: "#94A3B8" },
 };
 
 interface ResourceAllocationChartProps {
@@ -38,7 +38,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="border-0 bg-[var(--accent)] p-3 border-gray-200 rounded-lg shadow-md">
         <p className="font-semibold">{config?.label || role}</p>
-        <p className="text-sm">{`Count: ${payload[0].value}`}</p>
+        <p className="text-sm">{`Cantidad: ${payload[0].value}`}</p>
       </div>
     );
   }
@@ -72,8 +72,8 @@ export function ResourceAllocationChart({ data }: ResourceAllocationChartProps) 
 
   return (
     <ChartWrapper
-      title="Resource Allocation"
-      description="Team member distribution by role"
+      title="Asignación de Recursos"
+      description="Distribución de miembros por rol"
       config={chartConfig}
       className="border-[var(--border)]"
     >

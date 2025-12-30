@@ -44,7 +44,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         <CardContent>
           <div className="taskcard-due-date">
             <HiClock size={12} className="taskcard-due-icon" />
-            Due {new Date(task.dueDate).toLocaleDateString()}
+            Vence el {new Date(task.dueDate).toLocaleDateString()}
           </div>
         </CardContent>
       </Card>

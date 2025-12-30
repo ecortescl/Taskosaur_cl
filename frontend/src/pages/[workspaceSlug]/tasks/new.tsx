@@ -52,15 +52,15 @@ function NewTaskPageContent() {
         <div className="max-w-7xl mx-auto p-6">
           <Alert variant="destructive">
             <HiExclamationTriangle className="h-4 w-4" />
-            <AlertTitle>Authentication Required</AlertTitle>
+            <AlertTitle>Autenticación Requerida</AlertTitle>
             <AlertDescription>
-              Please log in to create a task.
+              Por favor inicia sesión para crear una tarea.
               <div className="mt-4">
                 <Link
                   href="/auth/login"
                   className="text-[var(--primary)] hover:text-[var(--primary)]/80 underline"
                 >
-                  Go to Login
+                  Ir al inicio de sesión
                 </Link>
               </div>
             </AlertDescription>

@@ -33,21 +33,21 @@ const getPriorityConfig = (priority: string) => {
         bgClass:
           "bg-[var(--destructive)]/10 text-[var(--destructive)] border-[var(--destructive)]/20",
         iconClass: "text-[var(--destructive)]",
-        label: "High Priority",
+        label: "Prioridad Alta",
       };
     case "MEDIUM":
       return {
         color: "bg-amber-500",
         bgClass: "bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400",
         iconClass: "text-amber-500",
-        label: "Medium Priority",
+        label: "Prioridad Media",
       };
     case "LOW":
       return {
         color: "bg-green-500",
         bgClass: "bg-green-500/10 text-green-600 border-green-500/20 dark:text-green-400",
         iconClass: "text-green-500",
-        label: "Low Priority",
+        label: "Prioridad Baja",
       };
     default:
       return {
@@ -66,10 +66,10 @@ const formatDueDate = (dateString: string) => {
     const diffTime = date.getTime() - now.getTime();
     const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
 
-    if (diffHours < 0) return "Overdue";
-    if (diffHours < 24) return `${diffHours}h left`;
+    if (diffHours < 0) return "Vencida";
+    if (diffHours < 24) return `faltan ${diffHours}h`;
 
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("es-419", {
       month: "short",
       day: "numeric",
       hour: "2-digit",
@@ -108,14 +108,13 @@ const TaskAgendaItem: React.FC<TaskAgendaItemProps> = ({ task, onClick }) => {
         transition-all duration-200 ease-in-out
         transform hover:scale-[1.01] active:scale-[0.99]
         focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-opacity-50
-        ${
-          isUrgent
-            ? "border-red-200 bg-red-50/30 dark:border-red-800/30 dark:bg-red-900/5 hover:bg-red-50 dark:hover:bg-red-900/10 hover:border-red-300 dark:hover:border-red-700"
-            : "border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)]/50 hover:border-[var(--primary)]/30 hover:shadow-sm"
+        ${isUrgent
+          ? "border-red-200 bg-red-50/30 dark:border-red-800/30 dark:bg-red-900/5 hover:bg-red-50 dark:hover:bg-red-900/10 hover:border-red-300 dark:hover:border-red-700"
+          : "border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)]/50 hover:border-[var(--primary)]/30 hover:shadow-sm"
         }
       `}
-      aria-label={`Open task: ${task.title}`}
-      title={`Click to view task details`}
+      aria-label={`Abrir tarea: ${task.title}`}
+      title={`Haz clic para ver los detalles de la tarea`}
     >
       <div className="flex items-center gap-3 w-full">
         <div className={`w-1.5 h-1.5 rounded-full ${priorityConfig.color} flex-shrink-0`} />
@@ -146,12 +145,12 @@ const TaskAgendaItem: React.FC<TaskAgendaItemProps> = ({ task, onClick }) => {
               <>
                 <Clock className="w-2.5 h-2.5 text-[var(--muted-foreground)]" />
                 <span className="text-[10px] text-[var(--muted-foreground)]">
-                  Due: {formatDueDate(task.dueDate)}
+                  Vencimiento: {formatDueDate(task.dueDate)}
                 </span>
               </>
             ) : (
               <span className="text-[10px] text-[var(--muted-foreground)] opacity-50">
-                No due date
+                Sin fecha de vencimiento
               </span>
             )}
           </div>
@@ -192,7 +191,7 @@ export function TodayAgendaDialog({
               </div>
               <div>
                 <DialogTitle className="text-base font-bold text-[var(--foreground)] flex items-center gap-2">
-                  Today&apos;s Agenda
+                  Agenda de Hoy
                   <Sparkles className="w-4 h-4 text-[var(--primary)]" />
                 </DialogTitle>
                 <DialogDescription className="text-xs text-[var(--muted-foreground)]">
@@ -217,15 +216,15 @@ export function TodayAgendaDialog({
                   <CheckCircle className="w-6 h-6 text-green-500" />
                 </div>
                 <h4 className="text-base font-semibold text-[var(--foreground)] mb-1">
-                  All clear for today!
+                  ¡Todo despejado por hoy!
                 </h4>
                 <p className="text-sm text-[var(--muted-foreground)] mb-3 max-w-xs mx-auto">
-                  No tasks scheduled. You&apos;re all caught up!
+                  No hay tareas programadas. ¡Estás al día!
                 </p>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                   <Sparkles className="w-3 h-3 text-green-600 dark:text-green-400" />
                   <span className="text-xs font-medium text-green-700 dark:text-green-400">
-                    Great job staying organized!
+                    ¡Buen trabajo manteniéndote organizado!
                   </span>
                 </div>
               </div>

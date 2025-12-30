@@ -13,10 +13,10 @@ export default function WorkspaceProjectsPage() {
       contextType="workspace"
       contextId={workspaceSlug as string}
       workspaceSlug={workspaceSlug as string}
-      title="Projects"
-      description="Manage and organize projects within this workspace."
-      emptyStateTitle="No projects found"
-      emptyStateDescription="Create your first project to get started with organizing your tasks and collaborating with your team."
+      title="Proyectos"
+      description="Administra y organiza tus proyectos dentro de este espacio de trabajo."
+      emptyStateTitle="No se encontraron proyectos"
+      emptyStateDescription="Crea tu primer proyecto para comenzar a organizar tus tareas y colaborar con tu equipo."
       enablePagination={false}
       generateProjectLink={(project, ws) =>
         isSafeSlug(ws) && isSafeSlug(project?.slug)

@@ -179,13 +179,13 @@ const TaskDescription: React.FC<TaskDescriptionProps> = ({
         {editorMode === "richtext" && (
           <div className="flex items-center gap-2 px-3 py-2 text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-md">
             <HiExclamationTriangle className="size-4 flex-shrink-0" />
-            <span>Interactive checkboxes only work in Markdown mode. Use <code className="px-1 py-0.5 bg-amber-100 dark:bg-amber-900/50 rounded">- [ ]</code> syntax for task lists.</span>
+            <span>Las casillas de verificación interactivas solo funcionan en modo Markdown. Usa la sintaxis <code className="px-1 py-0.5 bg-amber-100 dark:bg-amber-900/50 rounded">- [ ]</code> para listas de tareas.</span>
           </div>
         )}
         <DualModeEditor
           value={value || ""}
           onChange={onChange}
-          placeholder="Describe the task in detail..."
+          placeholder="Describe la tarea en detalle..."
           height={420}
           colorMode={colorMode}
           onModeChange={handleModeChange}
@@ -204,7 +204,7 @@ const TaskDescription: React.FC<TaskDescriptionProps> = ({
       ) : value ? (
         <MarkdownWithInteractiveTasks md={value} />
       ) : (
-        <div>No description provided</div>
+        <div>No se proporcionó descripción</div>
       )}
     </div>
   );

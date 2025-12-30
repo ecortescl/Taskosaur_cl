@@ -12,11 +12,11 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  low: { label: "Low Workload", color: "#10B981" },
-  medium: { label: "Medium Workload", color: "#F59E0B" },
-  high: { label: "High Workload", color: "#EF4444" },
-  assigned: { label: "Assigned Tasks", color: "#3B82F6" },
-  reported: { label: "Reported Tasks", color: "#8B5CF6" },
+  low: { label: "Carga Baja", color: "#10B981" },
+  medium: { label: "Carga Media", color: "#F59E0B" },
+  high: { label: "Carga Alta", color: "#EF4444" },
+  assigned: { label: "Tareas Asignadas", color: "#3B82F6" },
+  reported: { label: "Tareas Reportadas", color: "#8B5CF6" },
 };
 
 interface MemberWorkloadChartProps {
@@ -36,10 +36,10 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="border-0 bg-[var(--accent)] p-3 border-gray-200 rounded-lg shadow-md">
         <p className="font-semibold">{data.memberName}</p>
-        <p className="text-sm text-blue-600">{`Assigned Tasks: ${data.activeTasks}`}</p>
-        <p className="text-sm text-purple-600">{`Reported Tasks: ${data.reportedTasks}`}</p>
+        <p className="text-sm text-blue-600">{`Tareas Asignadas: ${data.activeTasks}`}</p>
+        <p className="text-sm text-purple-600">{`Tareas Reportadas: ${data.reportedTasks}`}</p>
         <p className="text-sm text-gray-500">
-          {`Workload: ${data.activeTasks > 10 ? "High" : data.activeTasks > 5 ? "Medium" : "Low"}`}
+          {`Carga de Trabajo: ${data.activeTasks > 10 ? "Alta" : data.activeTasks > 5 ? "Media" : "Baja"}`}
         </p>
       </div>
     );
@@ -68,8 +68,8 @@ export function MemberWorkloadChart({ data }: MemberWorkloadChartProps) {
 
   return (
     <ChartWrapper
-      title="Member Workload Distribution"
-      description="Active tasks vs reported tasks by member"
+      title="Distribución de Carga de Trabajo de Miembros"
+      description="Tareas activas vs tareas reportadas por miembro"
       config={chartConfig}
       className="border-[var(--border)]"
     >
@@ -99,7 +99,7 @@ export function MemberWorkloadChart({ data }: MemberWorkloadChartProps) {
           <Area
             type="monotone"
             dataKey="activeTasks"
-            name="Assigned Tasks"
+            name="Tareas Asignadas"
             stroke="#3B82F6"
             fillOpacity={1}
             fill="url(#colorAssigned)"
@@ -108,7 +108,7 @@ export function MemberWorkloadChart({ data }: MemberWorkloadChartProps) {
           <Area
             type="monotone"
             dataKey="reportedTasks"
-            name="Reported Tasks"
+            name="Tareas Reportadas"
             stroke="#8B5CF6"
             fillOpacity={1}
             fill="url(#colorReported)"

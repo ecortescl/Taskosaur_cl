@@ -60,19 +60,19 @@ const getPriorityColor = (priority: string) => {
 };
 
 const getCategoryFromDescription = (description?: string) => {
-  if (!description) return { name: "Task", color: "#6b7280" };
+  if (!description) return { name: "Tarea", color: "#6b7280" };
 
   const desc = description.toLowerCase();
   if (desc.includes("development") || desc.includes("code") || desc.includes("api")) {
-    return { name: "Development", color: "#3b82f6" };
+    return { name: "Desarrollo", color: "#3b82f6" };
   }
   if (desc.includes("design") || desc.includes("ui") || desc.includes("ux")) {
-    return { name: "Design", color: "#10b981" };
+    return { name: "Diseño", color: "#10b981" };
   }
   if (desc.includes("writing") || desc.includes("content")) {
-    return { name: "UX Writing", color: "#f59e0b" };
+    return { name: "Redacción UX", color: "#f59e0b" };
   }
-  return { name: "Task", color: "#6b7280" };
+  return { name: "Tarea", color: "#6b7280" };
 };
 
 const getInitials = (firstName?: string, lastName?: string) => {
@@ -93,11 +93,11 @@ const formatDueDate = (dueDate: string) => {
   tomorrow.setHours(0, 0, 0, 0);
 
   if (due.getTime() === today.getTime()) {
-    return "Today";
+    return "Hoy";
   } else if (due.getTime() === tomorrow.getTime()) {
-    return "Tomorrow";
+    return "Mañana";
   } else {
-    return due.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return due.toLocaleDateString("es-ES", { month: "short", day: "numeric" });
   }
 };
 
@@ -236,7 +236,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     color: "var(--muted-foreground)",
                     zIndex: 0,
                   }}
-                  title={`${assignees.length - 3} more assignees`}
+                  title={`${assignees.length - 3} asignados más`}
                 >
                   +{assignees.length - 3}
                 </div>

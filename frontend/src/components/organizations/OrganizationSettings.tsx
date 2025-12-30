@@ -176,13 +176,13 @@ export default function OrganizationSettingsComponent({
     {
       name: "delete",
       type: "delete" as const,
-      label: "Delete Organization",
-      description: "Permanently delete this organization and all its data",
+      label: "Eliminar Organización",
+      description: "Eliminar permanentemente esta organización y todos sus datos",
       handler: async () => {
         try {
           await deleteOrganization(organization.id);
         } catch (error: any) {
-          let errorMsg = "Failed to delete organization";
+          let errorMsg = "Error al eliminar la organización";
 
           // Extract detailed API error safely
           const apiErr =
@@ -194,9 +194,8 @@ export default function OrganizationSettingsComponent({
             } else if (apiErr.message) {
               errorMsg = apiErr.message;
               if (apiErr.error || apiErr.statusCode) {
-                errorMsg += ` (${apiErr.error || ""}${
-                  apiErr.statusCode ? `, ${apiErr.statusCode}` : ""
-                })`;
+                errorMsg += ` (${apiErr.error || ""}${apiErr.statusCode ? `, ${apiErr.statusCode}` : ""
+                  })`;
               }
             } else {
               errorMsg = JSON.stringify(apiErr);
@@ -216,7 +215,7 @@ export default function OrganizationSettingsComponent({
 
   const handleSave = async () => {
     if (!isFormValid()) {
-      toast.error("Please fix the errors before saving");
+      toast.error("Por favor corrige los errores antes de guardar");
       return;
     }
 
@@ -253,14 +252,14 @@ export default function OrganizationSettingsComponent({
       onUpdate(mappedOrg);
       setHasUnsavedChanges(false);
       setIsSlugManuallyEdited(false); // Reset manual edit flag after save
-      toast.success("Organization settings updated successfully!");
+      toast.success("¡Ajustes de la organización actualizados con éxito!");
 
       // Redirect to new URL if slug changed
       if (slugChanged && updatedOrg.slug !== organization.slug) {
         router.replace(`/settings/${updatedOrg.slug}`);
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update organization");
+      toast.error(error instanceof Error ? error.message : "Error al actualizar la organización");
     } finally {
       setIsLoading(false);
     }
@@ -272,10 +271,10 @@ export default function OrganizationSettingsComponent({
       <CardHeader className="px-0">
         <CardTitle className="text-md flex gap-2 items-center font-semibold text-[var(--foreground)]">
           <HiCog size={25} />
-          Organization Settings
+          Ajustes de la Organización
         </CardTitle>
         <p className="text-sm text-[var(--muted-foreground)]">
-          Configure your organization preferences and settings
+          Configura las preferencias y ajustes de tu organización
         </p>
       </CardHeader>
 
@@ -286,7 +285,7 @@ export default function OrganizationSettingsComponent({
             {/* Organization Name */}
             <div className="space-y-2">
               <Label htmlFor="org-name" className="text-sm font-medium text-[var(--foreground)]">
-                Organization Name <span className="text-red-500">*</span>
+                Nombre de la Organización <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="org-name"
@@ -299,19 +298,19 @@ export default function OrganizationSettingsComponent({
                   }))
                 }
                 className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
-                placeholder="Enter organization name"
+                placeholder="Ingresa el nombre de la organización"
                 required
                 disabled={!hasEditAccess}
               />
               {settings.general.name.trim().length === 0 && (
-                <p className="text-xs text-red-500">Organization name is required</p>
+                <p className="text-xs text-red-500">El nombre de la organización es obligatorio</p>
               )}
             </div>
 
             {/* Organization Slug (Editable) */}
             <div className="space-y-2">
               <Label htmlFor="org-slug" className="text-sm font-medium text-[var(--foreground)]">
-                Organization Slug
+                Slug de la Organización
               </Label>
               <div className="flex gap-2">
                 <Input
@@ -320,7 +319,7 @@ export default function OrganizationSettingsComponent({
                   value={slug}
                   onChange={(e) => handleSlugChange(e.target.value)}
                   className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] font-mono flex-1"
-                  placeholder="organization-slug"
+                  placeholder="slug-de-la-organizacion"
                   disabled={!hasEditAccess}
                 />
                 {isSlugManuallyEdited && hasEditAccess && (
@@ -330,7 +329,7 @@ export default function OrganizationSettingsComponent({
                     size="icon"
                     onClick={resetSlugToAuto}
                     className="h-9 w-9 flex-shrink-0"
-                    title="Reset to auto-generated slug"
+                    title="Restablecer al slug generado automáticamente"
                   >
                     <HiArrowPath className="h-4 w-4" />
                   </Button>
@@ -338,22 +337,22 @@ export default function OrganizationSettingsComponent({
               </div>
               {!isValidSlug(slug) && slug.length > 0 && (
                 <p className="text-xs text-red-500">
-                  Slug must contain only lowercase letters, numbers, and hyphens
+                  El slug debe contener solo letras minúsculas, números y guiones
                 </p>
               )}
               {slug.length === 0 && (
-                <p className="text-xs text-red-500">Slug is required</p>
+                <p className="text-xs text-red-500">El slug es obligatorio</p>
               )}
               {slug !== organization.slug && isValidSlug(slug) && (
                 <p className="text-xs text-amber-600 dark:text-amber-400">
-                  Slug will be updated from "{organization.slug}" to "{slug}"
+                  El slug se actualizará de "{organization.slug}" a "{slug}"
                 </p>
               )}
               {slug === organization.slug && (
                 <p className="text-xs text-[var(--muted-foreground)]">
                   {isSlugManuallyEdited
-                    ? "You can edit the slug or click the reset icon to auto-generate from name"
-                    : "Slug is auto-generated from the organization name"}
+                    ? "Puedes editar el slug o hacer clic en el ícono de restablecer para generarlo automáticamente desde el nombre"
+                    : "El slug se genera automáticamente desde el nombre de la organización"}
                 </p>
               )}
             </div>
@@ -364,7 +363,7 @@ export default function OrganizationSettingsComponent({
                 htmlFor="org-description"
                 className="text-sm font-medium text-[var(--foreground)]"
               >
-                Description
+                Descripción
               </Label>
               <Textarea
                 id="org-description"
@@ -377,18 +376,18 @@ export default function OrganizationSettingsComponent({
                 }
                 rows={4}
                 className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] resize-none"
-                placeholder="Describe your organization..."
+                placeholder="Describe tu organización..."
                 disabled={!hasEditAccess}
               />
               <p className="text-xs text-[var(--muted-foreground)]">
-                {settings.general.description.length}/500 characters
+                {settings.general.description.length}/500 caracteres
               </p>
             </div>
 
             {/* Website */}
             <div className="space-y-2">
               <Label htmlFor="org-website" className="text-sm font-medium text-[var(--foreground)]">
-                Website
+                Sitio Web
               </Label>
               <Input
                 id="org-website"
@@ -406,7 +405,7 @@ export default function OrganizationSettingsComponent({
               />
               {settings.general.website && !isValidUrl(settings.general.website) && (
                 <p className="text-xs text-red-500">
-                  Please enter a valid URL (e.g., https://example.com)
+                  Por favor ingresa una URL válida (ej., https://example.com)
                 </p>
               )}
             </div>
@@ -423,10 +422,10 @@ export default function OrganizationSettingsComponent({
             {isLoading ? (
               <>
                 <div className="w-4 h-4 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin mr-2"></div>
-                Saving...
+                Guardando...
               </>
             ) : (
-              "Save Changes"
+              "Guardar Cambios"
             )}
           </Button>
         </div>
@@ -439,12 +438,12 @@ export default function OrganizationSettingsComponent({
             <div className="flex items-start gap-3">
               <HiExclamationTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h4 className="font-medium text-red-800 dark:text-red-400">Danger Zone</h4>
+                <h4 className="font-medium text-red-800 dark:text-red-400">Zona de Peligro</h4>
                 <p className="text-sm text-red-700 dark:text-red-500 mb-4">
-                  These actions cannot be undone. Please proceed with caution.
+                  Estas acciones no se pueden deshacer. Por favor procede con precaución.
                 </p>
                 <DangerZoneModal
-                  triggerText="Delete Organization"
+                  triggerText="Eliminar Organización"
                   triggerVariant="destructive"
                   entity={{
                     type: "organization",

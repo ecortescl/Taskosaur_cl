@@ -35,7 +35,7 @@ export const SprintCard = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("es-419", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -50,13 +50,13 @@ export const SprintCard = ({
   };
 
   const duration = useMemo(() => {
-    if (!sprint.startDate || !sprint.endDate) return "No dates set";
+    if (!sprint.startDate || !sprint.endDate) return "Sin fechas definidas";
 
     const start = formatDate(sprint.startDate);
     const end = formatDate(sprint.endDate);
     const days = getDaysBetween(sprint.startDate, sprint.endDate);
 
-    return `${start} - ${end} (${days} days)`;
+    return `${start} - ${end} (${days} días)`;
   }, [sprint.startDate, sprint.endDate]);
 
   // Prevent dropdown menu clicks from triggering card click
@@ -116,7 +116,7 @@ export const SprintCard = ({
                   className="text-[var(--foreground)] hover:bg-[var(--accent)]"
                 >
                   <HiCheck className="w-4 h-4 mr-2" />
-                  Complete Sprint
+                  Completar Sprint
                 </DropdownMenuItem>
               )}
               {hasAccess && (
@@ -129,7 +129,7 @@ export const SprintCard = ({
                   className="text-[var(--foreground)] hover:bg-[var(--accent)]"
                 >
                   <HiPencil className="w-4 h-4 mr-2" />
-                  Edit Sprint
+                  Editar Sprint
                 </DropdownMenuItem>
               )}
               {hasAccess && (
@@ -142,7 +142,7 @@ export const SprintCard = ({
                   className="text-[var(--destructive)] hover:bg-[var(--destructive)]/10"
                 >
                   <HiTrash className="w-4 h-4 mr-2" />
-                  Delete Sprint
+                  Eliminar Sprint
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

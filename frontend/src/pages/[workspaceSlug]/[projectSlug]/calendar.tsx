@@ -99,14 +99,14 @@ function ProjectTasksCalendarPageContent() {
       }
 
       if (typeof workspaceSlug !== "string" || typeof projectSlug !== "string") {
-        setError("Invalid workspace or project slug");
+        setError("ID del espacio de trabajo o proyecto inválido");
         setLoading(false);
         return;
       }
 
       const workspace = await workspaceContext.getWorkspaceBySlug(workspaceSlug);
       if (!workspace) {
-        setError("Workspace not found");
+        setError("Espacio de trabajo no encontrado");
         setLoading(false);
         return;
       }
@@ -116,7 +116,7 @@ function ProjectTasksCalendarPageContent() {
       const project = findProjectBySlug(projects || [], projectSlug);
 
       if (!project) {
-        setError("Project not found");
+        setError("Proyecto no encontrado");
         setLoading(false);
         return;
       }
@@ -130,7 +130,7 @@ function ProjectTasksCalendarPageContent() {
       setDataLoaded(true);
     } catch (err) {
       console.error("Error loading page data:", err);
-      setError(err?.message ? err.message : "Failed to load data");
+      setError(err?.message ? err.message : "Error al cargar los datos");
     } finally {
       setLoading(false);
     }
@@ -182,7 +182,7 @@ function ProjectTasksCalendarPageContent() {
   }
 
   if (!workspaceData || !projectData) {
-    return <ErrorState error="Project or workspace not found" onRetry={loadData} />;
+    return <ErrorState error="Proyecto o espacio de trabajo no encontrado" onRetry={loadData} />;
   }
 
   return (
@@ -192,12 +192,12 @@ function ProjectTasksCalendarPageContent() {
           <div className="min-h-screen">
             <div className="flex flex-col gap-4">
               <PageHeader
-                title={`${projectData?.name} Calendar`}
-                description={`View and manage tasks for ${projectData?.name} project in calendar format.`}
+                title={`Calendario de ${projectData?.name}`}
+                description={`Visualiza y gestiona las tareas del proyecto ${projectData?.name} en formato de calendario.`}
                 actions={
                   userAccess?.role !== "VIEWER" && (
                     <ActionButton primary showPlusIcon onClick={() => setNewTaskModalOpen(true)}>
-                      Create Task
+                      Crear Tarea
                     </ActionButton>
                   )
                 }
@@ -214,10 +214,10 @@ function ProjectTasksCalendarPageContent() {
                           <HiCalendarDays className="w-6 h-6 text-[var(--muted-foreground)]" />
                         </div>
                         <p className="text-sm font-medium text-[var(--foreground)] mb-1">
-                          No tasks found
+                          No se encontraron tareas
                         </p>
                         <p className="text-xs text-[var(--muted-foreground)] mb-4">
-                          Create your first task for {projectData?.name} to see it on the calendar
+                          Crea tu primera tarea para {projectData?.name} para verla en el calendario
                         </p>
                         {userAccess?.role !== "VIEWER" && (
                           <ActionButton
@@ -225,7 +225,7 @@ function ProjectTasksCalendarPageContent() {
                             showPlusIcon
                             onClick={() => setNewTaskModalOpen(true)}
                           >
-                            Create Task
+                            Crear Tarea
                           </ActionButton>
                         )}
                       </div>

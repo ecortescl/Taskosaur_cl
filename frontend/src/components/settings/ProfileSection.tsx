@@ -73,7 +73,7 @@ export default function ProfileSection() {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      toast.error("Please select a valid image file.");
+      toast.error("Por favor, seleccione un archivo de imagen válido.");
       e.target.value = "";
       return;
     }
@@ -87,14 +87,14 @@ export default function ProfileSection() {
     try {
       const uploadResult = await uploadFileToS3(selectedFile, "avatar");
       const updatedUser = await updateUser(currentUser.id, { avatar: uploadResult.key });
-      toast.success("Profile picture updated successfully!");
+      toast.success("¡Foto de perfil actualizada con éxito!");
       setSelectedFile(null);
       setPreviewUrl(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
       // Refresh user's avatar for immediate UI update
       setCurrentUser(updatedUser);
     } catch {
-      toast.error("Failed to upload profile picture. Please try again.");
+      toast.error("Error al subir la foto de perfil. Por favor, inténtelo de nuevo.");
     } finally {
       setUploadingProfilePic(false);
     }
@@ -113,12 +113,12 @@ export default function ProfileSection() {
         mobileNumber: profileData.mobileNumber,
         bio: profileData.bio,
       });
-      toast.success("Profile updated successfully!");
+      toast.success("¡Perfil actualizado con éxito!");
       setIsEditing(false);
       // Refresh UI with updated user profile
       setCurrentUser(updatedUser);
     } catch {
-      toast.error("Failed to update profile. Please try again.");
+      toast.error("Error al actualizar el perfil. Por favor, inténtelo de nuevo.");
     } finally {
       setLoading(false);
       fetchingRef.current = false;
@@ -156,7 +156,7 @@ export default function ProfileSection() {
       {/* Header */}
       {!isEditing && (
         <div className="flex flex-row-reverse items-start">
-          <Tooltip content="Edit Profile" position="top" color="dark">
+          <Tooltip content="Editar Perfil" position="top" color="dark">
             <Button
               onClick={() => setIsEditing(true)}
               className="p-2 rounded-md hover:bg-[var(--accent)] transition-colors ml-auto shadow-none"
@@ -177,7 +177,7 @@ export default function ProfileSection() {
                 <AvatarImage
                   src={avatarSrc}
                   alt={
-                    `${profileData.firstName} ${profileData.lastName}`.trim() || "Profile Picture"
+                    `${profileData.firstName} ${profileData.lastName}`.trim() || "Foto de Perfil"
                   }
                   className="object-cover"
                 />
@@ -226,10 +226,10 @@ export default function ProfileSection() {
                   {uploadingProfilePic ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      Uploading...
+                      Subiendo...
                     </div>
                   ) : (
-                    "Save Picture"
+                    "Guardar Foto"
                   )}
                 </ActionButton>
               ) : (
@@ -240,7 +240,7 @@ export default function ProfileSection() {
                   disabled={uploadingProfilePic}
                   className="text-sm w-full"
                 >
-                  Upload Picture
+                  Subir Foto
                 </ActionButton>
               )}
             </div>
@@ -255,7 +255,7 @@ export default function ProfileSection() {
               {/* First Name */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-[var(--foreground)]">
-                  First Name <span className="text-red-500">*</span>
+                  Nombre <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   type="text"
@@ -267,14 +267,14 @@ export default function ProfileSection() {
                     }))
                   }
                   className="bg-[var(--background)] border-[var(--border)] text-xs"
-                  placeholder="Enter your first name"
+                  placeholder="Ingrese su nombre"
                 />
               </div>
 
               {/* Last Name */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-[var(--foreground)]">
-                  Last Name <span className="text-red-500">*</span>
+                  Apellido <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   type="text"
@@ -286,14 +286,14 @@ export default function ProfileSection() {
                     }))
                   }
                   className="bg-[var(--background)] border-[var(--border)] text-xs"
-                  placeholder="Enter your last name"
+                  placeholder="Ingrese su apellido"
                 />
               </div>
 
               {/* Email */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-[var(--foreground)]">
-                  E-mail <span className="text-red-500">*</span>
+                  Email <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   type="email"
@@ -305,17 +305,17 @@ export default function ProfileSection() {
                     }))
                   }
                   className="bg-[var(--background)] border-[var(--border)] text-xs"
-                  placeholder="Enter your email address"
+                  placeholder="Ingrese su dirección de email"
                 />
                 <p className="text-xs text-[var(--muted-foreground)]">
-                  We'll send a verification email if the address is changed.
+                  Enviaremos un email de verificación si la dirección cambia.
                 </p>
               </div>
 
               {/* Mobile Number */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-[var(--foreground)]">
-                  Mobile Number
+                  Número de Celular
                 </Label>
                 <Input
                   type="tel"
@@ -327,19 +327,19 @@ export default function ProfileSection() {
                     }))
                   }
                   className="bg-[var(--background)] border-[var(--border)] text-xs"
-                  placeholder="Enter your mobile number"
+                  placeholder="Ingrese su número de celular"
                 />
               </div>
 
               {/* Bio */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-[var(--foreground)]">Bio</Label>
+                <Label className="text-sm font-medium text-[var(--foreground)]">Biografía</Label>
                 <textarea
                   value={profileData.bio}
                   onChange={(e) => setProfileData((prev) => ({ ...prev, bio: e.target.value }))}
                   rows={3}
                   className="w-full px-3 py-2 text-xs rounded-md resize-none bg-[var(--background)] border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-                  placeholder="Tell us about yourself..."
+                  placeholder="Cuéntenos sobre usted..."
                 />
               </div>
 
@@ -351,7 +351,7 @@ export default function ProfileSection() {
                   disabled={loading}
                   className="border border-[var(--border)] bg-transparent hover:bg-[var(--muted)]"
                 >
-                  Cancel
+                  Cancelar
                 </ActionButton>
                 <ActionButton
                   onClick={handleProfileSubmit}
@@ -368,10 +368,10 @@ export default function ProfileSection() {
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      Updating...
+                      Actualizando...
                     </div>
                   ) : (
-                    "Update Information"
+                    "Actualizar Información"
                   )}
                 </ActionButton>
               </div>
@@ -380,23 +380,23 @@ export default function ProfileSection() {
             /* Display Mode - User Details as Paragraphs */
             <div className="space-y-2">
               <div>
-                <h4 className="text-sm font-medium text-[var(--muted-foreground)]">Full Name</h4>
+                <h4 className="text-sm font-medium text-[var(--muted-foreground)]">Nombre Completo</h4>
                 <p className="text-[var(--foreground)] text-sm">
-                  {`${profileData.firstName} ${profileData.lastName}`.trim() || "Not provided"}
+                  {`${profileData.firstName} ${profileData.lastName}`.trim() || "No proporcionado"}
                 </p>
               </div>
 
               <div>
                 <h4 className="text-sm font-medium text-[var(--muted-foreground)]">Email</h4>
                 <p className="text-[var(--foreground)] text-sm">
-                  {profileData.email || "Not provided"}
+                  {profileData.email || "No proporcionado"}
                 </p>
               </div>
 
               {profileData.mobileNumber && (
                 <div>
                   <h4 className="text-sm font-medium text-[var(--muted-foreground)]">
-                    Mobile Number
+                    Número de Celular
                   </h4>
                   <p className="text-[var(--foreground)] text-sm">{profileData.mobileNumber}</p>
                 </div>
@@ -404,7 +404,7 @@ export default function ProfileSection() {
 
               {profileData.bio && (
                 <div>
-                  <h4 className="text-sm font-medium text-[var(--muted-foreground)]">Bio</h4>
+                  <h4 className="text-sm font-medium text-[var(--muted-foreground)]">Biografía</h4>
                   <p className="text-[var(--foreground)] leading-6 text-sm">{profileData.bio}</p>
                 </div>
               )}

@@ -18,17 +18,17 @@ export function ModeToggle() {
   };
 
   return (
-    <Tooltip content="Toggle theme" position="bottom" color="primary">
+    <Tooltip content="Cambiar tema" position="bottom" color="primary">
       <Button
         onClick={handleToggle}
         variant="ghost"
         size="icon"
-        aria-label="Toggle theme"
+        aria-label="Cambiar tema"
         className="header-mode-toggle"
       >
         <CgDarkMode className="header-mode-toggle-icon" />
         {!hideThemeLabel && (
-          <span className="hidden max-[530px]:inline-block text-sm font-medium">Theme</span>
+          <span className="hidden max-[530px]:inline-block text-sm font-medium">Tema</span>
         )}
       </Button>
     </Tooltip>

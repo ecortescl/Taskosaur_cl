@@ -42,9 +42,9 @@ const OrganizationFormModal = ({
 
       const newOrg = await createOrganization(organizationData);
       onSuccess(newOrg);
-      toast.success("Organization created successfully!");
-    } catch (err) {
-      setError(err?.message ? err?.message[0] : "Failed to create organization");
+      toast.success("¡Organización creada con éxito!");
+    } catch (err: any) {
+      setError(err?.message ? err?.message[0] : "Error al crear la organización");
     } finally {
       setIsSubmitting(false);
     }
@@ -63,9 +63,9 @@ const OrganizationFormModal = ({
               <HiBuildingOffice2 className="projects-modal-icon-content" />
             </div>
             <div className="projects-modal-info">
-              <DialogTitle className="projects-modal-title">Create New Organization</DialogTitle>
+              <DialogTitle className="projects-modal-title">Crear Nueva Organización</DialogTitle>
               <DialogDescription className="projects-modal-description">
-                Provide information about your new organization
+                Proporciona información sobre tu nueva organización
               </DialogDescription>
             </div>
           </div>
@@ -78,7 +78,7 @@ const OrganizationFormModal = ({
                 <HiExclamationTriangle className="w-5 h-5 text-[var(--destructive)] flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-[var(--destructive)] mb-1">
-                    Error creating organization
+                    Error al crear la organización
                   </h4>
                   <p className="text-sm text-[var(--destructive)]/80">{error}</p>
                 </div>
@@ -89,14 +89,14 @@ const OrganizationFormModal = ({
           <div className="space-y-4">
             <div>
               <Label htmlFor="org-name" className="text-sm font-medium text-[var(--foreground)]">
-                Organization Name<span className="text-red-400">*</span>
+                Nombre de la Organización<span className="text-red-400">*</span>
               </Label>
               <Input
                 id="org-name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Enter organization name"
+                placeholder="Ingresa el nombre de la organización"
                 required
                 disabled={isSubmitting}
                 className="mt-1 border-input bg-background text-[var(--foreground)]"
@@ -108,13 +108,13 @@ const OrganizationFormModal = ({
                 htmlFor="org-description"
                 className="text-sm font-medium text-[var(--foreground)]"
               >
-                Description
+                Descripción
               </Label>
               <Textarea
                 id="org-description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Describe your organization..."
+                placeholder="Describe tu organización..."
                 rows={3}
                 disabled={isSubmitting}
                 className="mt-1 border-input bg-background text-[var(--foreground)]"
@@ -123,14 +123,14 @@ const OrganizationFormModal = ({
 
             <div>
               <Label htmlFor="org-website" className="text-sm font-medium text-[var(--foreground)]">
-                Website
+                Sitio Web
               </Label>
               <Input
                 id="org-website"
                 type="url"
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
-                placeholder="https://example.com"
+                placeholder="https://ejemplo.com"
                 disabled={isSubmitting}
                 className="mt-1 border-input bg-background text-[var(--foreground)]"
               />
@@ -145,7 +145,7 @@ const OrganizationFormModal = ({
               disabled={isSubmitting}
               className="h-9 border-none bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 text-[var(--foreground)] transition-all duration-200"
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
@@ -155,10 +155,10 @@ const OrganizationFormModal = ({
               {isSubmitting ? (
                 <>
                   <div className="w-4 h-4 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin mr-2"></div>
-                  Creating...
+                  Creando...
                 </>
               ) : (
-                <>Create Organization</>
+                <>Crear Organización</>
               )}
             </Button>
           </div>

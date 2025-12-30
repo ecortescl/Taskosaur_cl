@@ -135,48 +135,48 @@ export default function Sidebar() {
         name: "Dashboard",
         href: "/dashboard",
         icon: <HiHome size={16} />,
-        title: "Global Dashboard",
+        title: "Panel Global",
         disabled: !isAuth,
       },
       {
         name: "Workspaces",
         href: "/workspaces",
         icon: <HiViewGrid size={16} />,
-        title: "All Workspaces",
+        title: "Todos los Workspaces",
         disabled: !isAuth,
       },
       {
-        name: "Projects",
+        name: "Proyectos",
         href: "/projects",
         icon: <HiViewBoards size={16} />,
-        title: "All Projects",
+        title: "Todos los Proyectos",
         disabled: !isAuth,
       },
       {
-        name: "Tasks",
+        name: "Tareas",
         href: "/tasks",
         icon: <HiClipboardList size={16} />,
-        title: "All Tasks",
+        title: "Todas las Tareas",
         disabled: !isAuth,
       },
       {
-        name: "Activities",
+        name: "Actividades",
         href: "/activities",
         icon: <HiCalendar size={16} />,
-        title: "All Activities",
+        title: "Todas las Actividades",
         disabled: !isAuth,
       },
       // Settings only shown to authenticated users
       ...(isAuth
         ? [
-            {
-              name: "Settings",
-              href: "/settings",
-              icon: <HiCog size={16} />,
-              title: "All Settings",
-              disabled: false,
-            },
-          ]
+          {
+            name: "Configuración",
+            href: "/settings",
+            icon: <HiCog size={16} />,
+            title: "Toda la Configuración",
+            disabled: false,
+          },
+        ]
         : []),
     ],
     [isAuth]
@@ -186,54 +186,54 @@ export default function Sidebar() {
     () =>
       currentWorkspaceSlug
         ? [
-            {
-              name: "Overview",
-              href: `/${currentWorkspaceSlug}`,
-              icon: <HiViewGrid size={16} />,
-              title: "Workspace Overview",
-              disabled: !isAuth,
-            },
-            {
-              name: "Projects",
-              href: `/${currentWorkspaceSlug}/projects`,
-              icon: <HiViewBoards size={16} />,
-              title: "Workspace Projects",
-              disabled: !isAuth,
-            },
-            {
-              name: "Members",
-              href: `/${currentWorkspaceSlug}/members`,
-              icon: <HiUsers size={16} />,
-              title: "Workspace Members",
-              disabled: !isAuth,
-            },
-            {
-              name: "Activities",
-              href: `/${currentWorkspaceSlug}/activities`,
-              icon: <HiCalendar size={16} />,
-              title: "Workspace Activity",
-              disabled: !isAuth,
-            },
-            {
-              name: "Tasks",
-              href: `/${currentWorkspaceSlug}/tasks`,
-              icon: <HiClipboardList size={16} />,
-              title: "Workspace Tasks",
-              disabled: !isAuth,
-            },
-            // Settings only shown to authenticated users
-            ...(isAuth
-              ? [
-                  {
-                    name: "Settings",
-                    href: `/${currentWorkspaceSlug}/settings`,
-                    icon: <HiCog size={16} />,
-                    title: "Workspace Settings",
-                    disabled: false,
-                  },
-                ]
-              : []),
-          ]
+          {
+            name: "Resumen",
+            href: `/${currentWorkspaceSlug}`,
+            icon: <HiViewGrid size={16} />,
+            title: "Resumen del Workspace",
+            disabled: !isAuth,
+          },
+          {
+            name: "Proyectos",
+            href: `/${currentWorkspaceSlug}/projects`,
+            icon: <HiViewBoards size={16} />,
+            title: "Proyectos del Workspace",
+            disabled: !isAuth,
+          },
+          {
+            name: "Miembros",
+            href: `/${currentWorkspaceSlug}/members`,
+            icon: <HiUsers size={16} />,
+            title: "Miembros del Workspace",
+            disabled: !isAuth,
+          },
+          {
+            name: "Actividades",
+            href: `/${currentWorkspaceSlug}/activities`,
+            icon: <HiCalendar size={16} />,
+            title: "Actividad del Workspace",
+            disabled: !isAuth,
+          },
+          {
+            name: "Tareas",
+            href: `/${currentWorkspaceSlug}/tasks`,
+            icon: <HiClipboardList size={16} />,
+            title: "Tareas del Workspace",
+            disabled: !isAuth,
+          },
+          // Settings only shown to authenticated users
+          ...(isAuth
+            ? [
+              {
+                name: "Configuración",
+                href: `/${currentWorkspaceSlug}/settings`,
+                icon: <HiCog size={16} />,
+                title: "Configuración del Workspace",
+                disabled: false,
+              },
+            ]
+            : []),
+        ]
         : [],
     [currentWorkspaceSlug, isAuth]
   );
@@ -242,17 +242,17 @@ export default function Sidebar() {
   const defaultProjectNavItems = useMemo(
     () => [
       {
-        name: "Overview",
+        name: "Resumen",
         href: `/${currentWorkspaceSlug || ""}/${currentProjectSlug || ""}`,
         icon: <HiViewBoards size={16} />,
-        title: "Project Overview",
+        title: "Resumen del Proyecto",
         disabled: false, // usually for unauthenticated users
       },
       {
-        name: "Tasks",
+        name: "Tareas",
         href: `/${currentWorkspaceSlug || ""}/${currentProjectSlug || ""}/tasks`,
         icon: <HiClipboardList size={16} />,
-        title: "Tasks",
+        title: "Tareas",
         disabled: false,
       },
       {
@@ -289,49 +289,49 @@ export default function Sidebar() {
     // If user is authenticated, show actual project items
     return currentWorkspaceSlug && currentProjectSlug
       ? [
-          {
-            name: "Overview",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}`,
-            icon: <HiViewBoards size={16} />,
-            title: "Project Overview",
-            disabled: false,
-          },
-          {
-            name: "Tasks",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}/tasks`,
-            icon: <HiClipboardList size={16} />,
-            title: "Tasks",
-            disabled: false,
-          },
-          {
-            name: "Sprints",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}/sprints`,
-            icon: <HiLightningBolt size={16} />,
-            title: "Sprints",
-            disabled: false,
-          },
-          {
-            name: "Calendar",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}/calendar`,
-            icon: <HiCalendar size={16} />,
-            title: "Calendar",
-            disabled: false,
-          },
-          {
-            name: "Members",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}/members`,
-            icon: <HiUsers size={16} />,
-            title: "Members",
-            disabled: false,
-          },
-          {
-            name: "Settings",
-            href: `/${currentWorkspaceSlug}/${currentProjectSlug}/settings`,
-            icon: <HiCog size={16} />,
-            title: "Settings",
-            disabled: false,
-          },
-        ]
+        {
+          name: "Resumen",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}`,
+          icon: <HiViewBoards size={16} />,
+          title: "Resumen del Proyecto",
+          disabled: false,
+        },
+        {
+          name: "Tareas",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}/tasks`,
+          icon: <HiClipboardList size={16} />,
+          title: "Tareas",
+          disabled: false,
+        },
+        {
+          name: "Sprints",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}/sprints`,
+          icon: <HiLightningBolt size={16} />,
+          title: "Sprints",
+          disabled: false,
+        },
+        {
+          name: "Calendario",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}/calendar`,
+          icon: <HiCalendar size={16} />,
+          title: "Calendario",
+          disabled: false,
+        },
+        {
+          name: "Miembros",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}/members`,
+          icon: <HiUsers size={16} />,
+          title: "Miembros",
+          disabled: false,
+        },
+        {
+          name: "Configuración",
+          href: `/${currentWorkspaceSlug}/${currentProjectSlug}/settings`,
+          icon: <HiCog size={16} />,
+          title: "Configuración",
+          disabled: false,
+        },
+      ]
       : [];
   }, [currentWorkspaceSlug, currentProjectSlug, isAuth, defaultProjectNavItems]);
 
@@ -447,7 +447,7 @@ export default function Sidebar() {
                 <HiViewBoards size={16} />
               </div>
               <span className="layout-sidebar-header-dashboard-title">
-                {currentProject ? currentProject.name : "Project"}
+                {currentProject ? currentProject.name : "Proyecto"}
               </span>
             </div>
           </div>
@@ -471,7 +471,7 @@ export default function Sidebar() {
                         {activeItem ? activeItem.icon : "TS"}
                       </div>
                       <span className="layout-sidebar-header-dashboard-title">
-                        {activeItem ? activeItem.name : "Taskosaur"}
+                        {activeItem ? activeItem.name : "QUIEBRE.CL"}
                       </span>
                     </div>
                   </div>
@@ -504,14 +504,13 @@ export default function Sidebar() {
                 {item.disabled ? (
                   // Disabled navigation item
                   <div
-                    className={`layout-sidebar-nav-link layout-sidebar-nav-link-disabled ${
-                      isItemActive
-                        ? "layout-sidebar-nav-link-active"
-                        : "layout-sidebar-nav-link-inactive"
-                    }`}
+                    className={`layout-sidebar-nav-link layout-sidebar-nav-link-disabled ${isItemActive
+                      ? "layout-sidebar-nav-link-active"
+                      : "layout-sidebar-nav-link-inactive"
+                      }`}
                     onClick={handleDisabledClick}
                     style={{ cursor: "pointer", opacity: 0.6 }}
-                    title="Login required to access this feature"
+                    title="Se requiere iniciar sesión para acceder a esta función"
                   >
                     <span className="layout-sidebar-nav-link-icon">{item.icon}</span>
                     <span className="layout-sidebar-nav-link-text">{item.name}</span>
@@ -520,11 +519,10 @@ export default function Sidebar() {
                   // Enabled navigation item
                   <Link
                     href={item.href}
-                    className={`layout-sidebar-nav-link ${
-                      isItemActive
-                        ? "layout-sidebar-nav-link-active"
-                        : "layout-sidebar-nav-link-inactive"
-                    }`}
+                    className={`layout-sidebar-nav-link ${isItemActive
+                      ? "layout-sidebar-nav-link-active"
+                      : "layout-sidebar-nav-link-inactive"
+                      }`}
                   >
                     <span className="layout-sidebar-nav-link-icon">{item.icon}</span>
                     <span className="layout-sidebar-nav-link-text">{item.name}</span>
@@ -554,7 +552,7 @@ export default function Sidebar() {
         <button
           onClick={() => toggleSidebar(!isSidebarCollapsed)}
           className="layout-sidebar-mini-expand-button"
-          title="Expand navigation"
+          title="Expandir navegación"
         >
           <HiMenu size={16} />
         </button>
@@ -564,20 +562,19 @@ export default function Sidebar() {
             const isItemActive = isActive(pathname, item.href, item.name === "Overview");
             const linkProps = item.disabled
               ? {
-                  onClick: handleDisabledClick,
-                  style: { cursor: "pointer", opacity: 0.6 },
-                }
+                onClick: handleDisabledClick,
+                style: { cursor: "pointer", opacity: 0.6 },
+              }
               : {};
 
             return item.disabled ? (
               <div
                 key={item.name}
-                className={`layout-sidebar-mini-nav-link layout-sidebar-mini-nav-link-disabled ${
-                  isItemActive
-                    ? "layout-sidebar-nav-link-active"
-                    : "layout-sidebar-mini-nav-link-inactive"
-                }`}
-                title="Login required to access this feature"
+                className={`layout-sidebar-mini-nav-link layout-sidebar-mini-nav-link-disabled ${isItemActive
+                  ? "layout-sidebar-nav-link-active"
+                  : "layout-sidebar-mini-nav-link-inactive"
+                  }`}
+                title="Se requiere iniciar sesión para acceder a esta función"
                 {...linkProps}
               >
                 {item.icon}
@@ -586,11 +583,10 @@ export default function Sidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`layout-sidebar-mini-nav-link ${
-                  isItemActive
-                    ? "layout-sidebar-nav-link-active"
-                    : "layout-sidebar-mini-nav-link-inactive"
-                }`}
+                className={`layout-sidebar-mini-nav-link ${isItemActive
+                  ? "layout-sidebar-nav-link-active"
+                  : "layout-sidebar-mini-nav-link-inactive"
+                  }`}
                 title={item.title || item.name}
               >
                 {item.icon}
@@ -615,7 +611,7 @@ export default function Sidebar() {
         <button
           onClick={() => toggleSidebar(!isSidebarCollapsed)}
           className="layout-sidebar-toggle-button"
-          title="Show navigation"
+          title="Mostrar navegación"
         >
           <HiMenu size={16} />
         </button>
@@ -623,11 +619,10 @@ export default function Sidebar() {
 
       <div className="layout-sidebar-container">
         <div
-          className={`layout-sidebar-wrapper ${
-            isSidebarCollapsed
-              ? "layout-sidebar-wrapper-collapsed"
-              : "layout-sidebar-wrapper-expanded"
-          }`}
+          className={`layout-sidebar-wrapper ${isSidebarCollapsed
+            ? "layout-sidebar-wrapper-collapsed"
+            : "layout-sidebar-wrapper-expanded"
+            }`}
         >
           <div className="layout-sidebar-mini">
             {/* Mini sidebar content */}

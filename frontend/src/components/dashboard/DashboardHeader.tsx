@@ -25,10 +25,12 @@ export function DashboardHeader({
           {currentUser?.lastName?.charAt(0) || ""}
         </div>
         <div>
-          <h1 className="dashboard-greeting">
-            {greeting}, {currentUser?.firstName || "User"}!
-          </h1>
-          <p className="dashboard-date-info">{currentDate} • Ready to tackle your goals?</p>
+          <div className="flex items-center gap-2 mb-1">
+            <h1 className="dashboard-greeting font-bold text-[var(--foreground)]">
+              {greeting}, {currentUser?.firstName || "Usuario"}!
+            </h1>
+          </div>
+          <p className="dashboard-date-info">{currentDate} • ¿Listo para cumplir tus objetivos?</p>
         </div>
       </div>
 
@@ -38,7 +40,7 @@ export function DashboardHeader({
           secondary
           rightIcon={<HiCalendar className="dashboard-icon-sm" />}
         >
-          Today's Agenda
+          Agenda de hoy
         </ActionButton>
 
         {/* New Task Button and Modal */}
@@ -46,7 +48,7 @@ export function DashboardHeader({
           return (
             <>
               <ActionButton showPlusIcon primary onClick={() => setNewTaskModalOpen(true)}>
-                New Task
+                Nueva Tarea
               </ActionButton>
               <NewTaskModal
                 isOpen={isNewTaskModalOpen}

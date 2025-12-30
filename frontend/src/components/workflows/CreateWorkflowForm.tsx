@@ -45,18 +45,18 @@ export default function CreateWorkflowForm({
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Workflow name is required";
+      newErrors.name = "El nombre del flujo de trabajo es obligatorio";
     } else if (formData.name.trim().length < 3) {
-      newErrors.name = "Workflow name must be at least 3 characters";
+      newErrors.name = "El nombre del flujo de trabajo debe tener al menos 3 caracteres";
     } else if (formData.name.trim().length > 50) {
-      newErrors.name = "Workflow name must be less than 50 characters";
+      newErrors.name = "El nombre del flujo de trabajo debe tener menos de 50 caracteres";
     } else if (!/^[a-zA-Z0-9\s\-_]+$/.test(formData.name.trim())) {
       newErrors.name =
-        "Workflow name can only contain letters, numbers, spaces, hyphens, and underscores";
+        "El nombre del flujo de trabajo solo puede contener letras, números, espacios, guiones y guiones bajos";
     }
 
     if (formData.description && formData.description.length > 200) {
-      newErrors.description = "Description must be less than 200 characters";
+      newErrors.description = "La descripción debe tener menos de 200 caracteres";
     }
 
     setErrors(newErrors);
@@ -72,7 +72,7 @@ export default function CreateWorkflowForm({
       setError(null);
 
       if (!organizationId) {
-        throw new Error("Organization ID is required");
+        throw new Error("ID de organización es obligatorio");
       }
 
       const workflowData: CreateWorkflowData = {
@@ -86,7 +86,7 @@ export default function CreateWorkflowForm({
       handleClose();
     } catch (err) {
       console.error("Failed to create workflow:", err);
-      setError(err instanceof Error ? err.message : "Failed to create workflow");
+      setError(err instanceof Error ? err.message : "Error al crear flujo de trabajo");
     } finally {
       setIsSubmitting(false);
     }
@@ -117,12 +117,12 @@ export default function CreateWorkflowForm({
             </div>
             <div className="projects-modal-info">
               <DialogTitle className="projects-modal-title">
-                Create {isProjectLevel ? "project" : ""} workflow
+                Crear flujo de trabajo {isProjectLevel ? "de proyecto" : ""}
               </DialogTitle>
               <DialogDescription className="projects-modal-description">
                 {isProjectLevel
-                  ? "Create a new workflow for this project to define task statuses and flow"
-                  : "Create a new workflow template for use across multiple projects"}
+                  ? "Crea un nuevo flujo de trabajo para este proyecto para definir estados y flujo de tareas"
+                  : "Crea una nueva plantilla de flujo de trabajo para usar en múltiples proyectos"}
               </DialogDescription>
             </div>
           </div>
@@ -147,11 +147,11 @@ export default function CreateWorkflowForm({
                 className="projects-form-label-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Workflow name <span className="projects-form-label-required">*</span>
+              Nombre del flujo de trabajo <span className="projects-form-label-required">*</span>
             </Label>
             <Input
               id="name"
-              placeholder="e.g., Development Workflow, Bug Triage Process"
+              placeholder="ej., Flujo de Desarrollo, Proceso de Errores"
               value={formData.name}
               onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
               className="projects-form-input border-none"
@@ -174,7 +174,7 @@ export default function CreateWorkflowForm({
                 className="projects-form-hint-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Choose a clear, descriptive name for your workflow.
+              Elige un nombre claro y descriptivo para tu flujo de trabajo.
             </p>
             {errors.name && <p className="text-sm text-[var(--destructive)] mt-1">{errors.name}</p>}
           </div>
@@ -186,11 +186,11 @@ export default function CreateWorkflowForm({
                 className="projects-form-label-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Description
+              Descripción
             </Label>
             <Textarea
               id="description"
-              placeholder="Describe the purpose and usage of this workflow..."
+              placeholder="Describe el propósito y uso de este flujo de trabajo..."
               value={formData.description}
               onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
               className="projects-form-textarea border-none"
@@ -208,7 +208,7 @@ export default function CreateWorkflowForm({
                 className="projects-form-hint-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Provide context about when and how this workflow should be used.
+              Proporciona contexto sobre cuándo y cómo debe usarse este flujo de trabajo.
             </p>
             {errors.description && (
               <p className="text-sm text-[var(--destructive)] mt-1">{errors.description}</p>
@@ -232,12 +232,12 @@ export default function CreateWorkflowForm({
                   htmlFor="isDefault"
                   className="text-[var(--foreground)] font-medium cursor-pointer"
                 >
-                  Set as default workflow
+                  Establecer como flujo de trabajo predeterminado
                 </Label>
                 <p className="text-sm text-[var(--muted-foreground)]">
                   {isProjectLevel
-                    ? "This workflow will be used by default for new tasks in this project"
-                    : "This workflow will be used by default for new projects in your organization"}
+                    ? "Este flujo de trabajo se usará por defecto para nuevas tareas en este proyecto"
+                    : "Este flujo de trabajo se usará por defecto para nuevos proyectos en tu organización"}
                 </p>
               </div>
             </div>
@@ -251,16 +251,16 @@ export default function CreateWorkflowForm({
               onClick={handleClose}
               disabled={isSubmitting || isLoading}
             >
-              Cancel
+              Cancelar
             </ActionButton>
             <ActionButton type="submit" primary disabled={!isValid || isSubmitting || isLoading}>
               {isSubmitting || isLoading ? (
                 <>
                   <div className="animate-spin -ml-1 mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                  Creating...
+                  Creando...
                 </>
               ) : (
-                "Create"
+                "Crear"
               )}
             </ActionButton>
           </div>

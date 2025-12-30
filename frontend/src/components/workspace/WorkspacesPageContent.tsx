@@ -56,7 +56,7 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
   const fetchData = useCallback(
     async (searchTerm?: string) => {
       if (!currentOrganization) {
-        toast.error("No organization selected. Please select an organization first.");
+        toast.error("No se ha seleccionado ninguna organización. Por favor selecciona una primero.");
         return;
       }
 
@@ -65,12 +65,12 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
       } catch (error) {
         if (error instanceof Error) {
           if (error.message?.includes("401") || error.message?.includes("Unauthorized")) {
-            toast.error("Authentication required. Please log in again.");
+            toast.error("Autenticación requerida. Por favor inicia sesión nuevamente.");
           } else {
-            toast.error(`Failed to load workspaces: ${error.message}`);
+            toast.error(`Error al cargar los workspaces: ${error.message}`);
           }
         } else {
-          toast.error("Failed to load workspaces");
+          toast.error("Error al cargar los workspaces");
         }
       }
     },
@@ -114,10 +114,10 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
   const handleWorkspaceCreated = useCallback(async () => {
     try {
       await fetchData(searchQuery.trim() || undefined);
-      toast.success("Workspace created successfully!");
+      toast.success("¡Workspace creado exitosamente!");
     } catch (error) {
       console.error("Error refreshing workspaces after creation:", error);
-      toast.error("Workspace created but failed to refresh list. Please refresh the page.");
+      toast.error("Workspace creado pero falló al actualizar la lista. Por favor actualiza la página.");
     }
   }, [searchQuery]);
   const clearSearch = useCallback(() => {
@@ -138,14 +138,14 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
         <PageHeader
           icon={<HiViewGrid className="size-5" />}
           title="Workspaces"
-          description="Manage your workspaces efficiently and collaborate with your team."
+          description="Gestiona tus workspaces eficientemente y colabora con tu equipo."
           actions={
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="relative max-w-xs w-full">
                 <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)] z-10" />
                 <Input
                   type="text"
-                  placeholder="Search workspaces..."
+                  placeholder="Buscar workspaces..."
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className="pl-10 pr-10 rounded-md border border-[var(--border)]"
@@ -175,7 +175,7 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
                   refetchWorkspaces={handleWorkspaceCreated}
                 >
                   <ActionButton primary showPlusIcon onClick={() => setIsDialogOpen(true)}>
-                    New Workspace
+                    Nuevo Workspace
                   </ActionButton>
                 </NewWorkspaceDialog>
               )}
@@ -186,23 +186,23 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
           searchQuery ? (
             <EmptyState
               icon={<HiSearch size={24} />}
-              title="No workspaces found"
-              description={`No workspaces match "${searchQuery}". Try different search terms.`}
-              action={<ActionButton onClick={clearSearch}>Clear Search</ActionButton>}
+              title="No se encontraron workspaces"
+              description={`No hay workspaces que coincidan con "${searchQuery}". Intenta con otros términos.`}
+              action={<ActionButton onClick={clearSearch}>Limpiar búsqueda</ActionButton>}
             />
           ) : (
             <EmptyState
               icon={<HiFolder size={24} />}
-              title="No workspaces found"
+              title="No se encontraron workspaces"
               description={
                 hasAccess
-                  ? "Create your first workspace to get started with organizing your projects and collaborating with your team."
-                  : "No workspaces available. Contact your organization admin to create workspaces or get access."
+                  ? "Crea tu primer workspace para comenzar a organizar tus proyectos y colaborar con tu equipo."
+                  : "No hay workspaces disponibles. Contacta al administrador de tu organización para crear workspaces o solicitar acceso."
               }
               action={
                 hasAccess && (
                   <ActionButton primary showPlusIcon onClick={() => setIsDialogOpen(true)}>
-                    Create Workspace
+                    Crear Workspace
                   </ActionButton>
                 )
               }
@@ -226,11 +226,11 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
                   <div className="flex items-center gap-4">
                     <span className="flex items-center gap-1">
                       <HiFolder size={12} />
-                      {ws._count?.projects ?? ws.projectCount ?? 0} projects
+                      {ws._count?.projects ?? ws.projectCount ?? 0} proyectos
                     </span>
                     <span className="flex items-center gap-1">
                       <HiUsers size={12} />
-                      {ws._count?.members ?? ws.memberCount ?? 0} members
+                      {ws._count?.members ?? ws.memberCount ?? 0} miembros
                     </span>
                   </div>
                 }
@@ -242,15 +242,15 @@ export default function WorkspacesPageContent({ organizationId }: WorkspacesPage
         {workspaces.length > 0 && (
           <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full min-h-[48px] flex items-center justify-center pb-4 pointer-events-none">
             <p className="text-sm text-[var(--muted-foreground)] pointer-events-auto">
-              Showing {workspaces.length} workspace
+              Mostrando {workspaces.length} workspace
               {workspaces.length !== 1 ? "s" : ""}
-              {searchQuery && ` matching "${searchQuery}"`}
+              {searchQuery && ` que coinciden con "${searchQuery}"`}
               {searchQuery && (
                 <button
                   onClick={clearSearch}
                   className="ml-2 text-[var(--primary)] hover:underline"
                 >
-                  Clear search
+                  Limpiar búsqueda
                 </button>
               )}
             </p>

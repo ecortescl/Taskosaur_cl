@@ -3,9 +3,16 @@ import AuthRedirect from "@/components/auth/AuthRedirect";
 import { ModeToggle } from "@/components/header/ModeToggle";
 import { RegisterContent } from "@/components/register/RegisterContent";
 import { RegisterForm } from "@/components/register/RegisterForm";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function SignUpPage() {
   const { checkOrganizationAndRedirect } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/login");
+  }, [router]);
 
   const redirectTo = async () => {
     return await checkOrganizationAndRedirect();

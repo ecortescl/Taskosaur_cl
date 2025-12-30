@@ -115,7 +115,7 @@ export default function WorkspaceSelector({ currentWorkspaceSlug }: WorkspaceSel
               <div className="layout-workspace-selector-loading" />
             ) : (
               <div className="layout-workspace-selector-title">
-                {currentWorkspace ? currentWorkspace.name : "Select Workspace"}
+                {currentWorkspace ? currentWorkspace.name : "Seleccionar Workspace"}
               </div>
             )}
           </div>
@@ -133,9 +133,8 @@ export default function WorkspaceSelector({ currentWorkspaceSlug }: WorkspaceSel
           <DropdownMenuItem
             key={workspace.id}
             onClick={() => handleWorkspaceSelect(workspace)}
-            className={`layout-workspace-selector-item ${
-              currentWorkspace?.id === workspace.id ? "layout-workspace-selector-item-selected" : ""
-            }`}
+            className={`layout-workspace-selector-item ${currentWorkspace?.id === workspace.id ? "layout-workspace-selector-item-selected" : ""
+              }`}
           >
             <Avatar className="layout-workspace-selector-item-avatar">
               <AvatarFallback className="layout-workspace-selector-item-avatar-fallback">
@@ -145,7 +144,7 @@ export default function WorkspaceSelector({ currentWorkspaceSlug }: WorkspaceSel
             <div className="layout-workspace-selector-item-content">
               <div className="layout-workspace-selector-item-name">{workspace.name}</div>
               <div className="layout-workspace-selector-item-description">
-                {workspace.description || "No description"}
+                {workspace.description || "Sin descripción"}
               </div>
             </div>
             {currentWorkspace?.id === workspace.id && (

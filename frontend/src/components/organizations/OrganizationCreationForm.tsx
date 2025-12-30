@@ -37,7 +37,7 @@ const OrganizationCreationForm = ({
       onSuccess(newOrg);
     } catch (err) {
       console.error("Error creating organization:", err);
-      setError(err instanceof Error ? err.message : "Failed to create organization");
+      setError(err instanceof Error ? err.message : "Error al crear la organización");
     } finally {
       setIsSubmitting(false);
     }
@@ -52,7 +52,7 @@ const OrganizationCreationForm = ({
           <CardContent className="p-4">
             <div className="flex items-center gap-2 text-[var(--destructive)]">
               <HiExclamationTriangle className="w-5 h-5" />
-              <span className="text-sm font-medium">Error creating organization</span>
+              <span className="text-sm font-medium">Error al crear la organización</span>
             </div>
             <p className="text-sm text-[var(--destructive)] mt-1">{error}</p>
           </CardContent>
@@ -61,13 +61,13 @@ const OrganizationCreationForm = ({
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="name">Organization Name *</Label>
+          <Label htmlFor="name">Nombre de la Organización *</Label>
           <Input
             id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter organization name"
+            placeholder="Ingresa el nombre de la organización"
             required
             disabled={submitting}
             className="mt-1"
@@ -75,12 +75,12 @@ const OrganizationCreationForm = ({
         </div>
 
         <div>
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">Descripción</Label>
           <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Describe your organization..."
+            placeholder="Describe tu organización..."
             rows={3}
             disabled={submitting}
             className="mt-1"
@@ -88,7 +88,7 @@ const OrganizationCreationForm = ({
         </div>
 
         <div>
-          <Label htmlFor="website">Website</Label>
+          <Label htmlFor="website">Sitio Web</Label>
           <Input
             id="website"
             type="url"
@@ -103,18 +103,18 @@ const OrganizationCreationForm = ({
 
       <div className="flex justify-end gap-3 pt-4">
         <Button type="button" variant="outline" onClick={onCancel} disabled={submitting}>
-          Cancel
+          Cancelar
         </Button>
         <Button type="submit" disabled={submitting || !name.trim()} className="min-w-[140px]">
           {submitting ? (
             <>
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-[var(--primary-foreground)] border-t-transparent mr-2" />
-              Creating...
+              Creando...
             </>
           ) : (
             <>
               <HiPlus size={16} className="mr-2" />
-              Create Organization
+              Crear Organización
             </>
           )}
         </Button>

@@ -52,12 +52,12 @@ export default function SprintSelector({
 }: SprintSelectorProps) {
   const formatDate = (dateString: string) => {
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      return new Date(dateString).toLocaleDateString("es-419", {
         month: "short",
         day: "numeric",
       });
     } catch {
-      return "Invalid date";
+      return "Fecha inválida";
     }
   };
 
@@ -78,7 +78,7 @@ export default function SprintSelector({
             </div>
             <div className="sprints-selector-content">
               <div className="sprints-selector-name">
-                {currentSprint?.name || "No Active Sprint"}
+                {currentSprint?.name || "Sin Sprint Activo"}
               </div>
             </div>
             <HiChevronDown className="sprints-selector-chevron" />
@@ -91,8 +91,8 @@ export default function SprintSelector({
               <div className="sprints-selector-empty-icon-container">
                 <HiLightningBolt className="sprints-selector-empty-icon" />
               </div>
-              <p className="sprints-selector-empty-title">No sprints available</p>
-              <p className="sprints-selector-empty-subtitle">Create your first sprint</p>
+              <p className="sprints-selector-empty-title">No hay sprints disponibles</p>
+              <p className="sprints-selector-empty-subtitle">Cree su primer sprint</p>
             </div>
           ) : (
             <div className="sprints-selector-list">
@@ -108,19 +108,17 @@ export default function SprintSelector({
                     onClick={() => onSprintChange(sprint)}
                   >
                     <div
-                      className={`sprints-selector-item-content ${
-                        isSelected
+                      className={`sprints-selector-item-content ${isSelected
                           ? "sprints-selector-item-selected"
                           : "sprints-selector-item-unselected"
-                      }`}
+                        }`}
                     >
                       <div className="sprints-selector-item-header">
                         <div
-                          className={`sprints-selector-item-icon-container ${
-                            isSelected
+                          className={`sprints-selector-item-icon-container ${isSelected
                               ? "sprints-selector-item-icon-selected"
                               : "sprints-selector-item-icon-unselected"
-                          }`}
+                            }`}
                         >
                           <SprintIcon className={`w-3 h-3 ${sprintConfig.color}`} />
                         </div>
@@ -137,7 +135,13 @@ export default function SprintSelector({
                             <Badge
                               className={`sprints-selector-item-badge ${sprintConfig.className}`}
                             >
-                              {sprint.status}
+                              {sprint.status === "ACTIVE"
+                                ? "ACTIVO"
+                                : sprint.status === "PLANNED"
+                                  ? "PLANIFICADO"
+                                  : sprint.status === "COMPLETED"
+                                    ? "COMPLETADO"
+                                    : sprint.status}
                             </Badge>
                             <span className="sprints-selector-item-dates">
                               <HiCalendar className="sprints-selector-item-dates-icon" />

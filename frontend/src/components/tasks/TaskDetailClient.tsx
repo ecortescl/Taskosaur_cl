@@ -123,7 +123,7 @@ export default function TaskDetailClient({
     isOpen: false,
     title: "",
     message: "",
-    onConfirm: () => {},
+    onConfirm: () => { },
     type: "info" as "danger" | "warning" | "info",
   });
 
@@ -167,7 +167,7 @@ export default function TaskDetailClient({
       const startDate = new Date(newStartDate + "T00:00:00");
       const dueDate = new Date(editTaskData.dueDate + "T00:00:00");
       if (startDate > dueDate) {
-        toast.error("Start date cannot be after due date.");
+        toast.error("La fecha de inicio no puede ser posterior a la fecha de vencimiento.");
         return;
       }
     }
@@ -183,9 +183,9 @@ export default function TaskDetailClient({
       };
       await updateTask(taskId, updateData);
       onTaskRefetch && onTaskRefetch();
-      toast.success("Task start date updated successfully.");
+      toast.success("Fecha de inicio actualizada exitosamente.");
     } catch (error) {
-      toast.error("Failed to update task start date.");
+      toast.error("Error al actualizar la fecha de inicio.");
       // Revert on error
       handleTaskFieldChange("startDate", task.startDate ? task.startDate.split("T")[0] : "");
     }
@@ -240,9 +240,9 @@ export default function TaskDetailClient({
       // Update the task object's status
       task.status = item;
       onTaskRefetch && onTaskRefetch();
-      toast.success("Task status updated successfully.");
+      toast.success("Estado de la tarea actualizado exitosamente.");
     } catch (error) {
-      toast.error("Failed to update task status. Please try again.");
+      toast.error("Error al actualizar el estado de la tarea. Por favor intenta de nuevo.");
     }
   };
 
@@ -304,7 +304,7 @@ export default function TaskDetailClient({
         }
       } catch (error) {
         setProjectMembers([]);
-        toast.error("Failed to fetch project members");
+        toast.error("Error al obtener los miembros del proyecto");
       } finally {
         setLoadingMembers(false);
       }
@@ -339,7 +339,7 @@ export default function TaskDetailClient({
       const dueDate = new Date(newDueDate + "T00:00:00");
       const startDate = new Date(editTaskData.startDate + "T00:00:00");
       if (dueDate < startDate) {
-        toast.error("Due date cannot be before start date.");
+        toast.error("La fecha de vencimiento no puede ser anterior a la fecha de inicio.");
         return;
       }
     }
@@ -356,9 +356,9 @@ export default function TaskDetailClient({
 
       await updateTask(taskId, updateData);
       onTaskRefetch && onTaskRefetch();
-      toast.success("Task due date updated successfully.");
+      toast.success("Fecha de vencimiento actualizada exitosamente.");
     } catch (error) {
-      toast.error("Failed to update task due date.");
+      toast.error("Error al actualizar la fecha de vencimiento.");
       // Revert on error
       handleTaskFieldChange("dueDate", task.dueDate ? task.dueDate.split("T")[0] : "");
     }
@@ -500,7 +500,7 @@ export default function TaskDetailClient({
         }
       } catch (error) {
         setAvailableLabels([]);
-        toast.error("Failed to fetch project labels");
+        toast.error("Error al obtener las etiquetas del proyecto");
       } finally {
         setLoadingLabels(false);
       }
@@ -520,7 +520,7 @@ export default function TaskDetailClient({
         setAttachments(attachmentsData);
       } catch (error) {
         setAttachments([]);
-        toast.error("Failed to fetch task attachments");
+        toast.error("Error al obtener los adjuntos de la tarea");
       } finally {
         setLoadingAttachments(false);
       }
@@ -541,7 +541,7 @@ export default function TaskDetailClient({
           setStatuses(allStatuses);
         }
       } catch (error) {
-        toast.error("Failed to fetch task statuses");
+        toast.error("Error al obtener los estados de la tarea");
       } finally {
         setLoadingStatuses(false);
       }
@@ -587,11 +587,11 @@ export default function TaskDetailClient({
 
       const validFiles = Array.from(files).filter((file) => {
         if (file.size > maxFileSize) {
-          toast.error(`File "${file.name}" is too large. Maximum size is 10MB.`);
+          toast.error(`El archivo "${file.name}" es demasiado grande. El tamaño máximo es 10MB.`);
           return false;
         }
         if (!allowedTypes.includes(file.type)) {
-          toast.error(`File "${file.name}" has an unsupported format.`);
+          toast.error(`El archivo "${file.name}" tiene un formato no soportado.`);
           return false;
         }
         return true;
@@ -608,7 +608,7 @@ export default function TaskDetailClient({
           const uploadedAttachment = await uploadAttachment(taskId, file);
           return uploadedAttachment;
         } catch (error) {
-          toast.error(`Failed to upload "${file.name}". Please try again.`);
+          toast.error(`Error al subir "${file.name}". Por favor intenta de nuevo.`);
           return null;
         }
       });
@@ -619,10 +619,10 @@ export default function TaskDetailClient({
       if (successfulUploads.length > 0) {
         const updatedAttachments = await getTaskAttachments(taskId, isAuth);
         setAttachments(updatedAttachments || []);
-        toast.success(`${successfulUploads.length} file(s) uploaded successfully.`);
+        toast.success(`${successfulUploads.length} archivo(s) subido(s) exitosamente.`);
       }
     } catch (error) {
-      toast.error("Failed to upload one or more files. Please try again.");
+      toast.error("Error al subir uno o más archivos. Por favor intenta de nuevo.");
     } finally {
       setIsUploading(false);
       event.target.value = "";
@@ -636,9 +636,9 @@ export default function TaskDetailClient({
       });
       setAllowEmailReplies(enabled);
       task.allowEmailReplies = enabled;
-      toast.success(`Email replies ${enabled ? "enabled" : "disabled"} successfully.`);
+      toast.success(`Respuestas por correo ${enabled ? "habilitadas" : "deshabilitadas"} exitosamente.`);
     } catch (error) {
-      toast.error("Failed to update email replies setting.");
+      toast.error("Error al actualizar la configuración de respuestas por correo.");
       // Revert the state if the update failed
       setAllowEmailReplies(!enabled);
     }
@@ -657,9 +657,9 @@ export default function TaskDetailClient({
 
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-      toast.success("File downloaded successfully.");
+      toast.success("Archivo descargado exitosamente.");
     } catch (error) {
-      toast.error("Failed to download attachment. Please try again.");
+      toast.error("Error al descargar el adjunto. Por favor intenta de nuevo.");
     }
   };
 
@@ -667,7 +667,7 @@ export default function TaskDetailClient({
     try {
       const projectId = task.projectId || task.project?.id;
       if (!projectId) {
-        toast.error("Project ID not found. Cannot create label.");
+        toast.error("ID del proyecto no encontrado. No se puede crear la etiqueta.");
         return;
       }
 
@@ -687,10 +687,10 @@ export default function TaskDetailClient({
       });
 
       setLabels([...labels, newLabel]);
-      toast.success("Label created and assigned to task successfully.");
+      toast.success("Etiqueta creada y asignada a la tarea exitosamente.");
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to add label. Please try again."
+        error instanceof Error ? error.message : "Error al agregar la etiqueta. Por favor intenta de nuevo."
       );
     }
   };
@@ -705,9 +705,9 @@ export default function TaskDetailClient({
       );
 
       onTaskRefetch && onTaskRefetch();
-      toast.success("Label removed from task successfully.");
+      toast.success("Etiqueta eliminada de la tarea exitosamente.");
     } catch (error) {
-      toast.error("Failed to remove label. Please try again.");
+      toast.error("Error al eliminar la etiqueta. Por favor intenta de nuevo.");
     }
   };
 
@@ -723,33 +723,33 @@ export default function TaskDetailClient({
 
       onTaskRefetch && onTaskRefetch();
 
-      toast.success("Label assigned to task successfully.");
+      toast.success("Etiqueta asignada a la tarea exitosamente.");
     } catch (error) {
-      toast.error("Failed to assign label. Please try again.");
+      toast.error("Error al asignar la etiqueta. Por favor intenta de nuevo.");
     }
   };
 
   const handleDeleteAttachment = (attachmentId: string): Promise<void> => {
     return new Promise((resolve) => {
       if (!currentUser?.id) {
-        toast.error("You must be logged in to delete attachments.");
+        toast.error("Debes iniciar sesión para eliminar adjuntos.");
         resolve();
         return;
       }
 
       setConfirmModal({
         isOpen: true,
-        title: "Delete Attachment",
-        message: "Are you sure you want to delete this attachment? This action cannot be undone.",
+        title: "Eliminar Adjunto",
+        message: "¿Estás seguro de que quieres eliminar este adjunto? Esta acción no se puede deshacer.",
         type: "danger",
         onConfirm: async () => {
           try {
             await deleteAttachment(attachmentId, currentUser.id);
             const updatedAttachments = await getTaskAttachments(taskId, isAuth);
             setAttachments(updatedAttachments || []);
-            toast.success("Attachment deleted successfully.");
+            toast.success("Adjunto eliminado exitosamente.");
           } catch (error) {
-            toast.error("Failed to delete attachment. Please try again.");
+            toast.error("Error al eliminar el adjunto. Por favor intenta de nuevo.");
           }
           setConfirmModal((prev) => ({ ...prev, isOpen: false }));
           resolve();
@@ -777,13 +777,13 @@ export default function TaskDetailClient({
     const descriptionToSave = updatedDescription || editTaskData.description;
 
     if (!editTaskData?.title?.trim()) {
-      toast.error("Task title cannot be empty.");
+      toast.error("El título de la tarea no puede estar vacío.");
       return;
     }
 
     // Sanitize description to prevent XSS
-    const sanitizedDescription = descriptionToSave 
-      ? sanitizeEditorContent(descriptionToSave.trim()) 
+    const sanitizedDescription = descriptionToSave
+      ? sanitizeEditorContent(descriptionToSave.trim())
       : undefined;
 
     try {
@@ -812,9 +812,9 @@ export default function TaskDetailClient({
         sprint: false,
       });
       onTaskRefetch && onTaskRefetch();
-      toast.success("Task updated successfully.");
+      toast.success("Tarea actualizada exitosamente.");
     } catch (error) {
-      toast.error("Failed to update the task. Please try again.");
+      toast.error("Error al actualizar la tarea. Por favor intenta de nuevo.");
     }
   };
 
@@ -832,8 +832,8 @@ export default function TaskDetailClient({
     if (hasChanges) {
       setConfirmModal({
         isOpen: true,
-        title: "Discard Changes",
-        message: "Are you sure you want to discard your changes?",
+        title: "Descartar Cambios",
+        message: "¿Estás seguro de que quieres descartar tus cambios?",
         type: "info",
         onConfirm: () => {
           setEditTaskData({
@@ -879,13 +879,13 @@ export default function TaskDetailClient({
   const handleDeleteTask = () => {
     setConfirmModal({
       isOpen: true,
-      title: "Delete Task",
-      message: "Are you sure you want to delete this task? This action cannot be undone.",
+      title: "Eliminar Tarea",
+      message: "¿Estás seguro de que quieres eliminar esta tarea? Esta acción no se puede deshacer.",
       type: "danger",
       onConfirm: async () => {
         try {
           await deleteTask(taskId);
-          toast.success("Task deleted successfully.");
+          toast.success("Tarea eliminada exitosamente.");
 
           onTaskRefetch && onTaskRefetch();
           if (open === "modal") {
@@ -894,7 +894,7 @@ export default function TaskDetailClient({
             router.back();
           }
         } catch (error) {
-          toast.error("Failed to delete the task. Please try again.");
+          toast.error("Error al eliminar la tarea. Por favor intenta de nuevo.");
         }
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
       },
@@ -973,7 +973,7 @@ export default function TaskDetailClient({
                 {open === "modal" && (
                   <div className="absolute -top-[25px] right-11 z-50">
                     {isAuth && (
-                      <Tooltip content="Expand to full screen" position="left">
+                      <Tooltip content="Expandir a pantalla completa" position="left">
                         <div onClick={() => {
                           if (isValidInternalPath(detailUrl)) {
                             router.push(detailUrl);
@@ -993,14 +993,14 @@ export default function TaskDetailClient({
             {/* Created By Info */}
             <span className="text-sm text-[var(--muted-foreground)]">
               {task.createdByUser
-                ? `Created by ${task.createdByUser.firstName} ${task.createdByUser.lastName}`
+                ? `Creado por ${task.createdByUser.firstName} ${task.createdByUser.lastName}`
                 : task.emailThreadId
-                  ? "Created from mail"
+                  ? "Creado desde correo"
                   : ""}
             </span>
             {task.parentTask && (
               <div className="text-sm text-[var(--muted-foreground)] mt-1">
-                Parent:{" "}
+                Padre:{" "}
                 <Link
                   href={isValidInternalPath(parentDetailUrl) ? parentDetailUrl : "/"}
                   className="text-[var(--primary)] cursor-pointer hover:underline"
@@ -1014,7 +1014,7 @@ export default function TaskDetailClient({
           {(hasAccess || task.createdBy === currentUser?.id) && (
             <div className=" flex gap-2">
               {!task.emailThreadId && (
-                <Tooltip content="Edit task" position="left">
+                <Tooltip content="Editar tarea" position="left">
                   <ActionButton
                     onClick={handleEditTask}
                     variant="outline"
@@ -1025,7 +1025,7 @@ export default function TaskDetailClient({
                   </ActionButton>
                 </Tooltip>
               )}
-              <Tooltip content="Share to web" position="left">
+              <Tooltip content="Compartir en la web" position="left">
                 <ActionButton
                   onClick={() => setIsShareDialogOpen(true)}
                   variant="outline"
@@ -1035,7 +1035,7 @@ export default function TaskDetailClient({
                   <HiShare className="w-4 h-4" />
                 </ActionButton>
               </Tooltip>
-              <Tooltip content="Delete task" position="left">
+              <Tooltip content="Eliminar tarea" position="left">
                 <ActionButton
                   onClick={handleDeleteTask}
                   variant="outline"
@@ -1056,7 +1056,7 @@ export default function TaskDetailClient({
                   <Input
                     value={editTaskData.title}
                     onChange={(e) => handleTaskFieldChange("title", e.target.value)}
-                    placeholder="Task title"
+                    placeholder="Título de la tarea"
                     className="text-xs bg-[var(--background)] border-[var(--border)]"
                   />
                   <TaskDescription
@@ -1072,14 +1072,14 @@ export default function TaskDetailClient({
                       disabled={!hasUnsavedChanges}
                       className="justify-center bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--primary)]"
                     >
-                      Save Changes
+                      Guardar Cambios
                     </ActionButton>
                     <ActionButton
                       onClick={handleCancelTaskEdit}
                       secondary
                       className="justify-center"
                     >
-                      Cancel
+                      Cancelar
                     </ActionButton>
                   </div>
                 </div>
@@ -1110,9 +1110,9 @@ export default function TaskDetailClient({
                 <Subtasks
                   taskId={taskId}
                   projectId={task.projectId || task.project?.id}
-                  onSubtaskAdded={() => {}}
-                  onSubtaskUpdated={() => {}}
-                  onSubtaskDeleted={() => {}}
+                  onSubtaskAdded={() => { }}
+                  onSubtaskUpdated={() => { }}
+                  onSubtaskDeleted={() => { }}
                   showConfirmModal={showConfirmModal}
                   isAssignOrRepoter={hasAccess}
                   setLoading={setLoadingSubtasks}
@@ -1147,12 +1147,12 @@ export default function TaskDetailClient({
                 {task.showEmailReply && (
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <Label className="text-sm">Email Replies</Label>
+                      <Label className="text-sm">Respuestas por Email</Label>
                       <ToggleSwitch
                         checked={allowEmailReplies}
                         onChange={handleEmailRepliesToggle}
                         disabled={!hasAccess}
-                        label="Allow email replies"
+                        label="Permitir respuestas por email"
                         size="sm"
                       />
                     </div>
@@ -1162,7 +1162,7 @@ export default function TaskDetailClient({
                 {/* Task Type */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <Label className="text-sm">Task Type</Label>
+                    <Label className="text-sm">Tipo de Tarea</Label>
                     {hasAccess && (
                       <button
                         type="button"
@@ -1181,7 +1181,7 @@ export default function TaskDetailClient({
                         aria-label="Edit Task Type"
                         style={{ lineHeight: 0 }}
                       >
-                        Edit
+                        Editar
                       </button>
                     )}
                   </div>
@@ -1193,18 +1193,18 @@ export default function TaskDetailClient({
                         currentItem={
                           editTaskData.taskType
                             ? {
-                                id: editTaskData.taskType,
-                                name:
-                                  TASK_TYPE_OPTIONS.find(
-                                    (type) => type.value === editTaskData.taskType
-                                  )?.label || "Task",
-                                color: "#6B7280",
-                              }
+                              id: editTaskData.taskType,
+                              name:
+                                TASK_TYPE_OPTIONS.find(
+                                  (type) => type.value === editTaskData.taskType
+                                )?.label || "Task",
+                              color: "#6B7280",
+                            }
                             : {
-                                id: "",
-                                name: "Select task type",
-                                color: "#6B7280",
-                              }
+                              id: "",
+                              name: "Seleccionar tipo",
+                              color: "#6B7280",
+                            }
                         }
                         availableItems={TASK_TYPE_OPTIONS.map((type) => ({
                           id: type.value,
@@ -1243,12 +1243,12 @@ export default function TaskDetailClient({
                               taskType: false,
                             }));
                             onTaskRefetch && onTaskRefetch();
-                            toast.success("Task type updated successfully.");
+                            toast.success("Tipo de tarea actualizado exitosamente.");
                           } catch (error) {
-                            toast.error("Failed to update task type.");
+                            toast.error("Error al actualizar tipo de tarea.");
                           }
                         }}
-                        placeholder="Select task type..."
+                        placeholder="Seleccionar tipo..."
                         showUnassign={false}
                         hideAvatar={true}
                         hideSubtext={true}
@@ -1273,7 +1273,7 @@ export default function TaskDetailClient({
                         variant="outline"
                         className="text-[13px] h-5 min-h-0 px-1.5 py-0.5 bg-[var(--muted)] border-[var(--border)] flex-shrink-0"
                       >
-                        No task type
+                        Sin tipo
                       </Badge>
                     )}
                   </div>
@@ -1301,7 +1301,7 @@ export default function TaskDetailClient({
                         aria-label="Edit Sprint"
                         style={{ lineHeight: 0 }}
                       >
-                        Edit
+                        Editar
                       </button>
                     )}
                   </div>
@@ -1313,18 +1313,18 @@ export default function TaskDetailClient({
                         currentItem={
                           editTaskData.sprintId
                             ? {
-                                id: editTaskData.sprintId,
-                                name:
-                                  sprints.find((s) => s.id === editTaskData.sprintId)?.name ||
-                                  task.sprint?.name ||
-                                  "Selected Sprint",
-                                color: "#6366F1",
-                              }
+                              id: editTaskData.sprintId,
+                              name:
+                                sprints.find((s) => s.id === editTaskData.sprintId)?.name ||
+                                task.sprint?.name ||
+                                "Sprint Seleccionado",
+                              color: "#6366F1",
+                            }
                             : {
-                                id: "",
-                                name: "Backlog",
-                                color: "#6B7280",
-                              }
+                              id: "",
+                              name: "Backlog",
+                              color: "#6B7280",
+                            }
                         }
                         availableItems={[
                           { id: "", name: "Backlog", color: "#6B7280" },
@@ -1366,12 +1366,12 @@ export default function TaskDetailClient({
                               sprint: false,
                             }));
                             onTaskRefetch && onTaskRefetch();
-                            toast.success("Task sprint updated successfully.");
+                            toast.success("Sprint de la tarea actualizado exitosamente.");
                           } catch (error) {
-                            toast.error("Failed to update task sprint.");
+                            toast.error("Error al actualizar el sprint.");
                           }
                         }}
-                        placeholder="Select sprint..."
+                        placeholder="Seleccionar sprint..."
                         showUnassign={false}
                         hideAvatar={true}
                         hideSubtext={true}
@@ -1385,7 +1385,7 @@ export default function TaskDetailClient({
                                 const projectSprints = await getSprintsByProject(slug);
                                 setSprints(projectSprints || []);
                               } catch (error) {
-                                toast.error("Failed to fetch sprints");
+                                toast.error("Error al obtener los sprints");
                               } finally {
                                 setLoadingSprints(false);
                               }
@@ -1408,14 +1408,13 @@ export default function TaskDetailClient({
                           }
                         }}
                         variant="outline"
-                        className={`text-[13px] min-w-[120px] min-h-[29.33px] flex items-center justify-center cursor-pointer ${
-                          !editTaskData.sprintId ? "bg-[var(--muted)]" : "bg-indigo-500/10 text-indigo-500 border-indigo-500/20"
-                        }`}
+                        className={`text-[13px] min-w-[120px] min-h-[29.33px] flex items-center justify-center cursor-pointer ${!editTaskData.sprintId ? "bg-[var(--muted)]" : "bg-indigo-500/10 text-indigo-500 border-indigo-500/20"
+                          }`}
                       >
                         {editTaskData.sprintId
                           ? sprints.find((s) => s.id === editTaskData.sprintId)?.name ||
-                            task.sprint?.name ||
-                            "Current Sprint"
+                          task.sprint?.name ||
+                          "Sprint Actual"
                           : "Backlog"}
                       </Badge>
                     )}
@@ -1425,7 +1424,7 @@ export default function TaskDetailClient({
                 {/* Priority */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <Label className="text-sm">Priority</Label>
+                    <Label className="text-sm">Prioridad</Label>
                     {hasAccess && (
                       <button
                         type="button"
@@ -1444,7 +1443,7 @@ export default function TaskDetailClient({
                         aria-label="Edit Priority"
                         style={{ lineHeight: 0 }}
                       >
-                        Edit
+                        Editar
                       </button>
                     )}
                   </div>
@@ -1457,7 +1456,7 @@ export default function TaskDetailClient({
                           id: editTaskData.priority || "MEDIUM",
                           name:
                             editTaskData.priority?.charAt(0).toUpperCase() +
-                              editTaskData.priority?.slice(1).toLowerCase() || "Medium",
+                            editTaskData.priority?.slice(1).toLowerCase() || "Media",
                           color: task.priority?.color || "#F59E0B",
                         }}
                         availableItems={TaskPriorities}
@@ -1495,12 +1494,12 @@ export default function TaskDetailClient({
                               priority: false,
                             }));
                             onTaskRefetch && onTaskRefetch();
-                            toast.success("Task priority updated successfully.");
+                            toast.success("Prioridad de la tarea actualizada exitosamente.");
                           } catch (error) {
-                            toast.error("Failed to update task priority.");
+                            toast.error("Error al actualizar prioridad.");
                           }
                         }}
-                        placeholder="Select priority..."
+                        placeholder="Seleccionar prioridad..."
                         showUnassign={false}
                         hideAvatar={true}
                         hideSubtext={true}
@@ -1528,7 +1527,7 @@ export default function TaskDetailClient({
                 {/* Status */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <Label className="text-sm">Status</Label>
+                    <Label className="text-sm">Estado</Label>
                     {hasAccess && (
                       <button
                         type="button"
@@ -1547,7 +1546,7 @@ export default function TaskDetailClient({
                         aria-label="Edit Status"
                         style={{ lineHeight: 0 }}
                       >
-                        Edit
+                        Editar
                       </button>
                     )}
                   </div>
@@ -1583,7 +1582,7 @@ export default function TaskDetailClient({
                             status: false,
                           }));
                         }}
-                        placeholder="Select status..."
+                        placeholder="Seleccionar estado..."
                         showUnassign={false}
                         hideAvatar={true}
                         hideSubtext={true}
@@ -1596,7 +1595,7 @@ export default function TaskDetailClient({
                                 const allStatuses = await getTaskStatusByProject(projectId);
                                 setStatuses(allStatuses || []);
                               } catch (error) {
-                                toast.error("Failed to fetch task statuses");
+                                toast.error("Error al obtener estados");
                               }
                             }
                           }
@@ -1604,15 +1603,15 @@ export default function TaskDetailClient({
                       />
                     ) : (
                       <StatusBadge onClick={() => {
-                          setIsEditingTask((prev) => ({
-                            ...prev,
-                            status: true,
-                          }));
-                          setAutoOpenDropdown((prev) => ({
-                            ...prev,
-                            status: true,
-                          }));
-                        }} status={currentStatus} className="text-[13px]" />
+                        setIsEditingTask((prev) => ({
+                          ...prev,
+                          status: true,
+                        }));
+                        setAutoOpenDropdown((prev) => ({
+                          ...prev,
+                          status: true,
+                        }));
+                      }} status={currentStatus} className="text-[13px]" />
                     )}
                   </div>
                 </div>
@@ -1620,7 +1619,7 @@ export default function TaskDetailClient({
                 {/* Date Range Section */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <Label className="text-sm">Date Range</Label>
+                    <Label className="text-sm">Rango de Fechas</Label>
                     {hasAccess && (
                       <button
                         type="button"
@@ -1636,7 +1635,7 @@ export default function TaskDetailClient({
                         aria-label="Edit Dates"
                         style={{ lineHeight: 0 }}
                       >
-                        {isEditingTask.startDate ? "Done" : "Edit"}
+                        {isEditingTask.startDate ? "Listo" : "Editar"}
                       </button>
                     )}
                   </div>
@@ -1644,7 +1643,7 @@ export default function TaskDetailClient({
                   {/* Start Date */}
                   <div className="mb-3">
                     <Label className="text-xs text-[var(--muted-foreground)] mb-1.5 block">
-                      Start Date
+                      Fecha de Inicio
                     </Label>
                     {isEditingTask.startDate ? (
                       <div className="relative">
@@ -1664,7 +1663,7 @@ export default function TaskDetailClient({
                             }
                           }}
                           className="text-xs bg-[var(--background)] border-[var(--border)] w-full cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
-                          placeholder="Select start date..."
+                          placeholder="Seleccionar fecha inicio..."
                         />
                         {editTaskData.startDate && (
                           <button
@@ -1675,7 +1674,7 @@ export default function TaskDetailClient({
                               saveStartDate("");
                             }}
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xs z-10"
-                            title="Clear start date"
+                            title="Limpiar fecha inicio"
                           >
                             ✕
                           </button>
@@ -1695,7 +1694,7 @@ export default function TaskDetailClient({
                       >
                         {editTaskData.startDate
                           ? new Date(editTaskData.startDate).toLocaleDateString()
-                          : "No start date"}
+                          : "Sin fecha inicio"}
                       </Badge>
                     )}
                   </div>
@@ -1703,7 +1702,7 @@ export default function TaskDetailClient({
                   {/* Due Date */}
                   <div>
                     <Label className="text-xs text-[var(--muted-foreground)] mb-1.5 block">
-                      Due Date
+                      Fecha de Vencimiento
                     </Label>
                     {isEditingTask.dueDate ? (
                       <div className="relative">
@@ -1722,7 +1721,7 @@ export default function TaskDetailClient({
                             }
                           }}
                           className="text-xs bg-[var(--background)] border-[var(--border)] w-full cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
-                          placeholder="Select due date..."
+                          placeholder="Seleccionar fecha vencimiento..."
                         />
                         {editTaskData.dueDate && (
                           <button
@@ -1733,7 +1732,7 @@ export default function TaskDetailClient({
                               saveDueDate("");
                             }}
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-xs z-10"
-                            title="Clear due date"
+                            title="Limpiar fecha vencimiento"
                           >
                             ✕
                           </button>
@@ -1753,19 +1752,19 @@ export default function TaskDetailClient({
                       >
                         {editTaskData.dueDate
                           ? new Date(editTaskData.dueDate).toLocaleDateString()
-                          : "No due date"}
+                          : "Sin vencimiento"}
                       </Badge>
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <Divider label="Assignment" />
+            <Divider label="Asignación" />
             {/* Assignment Section */}
             <div className="space-y-4">
               <div>
                 <MemberSelect
-                  label="Assignees"
+                  label="Responsables"
                   editMode={isAuth && hasAccess}
                   selectedMembers={assignees}
                   projectId={task.projectId || task.project?.id}
@@ -1777,19 +1776,19 @@ export default function TaskDetailClient({
                         newAssignees.map((a) => a.id)
                       );
                       onTaskRefetch && onTaskRefetch();
-                      toast.success("Assignees updated successfully.");
+                      toast.success("Responsables actualizados exitosamente.");
                     } catch {
-                      toast.error("Failed to update assignees.");
+                      toast.error("Error al actualizar responsables.");
                     }
                   }}
                   members={projectMembers}
                   disabled={!hasAccess}
-                  placeholder={projectMembers.length === 0 ? "No members" : "Select assignees..."}
+                  placeholder={projectMembers.length === 0 ? "Sin miembros" : "Seleccionar responsables..."}
                 />
               </div>
               <div>
                 <MemberSelect
-                  label="Reporters"
+                  label="Reportadores"
                   selectedMembers={reporters}
                   editMode={isAuth && hasAccess}
                   projectId={task.projectId || task.project?.id}
@@ -1800,18 +1799,18 @@ export default function TaskDetailClient({
                         reporterIds: newReporters.map((r) => r.id),
                       });
                       onTaskRefetch && onTaskRefetch();
-                      toast.success("Reporters updated successfully.");
+                      toast.success("Reportadores actualizados exitosamente.");
                     } catch {
-                      toast.error("Failed to update reporters.");
+                      toast.error("Error al actualizar reportadores.");
                     }
                   }}
                   members={projectMembers}
                   disabled={!hasAccess}
-                  placeholder={projectMembers.length === 0 ? "No members" : "Select reporters..."}
+                  placeholder={projectMembers.length === 0 ? "Sin miembros" : "Seleccionar reportadores..."}
                 />
               </div>
             </div>
-            <Divider label="Labels" />
+            <Divider label="Etiquetas" />
             {/* Labels Section */}
             <TaskLabels
               labels={labels}
@@ -1822,7 +1821,7 @@ export default function TaskDetailClient({
               hasAccess={hasAccess}
               setLoading={setLoadingLabels}
             />
-            <Divider label="Activities" />
+            <Divider label="Actividades" />
 
             <TaskActivities taskId={taskId} setLoading={setLoadingActivities} />
           </div>
@@ -1837,21 +1836,21 @@ export default function TaskDetailClient({
         type={confirmModal.type}
         confirmText={
           confirmModal.type === "danger"
-            ? "Delete"
+            ? "Eliminar"
             : confirmModal.type === "warning"
-              ? "Continue"
-              : "Confirm"
+              ? "Continuar"
+              : "Confirmar"
         }
-        cancelText="Cancel"
+        cancelText="Cancelar"
       />
       <div className="relative">
 
-      <ShareTaskDialog 
-        taskId={taskId} 
-        isOpen={isShareDialogOpen} 
-        onClose={() => setIsShareDialogOpen(false)} 
+        <ShareTaskDialog
+          taskId={taskId}
+          isOpen={isShareDialogOpen}
+          onClose={() => setIsShareDialogOpen(false)}
         />
-        </div>
+      </div>
     </div>
   );
 }

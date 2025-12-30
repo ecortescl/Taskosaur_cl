@@ -248,7 +248,7 @@ function WorkspaceMembersContent() {
       currentSlugRef.current = pageKey;
 
       if (!workspaceSlug || !contextFunctionsRef.current.isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         setSearchLoading(false);
         return;
@@ -275,7 +275,7 @@ function WorkspaceMembersContent() {
         }
 
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           setSearchLoading(false);
           return;
@@ -304,10 +304,10 @@ function WorkspaceMembersContent() {
           userId: member.userId,
           name:
             `${member.user?.firstName || ""} ${member.user?.lastName || ""}`.trim() ||
-            "Unknown User",
+            "Usuario Desconocido",
           email: member.user?.email || "",
-          role: member.role || "Member",
-          status: member.user?.status || "Active",
+          role: member.role || "Miembro",
+          status: member.user?.status || "Activo",
           joinedAt: member.createdAt || new Date().toISOString(),
           avatar: member.user?.avatar || "",
           user: member.user,
@@ -319,7 +319,7 @@ function WorkspaceMembersContent() {
         isInitializedRef.current = true;
       } catch (err) {
         if (requestIdRef.current === requestId && isMountedRef.current) {
-          setError(err?.message ? err.message : "An error occurred");
+          setError(err?.message ? err.message : "Ocurrió un error");
           isInitializedRef.current = false;
         }
       } finally {
@@ -394,10 +394,10 @@ function WorkspaceMembersContent() {
         id: member.id,
         userId: member.userId,
         name:
-          `${member.user?.firstName || ""} ${member.user?.lastName || ""}`.trim() || "Unknown User",
+          `${member.user?.firstName || ""} ${member.user?.lastName || ""}`.trim() || "Usuario Desconocido",
         email: member.user?.email || "",
-        role: member.role || "Member",
-        status: member.user?.status || "Active",
+        role: member.role || "Miembro",
+        status: member.user?.status || "Activo",
         joinedAt: member.createdAt || new Date().toISOString(),
         avatar: member.user?.avatar || "",
         user: member.user,
@@ -406,7 +406,7 @@ function WorkspaceMembersContent() {
       setTotalMembers(response.total || 0);
       setError(null);
     } catch (err) {
-      setError(err?.message ? err.message : "Failed to load members");
+      setError(err?.message ? err.message : "Error al cargar los miembros");
     }
   };
 
@@ -437,7 +437,7 @@ function WorkspaceMembersContent() {
   const handleRoleUpdate = async (memberId: string, newRole: string) => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
-      toast.error("User not authenticated");
+      toast.error("Usuario no autenticado");
       return;
     }
 
@@ -446,9 +446,9 @@ function WorkspaceMembersContent() {
       await updateMemberRole(memberId, { role: newRole as any }, currentUser.id);
       await refreshMembers();
       updateLocalStorageUser(newRole);
-      toast.success("Member role updated successfully");
+      toast.success("Rol del miembro actualizado con éxito");
     } catch (err) {
-      const errorMessage = err.message || "Failed to update role";
+      const errorMessage = err.message || "Error al actualizar el rol";
       toast.error(errorMessage);
     } finally {
       setUpdatingMember(null);
@@ -458,7 +458,7 @@ function WorkspaceMembersContent() {
   const handleRemoveMember = async (member: ProjectMember) => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
-      setError("User not authenticated");
+      setError("Usuario no autenticado");
       return;
     }
 
@@ -470,14 +470,14 @@ function WorkspaceMembersContent() {
 
       // If user removed themselves, redirect to workspaces page
       if (member.userId === currentUser.id) {
-        toast.success("You have left the workspace");
+        toast.success("Has salido del espacio de trabajo");
         router.push("/workspaces");
         return;
       }
 
-      toast.success("Member removed successfully");
+      toast.success("Miembro eliminado con éxito");
     } catch (err) {
-      const errorMessage = err.message ? err.message : "Failed to remove member";
+      const errorMessage = err.message ? err.message : "Error al eliminar al miembro";
       setError(errorMessage);
       setMemberToRemove(null);
       toast.error(errorMessage);
@@ -488,8 +488,8 @@ function WorkspaceMembersContent() {
 
   const handleInvite = async (email: string, role: string) => {
     if (!workspace) {
-      toast.error("Workspace not found");
-      throw new Error("Workspace not found");
+      toast.error("Espacio de trabajo no encontrado");
+      throw new Error("Espacio de trabajo no encontrado");
     }
 
     const validation = invitationApi.validateInvitationData({
@@ -500,7 +500,7 @@ function WorkspaceMembersContent() {
 
     if (!validation.isValid) {
       validation.errors.forEach((error) => toast.error(error));
-      throw new Error("Validation failed");
+      throw new Error("Error de validación");
     }
 
     try {
@@ -510,14 +510,14 @@ function WorkspaceMembersContent() {
         role: role,
       });
 
-      toast.success(`Invitation sent to ${email}`);
+      toast.success(`Invitación enviada a ${email}`);
 
       if (pendingInvitationsRef.current) {
         await pendingInvitationsRef.current.refreshInvitations();
       }
     } catch (error: any) {
       const errorMessage =
-        error?.response?.data?.message || error?.message || "Failed to send invitation";
+        error?.response?.data?.message || error?.message || "Error al enviar la invitación";
       toast.error(errorMessage);
       console.error("Invite member error:", error);
       throw error;
@@ -534,7 +534,7 @@ function WorkspaceMembersContent() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("es-419", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -548,7 +548,7 @@ function WorkspaceMembersContent() {
   if (error && !members.length) {
     return (
       <div className="min-h-screen bg-[var(--background)]">
-        <ErrorState error="Error loading workspace members" onRetry={retryFetch} />
+        <ErrorState error="Error al cargar los miembros del espacio de trabajo" onRetry={retryFetch} />
       </div>
     );
   }
@@ -557,7 +557,7 @@ function WorkspaceMembersContent() {
     return (
       <div className="dashboard-container px-[1rem]">
         <div className="text-center py-12">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">Workspace not found</h2>
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">Espacio de trabajo no encontrado</h2>
         </div>
       </div>
     );
@@ -567,8 +567,8 @@ function WorkspaceMembersContent() {
     <div className="dashboard-container pt-0">
       {/* Header - Compact */}
       <PageHeader
-        title={workspace ? `${workspace.name} Members` : "Workspace Members"}
-        description="Manage members and their permissions in this workspace."
+        title={workspace ? `Miembros de ${workspace.name}` : "Miembros del Espacio de Trabajo"}
+        description="Gestiona los miembros y sus permisos en este espacio de trabajo."
         actions={
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
             {hasAccess && (
@@ -582,7 +582,7 @@ function WorkspaceMembersContent() {
                 ) : (
                   <HiPlus className="size-4" />
                 )}
-                Invite Member
+                Invitar Miembro
               </Button>
             )}
           </div>
@@ -596,7 +596,7 @@ function WorkspaceMembersContent() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                   <HiUsers className="w-5 h-5 text-[var(--muted-foreground)]" />
-                  Members ({activeMembers.length})
+                  Miembros ({activeMembers.length})
                 </CardTitle>
                 <div className="relative w-full sm:w-auto">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -607,7 +607,7 @@ function WorkspaceMembersContent() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 h-9 w-full sm:w-64 border-input bg-background text-[var(--foreground)]"
-                    placeholder="Search members..."
+                    placeholder="Buscar miembros..."
                   />
                   {searchLoading && (
                     <div className="absolute inset-y-0 right-10 pr-3 flex items-center">
@@ -630,11 +630,11 @@ function WorkspaceMembersContent() {
               {/* Table Header - Desktop Only */}
               <div className="hidden lg:block px-4 py-3 bg-[var(--muted)]/30 border-b border-[var(--border)]">
                 <div className="grid grid-cols-12 gap-3 text-xs font-medium text-[var(--muted-foreground)] uppercase tracking-wide">
-                  <div className="col-span-4">Member</div>
-                  <div className="col-span-2">Status</div>
-                  <div className="col-span-2">Joined</div>
-                  <div className="col-span-2">Role</div>
-                  <div className="col-span-2">Action</div>
+                  <div className="col-span-4">Miembro</div>
+                  <div className="col-span-2">Estado</div>
+                  <div className="col-span-2">Unido</div>
+                  <div className="col-span-2">Rol</div>
+                  <div className="col-span-2">Acción</div>
                 </div>
               </div>
 
@@ -644,13 +644,13 @@ function WorkspaceMembersContent() {
                   icon={HiUsers}
                   title={
                     searchTerm
-                      ? "No members found matching your search"
-                      : "No members found in this workspace"
+                      ? "No se encontraron miembros que coincidan con tu búsqueda"
+                      : "No se encontraron miembros en este espacio de trabajo"
                   }
                   description={
                     searchTerm
-                      ? "Try adjusting your search terms"
-                      : "Start by inviting team members to collaborate on this workspace"
+                      ? "Intenta ajustar tus términos de búsqueda"
+                      : "Comienza invitando a miembros del equipo para colaborar en este espacio de trabajo"
                   }
                 />
               ) : (
@@ -699,10 +699,10 @@ function WorkspaceMembersContent() {
                                 <Tooltip
                                   content={
                                     isCurrentUser
-                                      ? "Leave Workspace"
+                                      ? "Salir del Espacio de Trabajo"
                                       : userAccess?.role === "MANAGER" && member.role === "MANAGER"
-                                        ? "Cannot remove other managers"
-                                        : "Remove Member"
+                                        ? "No se puede eliminar a otros gestores"
+                                        : "Eliminar Miembro"
                                   }
                                   position="top"
                                   color="danger"
@@ -738,7 +738,15 @@ function WorkspaceMembersContent() {
                                         value={role.name}
                                         className="hover:bg-[var(--hover-bg)]"
                                       >
-                                        {role.name.charAt(0) + role.name.slice(1).toLowerCase()}
+                                        {role.name === "OWNER"
+                                          ? "Dueño"
+                                          : role.name === "MANAGER"
+                                            ? "Gestor"
+                                            : role.name === "MEMBER"
+                                              ? "Miembro"
+                                              : role.name === "VIEWER"
+                                                ? "Espectador"
+                                                : role.name}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -820,7 +828,15 @@ function WorkspaceMembersContent() {
                                         value={role.name}
                                         className="hover:bg-[var(--hover-bg)]"
                                       >
-                                        {role.name.charAt(0) + role.name.slice(1).toLowerCase()}
+                                        {role.name === "OWNER"
+                                          ? "Dueño"
+                                          : role.name === "MANAGER"
+                                            ? "Gestor"
+                                            : role.name === "MEMBER"
+                                              ? "Miembro"
+                                              : role.name === "VIEWER"
+                                                ? "Espectador"
+                                                : role.name}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -842,10 +858,10 @@ function WorkspaceMembersContent() {
                                 <Tooltip
                                   content={
                                     isCurrentUser
-                                      ? "Leave Workspace"
+                                      ? "Salir del Espacio de Trabajo"
                                       : userAccess?.role === "MANAGER" && member.role === "MANAGER"
-                                        ? "Cannot remove other managers"
-                                        : "Remove Member"
+                                        ? "No se puede eliminar a otros gestores"
+                                        : "Eliminar Miembro"
                                   }
                                   position="top"
                                   color="danger"
@@ -897,25 +913,25 @@ function WorkspaceMembersContent() {
             <CardHeader className="pb-2">
               <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                 <HiUsers className="w-5 h-5 text-[var(--muted-foreground)]" />
-                Workspace Info
+                Información del Espacio de Trabajo
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-3">
                 <div>
                   <p className="text-sm font-medium text-[var(--foreground)]">
-                    {workspace?.name || "Unknown Workspace"}
+                    {workspace?.name || "Espacio de Trabajo Desconocido"}
                   </p>
                   <p className="text-xs text-[var(--muted-foreground)]">
-                    {workspace?.description || "No description available"}
+                    {workspace?.description || "Sin descripción disponible"}
                   </p>
                 </div>
                 <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                  <span>Members:</span>
+                  <span>Miembros:</span>
                   <span className="font-medium text-[var(--foreground)]">{members.length}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                  <span>Active Members:</span>
+                  <span>Miembros Activos:</span>
                   <span className="font-medium text-[var(--foreground)]">
                     {members.filter((m) => m.status === "ACTIVE").length}
                   </span>
@@ -928,7 +944,7 @@ function WorkspaceMembersContent() {
             <CardHeader className="pb-2">
               <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                 <HiCog className="w-5 h-5 text-[var(--muted-foreground)]" />
-                Role Distribution
+                Distribución de Roles
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
@@ -941,7 +957,17 @@ function WorkspaceMembersContent() {
 
                   return (
                     <div key={role.id} className="flex items-center justify-between text-xs">
-                      <span className="text-[var(--muted-foreground)]">{role.name}</span>
+                      <span className="text-[var(--muted-foreground)]">
+                        {role.name === "OWNER"
+                          ? "Dueño"
+                          : role.name === "MANAGER"
+                            ? "Gestor"
+                            : role.name === "MEMBER"
+                              ? "Miembro"
+                              : role.name === "VIEWER"
+                                ? "Espectador"
+                                : role.name}
+                      </span>
                       <Badge
                         variant={role.variant}
                         className="h-5 px-2 text-xs border-none bg-[var(--primary)]/10 text-[var(--primary)]"
@@ -978,14 +1004,14 @@ function WorkspaceMembersContent() {
           isOpen={true}
           onClose={() => setMemberToRemove(null)}
           onConfirm={() => handleRemoveMember(memberToRemove)}
-          title={memberToRemove.userId === getCurrentUserId() ? "Leave Workspace" : "Remove Member"}
+          title={memberToRemove.userId === getCurrentUserId() ? "Salir del Espacio de Trabajo" : "Eliminar Miembro"}
           message={
             memberToRemove.userId === getCurrentUserId()
-              ? "Are you sure you want to leave this workspace? You will lose access to all workspace resources."
-              : "Are you sure you want to remove this member from the Workspace?"
+              ? "¿Estás seguro de que deseas salir de este espacio de trabajo? Perderás el acceso a todos los recursos del espacio de trabajo."
+              : "¿Estás seguro de que deseas eliminar a este miembro del Espacio de Trabajo?"
           }
-          confirmText={memberToRemove.userId === getCurrentUserId() ? "Leave" : "Remove"}
-          cancelText="Cancel"
+          confirmText={memberToRemove.userId === getCurrentUserId() ? "Salir" : "Eliminar"}
+          cancelText="Cancelar"
         />
       )}
     </div>

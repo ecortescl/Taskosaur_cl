@@ -32,17 +32,17 @@ export default function OrganizationForm({
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Organization name is required";
+      newErrors.name = "El nombre de la organización es obligatorio";
     }
 
     if (!formData.slug.trim()) {
-      newErrors.slug = "Organization slug is required";
+      newErrors.slug = "El slug de la organización es obligatorio";
     } else if (!/^[a-z0-9-]+$/.test(formData.slug)) {
-      newErrors.slug = "Slug can only contain lowercase letters, numbers, and hyphens";
+      newErrors.slug = "El slug solo puede contener letras minúsculas, números y guiones";
     }
 
     if (formData.website && !isValidUrl(formData.website)) {
-      newErrors.website = "Please enter a valid URL";
+      newErrors.website = "Por favor ingresa una URL válida";
     }
 
     setErrors(newErrors);
@@ -108,7 +108,7 @@ export default function OrganizationForm({
       }
     } catch (error) {
       console.error("Error saving organization:", error);
-      setErrors({ submit: "Failed to save organization. Please try again." });
+      setErrors({ submit: "Error al guardar la organización. Por favor intenta de nuevo." });
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +118,7 @@ export default function OrganizationForm({
     <form onSubmit={handleSubmit} className="organizations-form">
       <div className="organizations-form-field">
         <label htmlFor="name" className="form-label-primary">
-          Organization Name *
+          Nombre de la Organización *
         </label>
         <input
           type="text"
@@ -127,7 +127,7 @@ export default function OrganizationForm({
           value={formData.name}
           onChange={handleNameChange}
           className="form-input-primary"
-          placeholder="Enter organization name"
+          placeholder="Ingresa el nombre de la organización"
           required
         />
         {errors.name && <p className="form-error-text">{errors.name}</p>}
@@ -135,7 +135,7 @@ export default function OrganizationForm({
 
       <div className="organizations-form-field">
         <label htmlFor="slug" className="form-label-primary">
-          Organization Slug *
+          Slug de la Organización *
         </label>
         <input
           type="text"
@@ -144,19 +144,18 @@ export default function OrganizationForm({
           value={formData.slug}
           onChange={handleChange}
           className="form-input-primary"
-          placeholder="organization-slug"
+          placeholder="slug-de-la-organizacion"
           required
         />
         <p className="organizations-form-slug-hint">
-          This will be used in your organization URL. Only lowercase letters, numbers, and hyphens
-          are allowed.
+          Esto se usará en la URL de tu organización. Solo se permiten letras minúsculas, números y guiones.
         </p>
         {errors.slug && <p className="form-error-text">{errors.slug}</p>}
       </div>
 
       <div className="organizations-form-field">
         <label htmlFor="description" className="form-label-primary">
-          Description
+          Descripción
         </label>
         <textarea
           id="description"
@@ -165,13 +164,13 @@ export default function OrganizationForm({
           value={formData.description}
           onChange={handleChange}
           className="form-textarea-primary"
-          placeholder="Describe your organization..."
+          placeholder="Describe tu organización..."
         />
       </div>
 
       <div className="organizations-form-field">
         <label htmlFor="website" className="form-label-primary">
-          Website
+          Sitio Web
         </label>
         <input
           type="url"
@@ -180,7 +179,7 @@ export default function OrganizationForm({
           value={formData.website}
           onChange={handleChange}
           className="form-input-primary"
-          placeholder="https://your-website.com"
+          placeholder="https://tu-sitio-web.com"
         />
         {errors.website && <p className="form-error-text">{errors.website}</p>}
       </div>
@@ -194,11 +193,11 @@ export default function OrganizationForm({
       <div className="organizations-form-actions">
         {onCancel && (
           <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
-            Cancel
+            Cancelar
           </Button>
         )}
         <Button type="submit" disabled={isLoading}>
-          {isEditing ? "Update Organization" : "Create Organization"}
+          {isEditing ? "Actualizar Organización" : "Crear Organización"}
         </Button>
       </div>
     </form>

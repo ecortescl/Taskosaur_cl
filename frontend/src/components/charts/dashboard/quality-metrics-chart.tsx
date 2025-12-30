@@ -4,11 +4,11 @@ import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  resolved: { label: "Resolved", color: "#10B981" },
-  low: { label: "Low Performance", color: "#EF4444" },
-  medium: { label: "Medium Performance", color: "#F59E0B" },
-  high: { label: "High Performance", color: "#10B981" },
-  remaining: { label: "Remaining", color: "#E5E7EB" },
+  resolved: { label: "Resueltos", color: "#10B981" },
+  low: { label: "Bajo Rendimiento", color: "#EF4444" },
+  medium: { label: "Rendimiento Medio", color: "#F59E0B" },
+  high: { label: "Alto Rendimiento", color: "#10B981" },
+  remaining: { label: "Restante", color: "#E5E7EB" },
 };
 
 interface QualityMetricsChartProps {
@@ -45,8 +45,8 @@ export function QualityMetricsChart({ data }: QualityMetricsChartProps) {
 
   return (
     <ChartWrapper
-      title="Bug Resolution Quality"
-      description={`${data.resolvedBugs}/${data.totalBugs} bugs resolved (${data.bugResolutionRate.toFixed(1)}%)`}
+      title="Calidad de Resolución de Bugs"
+      description={`${data.resolvedBugs}/${data.totalBugs} bugs resueltos (${data.bugResolutionRate.toFixed(1)}%)`}
       config={chartConfig}
       className="border-[var(--border)]"
     >
@@ -71,7 +71,7 @@ export function QualityMetricsChart({ data }: QualityMetricsChartProps) {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <div className="text-2xl font-bold">{data.bugResolutionRate.toFixed(1)}%</div>
-            <div className="text-sm text-muted-foreground">Resolution Rate</div>
+            <div className="text-sm text-muted-foreground">Tasa de Resolución</div>
           </div>
         </div>
       </div>

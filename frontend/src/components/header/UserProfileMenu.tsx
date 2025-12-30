@@ -57,9 +57,9 @@ export default function UserProfileMenu({
   };
 
   const getFullName = () => {
-    if (!isClient || !user) return "User";
+    if (!isClient || !user) return "Usuario";
     const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
-    return fullName || "User";
+    return fullName || "Usuario";
   };
 
   const getUserRole = () => user?.role || "Admin";
@@ -134,7 +134,7 @@ export default function UserProfileMenu({
                     <div className="header-user-menu-icon-container header-user-menu-icon-container-settings">
                       <HiCog className="header-user-menu-icon-settings" />
                     </div>
-                    <div className="header-user-menu-text">Profile</div>
+                    <div className="header-user-menu-text">Perfil</div>
                   </Link>
                 </DropdownMenuItem>
 
@@ -151,7 +151,7 @@ export default function UserProfileMenu({
                 <RiLogoutCircleRLine className="header-user-menu-icon-logout" />
               </div>
               <div className="header-user-menu-text">
-                {isLoggingOut ? "Logging out..." : "Logout"}
+                {isLoggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}
               </div>
             </DropdownMenuItem>
           </div>
@@ -162,10 +162,10 @@ export default function UserProfileMenu({
         isOpen={logoutModalOpen}
         onClose={() => setLogoutModalOpen(false)}
         onConfirm={handleLogout}
-        title="Confirm Logout"
-        message="Are you sure you want to log out? You’ll need to log in again to access your account."
-        confirmText="Logout"
-        cancelText="Cancel"
+        title="Confirmar Cierre de Sesión"
+        message="¿Estás seguro de que deseas cerrar sesión? Tendrás que iniciar sesión nuevamente para acceder a tu cuenta."
+        confirmText="Cerrar Sesión"
+        cancelText="Cancelar"
         type="danger"
       />
     </>

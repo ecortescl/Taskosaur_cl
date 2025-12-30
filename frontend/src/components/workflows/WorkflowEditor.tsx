@@ -166,9 +166,9 @@ export default function WorkflowEditor({
 
       onUpdate(updatedWorkflow);
       setHasStatusChanges(false);
-      toast.success("Status order updated successfully!");
+      toast.success("¡Orden de los estados actualizado con éxito!");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to save status order");
+      toast.error(error instanceof Error ? error.message : "Error al guardar el orden de los estados");
     } finally {
       setIsSavingStatuses(false);
     }
@@ -178,15 +178,15 @@ export default function WorkflowEditor({
     const errors: Record<string, string> = {};
 
     if (!detailsFormData.name.trim()) {
-      errors.name = "Workflow name is required";
+      errors.name = "El nombre del workflow es obligatorio";
     } else if (detailsFormData.name.trim().length < 3) {
-      errors.name = "Workflow name must be at least 3 characters";
+      errors.name = "El nombre del workflow debe tener al menos 3 caracteres";
     } else if (detailsFormData.name.trim().length > 50) {
-      errors.name = "Workflow name must be less than 50 characters";
+      errors.name = "El nombre del workflow debe tener menos de 50 caracteres";
     }
 
     if (detailsFormData.description && detailsFormData.description.length > 200) {
-      errors.description = "Description must be less than 200 characters";
+      errors.description = "La descripción debe tener menos de 200 caracteres";
     }
 
     setDetailsErrors(errors);
@@ -212,9 +212,9 @@ export default function WorkflowEditor({
       onUpdate({ ...updatedWorkflow, statuses: workflow.statuses || [] });
       setIsEditingDetails(false);
 
-      toast.success("Workflow details updated successfully");
+      toast.success("Detalles del workflow actualizados con éxito");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update workflow details");
+      toast.error(error instanceof Error ? error.message : "Error al actualizar los detalles del workflow");
       console.error("Failed to update workflow details:", error);
     } finally {
       setIsSavingDetails(false);
@@ -241,10 +241,10 @@ export default function WorkflowEditor({
       <Card className="bg-[var(--sidebar)] border-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
           <CardTitle className="text-md font-semibold text-[var(--foreground)]">
-            Workflow Details
+            Detalles del Workflow
           </CardTitle>
           {!isEditingDetails && (
-            <Tooltip content="Edit details" position="top" color="primary">
+            <Tooltip content="Editar detalles" position="top" color="primary">
               <Button
                 variant="outline"
                 size="sm"
@@ -262,7 +262,7 @@ export default function WorkflowEditor({
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-[var(--foreground)]">
-                  Workflow Name <span className="text-red-500">*</span>
+                  Nombre del Workflow <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="name"
@@ -273,7 +273,7 @@ export default function WorkflowEditor({
                       name: e.target.value,
                     })
                   }
-                  placeholder="Enter workflow name"
+                  placeholder="Ingresa el nombre del workflow"
                   disabled={isSavingDetails}
                   className="bg-[var(--background)] border-[var(--border)] text-[var(--foreground)]"
                 />
@@ -284,7 +284,7 @@ export default function WorkflowEditor({
 
               <div className="space-y-2">
                 <Label htmlFor="description" className="text-[var(--foreground)]">
-                  Description
+                  Descripción
                 </Label>
                 <Textarea
                   id="description"
@@ -295,7 +295,7 @@ export default function WorkflowEditor({
                       description: e.target.value,
                     })
                   }
-                  placeholder="Enter workflow description"
+                  placeholder="Ingresa la descripción del workflow"
                   disabled={isSavingDetails}
                   className="bg-[var(--background)] border-[var(--border)] text-[var(--foreground)] min-h-[80px]"
                   rows={3}
@@ -320,7 +320,7 @@ export default function WorkflowEditor({
                   className="border-[var(--border)] cursor-pointer"
                 />
                 <Label htmlFor="isDefault" className="text-[var(--foreground)] cursor-pointer">
-                  Set as default workflow
+                  Establecer como workflow por defecto
                 </Label>
               </div>
 
@@ -334,12 +334,12 @@ export default function WorkflowEditor({
                   {isSavingDetails ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Saving...
+                      Guardando...
                     </>
                   ) : (
                     <>
                       <Save className="w-4 h-4" />
-                      Save Details
+                      Guardar Detalles
                     </>
                   )}
                 </Button>
@@ -350,7 +350,7 @@ export default function WorkflowEditor({
                   className="bg-[var(--card)] border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--accent)]"
                 >
                   <X className="w-4 h-4" />
-                  Cancel
+                  Cancelar
                 </Button>
               </div>
             </div>
@@ -364,19 +364,19 @@ export default function WorkflowEditor({
                       variant="default"
                       className="bg-[var(--primary)] text-[var(--primary-foreground)]"
                     >
-                      Default
+                      Por Defecto
                     </Badge>
                   )}
                 </div>
                 <p className="text-[var(--muted-foreground)] text-sm">
-                  {workflow.description || "No description provided"}
+                  {workflow.description || "Sin descripción"}
                 </p>
               </div>
 
               <div className="flex items-center gap-4 text-xs text-[var(--muted-foreground)]">
-                <span>Created: {new Date(workflow.createdAt).toLocaleDateString()}</span>
-                <span>Updated: {new Date(workflow.updatedAt).toLocaleDateString()}</span>
-                <span>Statuses: {workflow.statuses ? workflow.statuses.length : 0}</span>
+                <span>Creado: {new Date(workflow.createdAt).toLocaleDateString()}</span>
+                <span>Actualizado: {new Date(workflow.updatedAt).toLocaleDateString()}</span>
+                <span>Estados: {workflow.statuses ? workflow.statuses.length : 0}</span>
               </div>
             </div>
           )}
@@ -388,7 +388,7 @@ export default function WorkflowEditor({
         <Alert className="bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
           <AlertTriangle className="h-4 w-4 text-yellow-800" />
           <AlertDescription className="text-yellow-600">
-            You have unsaved changes to the status order. Don't forget to save your changes.
+            Tienes cambios sin guardar en el orden de los estados. No olvides guardar tus cambios.
           </AlertDescription>
         </Alert>
       )}
@@ -400,20 +400,20 @@ export default function WorkflowEditor({
               <Play className="w-8 h-8 text-[var(--muted-foreground)]" />
             </div>
             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">
-              No Statuses Configured
+              No hay Estados Configurados
             </h3>
             <p className="text-sm text-[var(--muted-foreground)]">
-              Add statuses to this workflow to create a visual flow.
+              Añade estados a este workflow para crear un flujo visual.
             </p>
           </div>
         ) : (
           <div>
             <div className="block mb-2 md:flex items-center gap-2 justify-between ">
               <h3 className="text-md font-semibold text-[var(--foreground)]">
-                Visual Status Flow Editor
+                Editor Visual de Flujo de Estados
               </h3>
               <div className="flex gap-2">
-                <Tooltip content="Reset to Default" position="top" color="primary">
+                <Tooltip content="Restablecer a Valores por Defecto" position="top" color="primary">
                   <Button
                     variant="outline"
                     size="sm"
@@ -439,12 +439,12 @@ export default function WorkflowEditor({
                     {isSavingStatuses ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Saving...
+                        Guardando...
                       </>
                     ) : (
                       <>
                         <Save className="w-4 h-4" />
-                        Save Order
+                        Guardar Orden
                       </>
                     )}
                   </Button>
@@ -452,8 +452,8 @@ export default function WorkflowEditor({
               </div>
             </div>
             <p className="text-[var(--muted-foreground)] text-sm mb-4">
-              Drag and drop statuses to reorder them. The order defines the typical flow of tasks
-              through your workflow.
+              Arrastra y suelta los estados para reordenarlos. El orden define el flujo típico de las tareas
+              a través de tu workflow.
             </p>
             <div className="overflow-x-auto">
               <div className="flex gap-4 pb-4 min-w-max">
@@ -472,13 +472,11 @@ export default function WorkflowEditor({
                   return (
                     <React.Fragment key={status.id}>
                       <div
-                        className={`flex-shrink-0 w-48 sm:w-56 md:w-64 p-4 border-2 border-dashed rounded-lg cursor-move transition-all ${
-                          dragOverIndex === index
+                        className={`flex-shrink-0 w-48 sm:w-56 md:w-64 p-4 border-2 border-dashed rounded-lg cursor-move transition-all ${dragOverIndex === index
                             ? "border-[var(--primary)] bg-[var(--primary)]/10"
                             : "border-[var(--border)] hover:border-[var(--primary)]/50 hover:bg-[var(--accent)]"
-                        } ${
-                          draggedStatus?.id === status.id ? "opacity-50 rotate-1 scale-105" : ""
-                        }`}
+                          } ${draggedStatus?.id === status.id ? "opacity-50 rotate-1 scale-105" : ""
+                          }`}
                         draggable
                         onDragStart={(e) => handleDragStart(e, safeStatus)}
                         onDragEnd={handleDragEnd}
@@ -508,11 +506,11 @@ export default function WorkflowEditor({
                         {/* Status Details */}
                         <div className="space-y-2 pt-6">
                           <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                            <span>{status.isDefault ? "Default" : "Custom"}</span>
+                            <span>{status.isDefault ? "Por Defecto" : "Personalizado"}</span>
                             <div className="hidden sm:flex items-center space-x-1">
                               <GripVertical className="w-3 h-3" />
-                              <span className="hidden md:inline">Drag to reorder</span>
-                              <span className="md:hidden">Drag</span>
+                              <span className="hidden md:inline">Arrastra para reordenar</span>
+                              <span className="md:hidden">Arrastra</span>
                             </div>
                           </div>
                         </div>
@@ -535,25 +533,25 @@ export default function WorkflowEditor({
 
       {/* Workflow Rules */}
       <Card className="bg-[var(--sidebar)] border-none p-6">
-        <h3 className="text-md font-semibold text-[var(--foreground)] mb-4">Workflow Rules</h3>
+        <h3 className="text-md font-semibold text-[var(--foreground)] mb-4">Reglas del Workflow</h3>
         <div className="space-y-4">
           <div className="p-4 bg-[var(--category-blue-10)] rounded-lg border-none">
-            <h4 className="font-medium text-[var(--category-blue)] mb-2">Transition Rules</h4>
+            <h4 className="font-medium text-[var(--category-blue)] mb-2">Reglas de Transición</h4>
             <ul className="text-sm text-[var(--category-blue-light)] space-y-1">
-              <li>• Tasks can move forward to any subsequent status</li>
-              <li>• Tasks can move backward to previous statuses</li>
-              <li>• Some transitions may require specific permissions</li>
-              <li>• Automated transitions can be configured for certain conditions</li>
+              <li>• Las tareas pueden avanzar a cualquier estado subsiguiente</li>
+              <li>• Las tareas pueden retroceder a estados anteriores</li>
+              <li>• Algunas transiciones pueden requerir permisos específicos</li>
+              <li>• Se pueden configurar transiciones automatizadas para ciertas condiciones</li>
             </ul>
           </div>
 
           <div className="p-4 bg-[var(--category-lime-10)] rounded-lg border-none">
-            <h4 className="font-medium text-[var(--category-lime)] mb-2">Status Requirements</h4>
+            <h4 className="font-medium text-[var(--category-lime)] mb-2">Requisitos de Estado</h4>
             <ul className="text-sm text-[var(--category-lime-light)] space-y-1">
-              <li>• At least one status must be marked as default</li>
-              <li>• Each workflow must have at least one status in each category</li>
-              <li>• Status names must be unique within a workflow</li>
-              <li>• Default status cannot be deleted</li>
+              <li>• Al menos un estado debe estar marcado como por defecto</li>
+              <li>• Cada workflow debe tener al menos un estado en cada categoría</li>
+              <li>• Los nombres de los estados deben ser únicos dentro de un workflow</li>
+              <li>• El estado por defecto no se puede eliminar</li>
             </ul>
           </div>
         </div>
@@ -563,10 +561,10 @@ export default function WorkflowEditor({
         isOpen={resetToDefaultConfirmation}
         onClose={() => setResetToDefaultConfirmation(false)}
         onConfirm={() => handleResetToDefault()}
-        title="Reset to default"
-        message="Are you sure you want to reset the workflow to default order? This will undo any custom ordering."
-        confirmText="Reset to default"
-        cancelText="Cancel"
+        title="Restablecer a valores por defecto"
+        message="¿Estás seguro de que deseas restablecer el workflow al orden por defecto? Esto deshará cualquier orden personalizado."
+        confirmText="Restablecer"
+        cancelText="Cancelar"
       />
     </div>
   );

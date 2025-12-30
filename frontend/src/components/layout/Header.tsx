@@ -38,7 +38,7 @@ const LoginButton = () => {
 
   return (
     <Button onClick={handleLogin} variant="default" className="header-login-button">
-      Login
+      Iniciar Sesión
     </Button>
   );
 };
@@ -187,8 +187,8 @@ export default function Header() {
 
   const workspaceSlugFromUrl =
     contextLevel === "workspace" ||
-    contextLevel === "workspace-nested" ||
-    contextLevel === "project"
+      contextLevel === "workspace-nested" ||
+      contextLevel === "project"
       ? workspaceSlug
       : null;
 
@@ -283,7 +283,7 @@ export default function Header() {
                       <DropdownMenuTrigger asChild>
                         <Button variant="default" className="header-create-button">
                           <HiPlus className="size-4" />
-                          <span className="hidden sm:inline">Create</span>
+                          <span className="hidden sm:inline">Crear</span>
                           <HiChevronDown className="size-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -295,7 +295,7 @@ export default function Header() {
                     sideOffset={8}
                   >
                     <div className="header-dropdown-header">
-                      <h3 className="header-dropdown-title">Create New</h3>
+                      <h3 className="header-dropdown-title">Crear Nuevo</h3>
                     </div>
 
                     <div className="p-2 space-y-1">
@@ -312,9 +312,9 @@ export default function Header() {
                                   <HiCommandLine className="header-dropdown-icon-inner" />
                                 </div>
                                 <div className="header-dropdown-item-content">
-                                  <div className="header-dropdown-item-title">New Workspace</div>
+                                  <div className="header-dropdown-item-title">Nuevo Workspace</div>
                                   <div className="header-dropdown-item-description">
-                                    Create a workspace for your team
+                                    Cree un workspace para su equipo
                                   </div>
                                 </div>
                               </div>
@@ -332,9 +332,9 @@ export default function Header() {
                               <HiRocketLaunch className="header-dropdown-icon-inner" />
                             </div>
                             <div className="header-dropdown-item-content">
-                              <div className="header-dropdown-item-title">New Project</div>
+                              <div className="header-dropdown-item-title">Nuevo Proyecto</div>
                               <div className="header-dropdown-item-description">
-                                Start a new project
+                                Inicie un nuevo proyecto
                               </div>
                             </div>
                           </DropdownMenuItem>
@@ -353,9 +353,9 @@ export default function Header() {
                             <HiRocketLaunch className="header-dropdown-icon-inner" />
                           </div>
                           <div className="header-dropdown-item-content">
-                            <div className="header-dropdown-item-title">New Project</div>
+                            <div className="header-dropdown-item-title">Nuevo Proyecto</div>
                             <div className="header-dropdown-item-description">
-                              Start a new project
+                              Inicie un nuevo proyecto
                             </div>
                           </div>
                         </DropdownMenuItem>
@@ -373,9 +373,9 @@ export default function Header() {
                             <HiPlus className="header-dropdown-icon-inner" />
                           </div>
                           <div className="header-dropdown-item-content">
-                            <div className="header-dropdown-item-title">New Task</div>
+                            <div className="header-dropdown-item-title">Nueva Tarea</div>
                             <div className="header-dropdown-item-description">
-                              Add a task to this project
+                              Añada una tarea a este proyecto
                             </div>
                           </div>
                         </DropdownMenuItem>
@@ -406,17 +406,15 @@ export default function Header() {
                         onClick={toggleChat}
                         variant="ghost"
                         size="icon"
-                        aria-label="Toggle AI Chat"
-                        className={`header-mode-toggle transition-all duration-200 ${
-                          isChatOpen
+                        aria-label="Alternar Chat de IA"
+                        className={`header-mode-toggle transition-all duration-200 ${isChatOpen
                             ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 ring-2 ring-blue-500/20"
                             : ""
-                        }`}
+                          }`}
                       >
                         <HiChatBubbleLeftRight
-                          className={`header-mode-toggle-icon transition-colors duration-200 ${
-                            isChatOpen ? "text-blue-600 dark:text-blue-400 scale-110" : ""
-                          }`}
+                          className={`header-mode-toggle-icon transition-colors duration-200 ${isChatOpen ? "text-blue-600 dark:text-blue-400 scale-110" : ""
+                            }`}
                         />
                       </Button>
                       {isChatOpen && (

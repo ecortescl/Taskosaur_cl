@@ -49,7 +49,7 @@ export default function SetupChecker({ children }: { children: React.ReactNode }
       <div className="setup-checker-loading-container">
         <div className="setup-checker-loading-content">
           <div className="setup-checker-loading-spinner"></div>
-          <p className="setup-checker-loading-text">Checking system status...</p>
+          <p className="setup-checker-loading-text">Verificando el estado del sistema...</p>
         </div>
       </div>
     );

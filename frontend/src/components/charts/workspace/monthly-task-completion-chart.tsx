@@ -9,7 +9,7 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  completion: { label: "Tasks Completed", color: "#3B82F6" },
+  completion: { label: "Tareas Completadas", color: "#3B82F6" },
 };
 
 interface MonthlyTaskCompletionChartProps {
@@ -19,7 +19,7 @@ interface MonthlyTaskCompletionChartProps {
 export function MonthlyTaskCompletionChart({ data }: MonthlyTaskCompletionChartProps) {
   const chartData = data
     ?.map((item) => ({
-      month: new Date(item.month + "-01").toLocaleDateString("en-US", {
+      month: new Date(item.month + "-01").toLocaleDateString("es-419", {
         month: "short",
         year: "2-digit",
       }),
@@ -29,8 +29,8 @@ export function MonthlyTaskCompletionChart({ data }: MonthlyTaskCompletionChartP
 
   return (
     <ChartWrapper
-      title="Monthly Task Completion Trend"
-      description="Tasks completed per month across workspace"
+      title="Tendencia Mensual de Tareas Completadas"
+      description="Tareas completadas por mes en el workspace"
       config={chartConfig}
       className="border-[var(--border)]"
     >

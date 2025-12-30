@@ -83,7 +83,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
       });
     } catch (error) {
       console.error("Failed to load settings:", error);
-      setMessage({ type: "error", text: "Failed to load AI settings" });
+      setMessage({ type: "error", text: "Error al cargar la configuración de IA" });
     } finally {
       setIsLoading(false);
     }
@@ -133,12 +133,12 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
         })
       );
 
-      setMessage({ type: "success", text: "AI settings saved successfully!" });
-      toast.success("AI settings saved successfully!");
+      setMessage({ type: "success", text: "¡Configuración de IA guardada con éxito!" });
+      toast.success("¡Configuración de IA guardada con éxito!");
     } catch (error) {
       console.error("Failed to save settings:", error);
-      setMessage({ type: "error", text: "Failed to save AI settings" });
-      toast.error("Failed to save AI settings");
+      setMessage({ type: "error", text: "Error al guardar la configuración de IA" });
+      toast.error("Error al guardar la configuración de IA");
     } finally {
       setIsSaving(false);
     }
@@ -146,17 +146,17 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
 
   const testConnection = async () => {
     if (!apiKey) {
-      setMessage({ type: "error", text: "Please enter an API key first" });
+      setMessage({ type: "error", text: "Por favor, ingrese una clave API primero" });
       return;
     }
 
     if (!model) {
-      setMessage({ type: "error", text: "Please enter a model name first" });
+      setMessage({ type: "error", text: "Por favor, ingrese un nombre de modelo primero" });
       return;
     }
 
     if (!apiUrl) {
-      setMessage({ type: "error", text: "Please enter an API URL first" });
+      setMessage({ type: "error", text: "Por favor, ingrese una URL de API primero" });
       return;
     }
 
@@ -172,10 +172,10 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
       });
 
       if (response.data.success) {
-        setMessage({ type: "success", text: response.data.message || "Connection test successful!" });
-        toast.success(response.data.message || "Connection test successful!");
+        setMessage({ type: "success", text: response.data.message || "¡Prueba de conexión exitosa!" });
+        toast.success(response.data.message || "¡Prueba de conexión exitosa!");
       } else {
-        const errorMsg = response.data.error || "Connection test failed";
+        const errorMsg = response.data.error || "La prueba de conexión falló";
         setMessage({
           type: "error",
           text: errorMsg,
@@ -184,7 +184,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
       }
     } catch (error: any) {
       console.error("Connection test failed:", error);
-      const errorMessage = error.response?.data?.error || error.message || "Connection test failed";
+      const errorMessage = error.response?.data?.error || error.message || "La prueba de conexión falló";
       setMessage({ type: "error", text: errorMessage });
       toast.error(errorMessage);
     } finally {
@@ -210,9 +210,9 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
               <HiSparkles className="projects-modal-icon-content" />
             </div>
             <div className="projects-modal-info">
-              <DialogTitle className="projects-modal-title">AI Assistant Settings</DialogTitle>
+              <DialogTitle className="projects-modal-title">Configuración del Asistente de IA</DialogTitle>
               <p className="projects-modal-description">
-                Configure your AI chat functionality and API settings
+                Configure la funcionalidad de chat de IA y los ajustes de la API
               </p>
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
                 className="projects-form-label-icon size-3"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              API Key <span className="projects-form-label-required">*</span>
+              Clave API <span className="projects-form-label-required">*</span>
             </Label>
 
             <div className="relative">
@@ -240,7 +240,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
                 type={showApiKey ? "text" : "password"}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder="Enter your API key"
+                placeholder="Ingrese su clave API"
                 disabled={isLoading || isSaving}
                 className="projects-form-input border-none pr-8"
                 style={{ borderColor: "var(--border)" }}
@@ -276,14 +276,14 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
                 className="projects-form-label-icon"
                 style={{ color: "hsl(var(--primary))" }}
               />
-              Model <span className="projects-form-label-required">*</span>
+              Modelo <span className="projects-form-label-required">*</span>
             </Label>
             <Input
               id="model"
               type="text"
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              placeholder="e.g., deepseek/deepseek-chat-v3-0324:free"
+              placeholder="ej., deepseek/deepseek-chat-v3-0324:free"
               disabled={isLoading || isSaving}
               className="projects-form-input border-none"
               style={{ borderColor: "var(--border)" }}
@@ -314,7 +314,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
                   }}
                 />
               </span>
-              API URL <span className="projects-form-label-required">*</span>
+              URL de la API <span className="projects-form-label-required">*</span>
             </Label>
             <Input
               id="api-url"
@@ -346,10 +346,10 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
                     className="projects-form-label-icon"
                     style={{ color: "hsl(var(--primary))" }}
                   />
-                  Enable AI Chat
+                  Habilitar Chat de IA
                 </Label>
                 <p className="projects-url-preview-label text-[13px] mt-1 ml-6">
-                  Fill all the fields to enable chat.
+                  Complete todos los campos para habilitar el chat.
                 </p>
               </div>
 
@@ -379,29 +379,26 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
           {/* Setup Guide & Providers - Always visible */}
 
           <div className="mt-4 p-3 bg-[var(--border)] rounded-lg">
-            <h3 className="projects-url-preview-label mb-2 text-[14px]">Popular AI Providers:</h3>
+            <h3 className="projects-url-preview-label mb-2 text-[14px]">Proveedores de IA Populares:</h3>
             <ul
               className="text-xs space-y-1 text-[var(--accent-foreground)]"
               style={{ fontSize: "13px" }}
             >
               <li>
-                • <strong>OpenRouter:</strong> https://openrouter.ai/api/v1 (100+ models, free
-                options available)
+                • <strong>OpenRouter:</strong> https://openrouter.ai/api/v1 (más de 100 modelos, opciones gratuitas disponibles)
               </li>
               <li>
-                • <strong>OpenAI:</strong> https://api.openai.com/v1 (GPT models)
+                • <strong>OpenAI:</strong> https://api.openai.com/v1 (modelos GPT)
               </li>
               <li>
-                • <strong>Anthropic:</strong> https://api.anthropic.com/v1 (Claude models)
+                • <strong>Anthropic:</strong> https://api.anthropic.com/v1 (modelos Claude)
               </li>
               <li>
-                • <strong>Google:</strong> https://generativelanguage.googleapis.com/v1beta (Gemini
-                models)
+                • <strong>Google:</strong> https://generativelanguage.googleapis.com/v1beta (modelos Gemini)
               </li>
             </ul>
             <p className="text-xs" style={{ fontSize: "13px" }}>
-              • API keys are encrypted and stored securely • Test connection after changes • The URL
-              determines which provider is used
+              • Las claves API están encriptadas y se almacenan de forma segura • Pruebe la conexión después de los cambios • La URL determina qué proveedor se utiliza
             </p>
           </div>
 
@@ -413,7 +410,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
               onClick={handleClose}
               disabled={isLoading || isSaving}
             >
-              Cancel
+              Cancelar
             </ActionButton>
 
             <ActionButton
@@ -423,7 +420,7 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
               variant="outline"
               secondary
             >
-              {isLoading ? "Testing..." : "Test Connection"}
+              {isLoading ? "Probando..." : "Probar Conexión"}
             </ActionButton>
 
             <ActionButton
@@ -435,10 +432,10 @@ export default function AISettingsModal({ isOpen, onClose }: AISettingsModalProp
               {isSaving ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Saving...
+                  Guardando...
                 </div>
               ) : (
-                "Save Settings"
+                "Guardar Configuración"
               )}
             </ActionButton>
           </div>

@@ -17,26 +17,19 @@ export function LoginContent() {
         >
           <div className="">
             <div className="flex items-center">
-              <Image
-                src="/taskosaur-logo.svg"
-                alt="Taskosaur Logo"
-                width={50}
-                height={50}
-                className={`size-6 lg:size-10 ${resolvedTheme === "light" ? " filter invert brightness-200" : ""}`}
-              />
-              <h1 className="login-brand-title">Taskosaur</h1>
+
+              <h1 className="login-brand-title">QUIEBRE.CL</h1>
             </div>
           </div>
 
           <h2 className="login-hero-heading">
-            Transform your
+            Agencia de Marketing
             <br />
-            <span className="login-hero-heading-gradient">team's workflow</span>
+            <span className="login-hero-heading-gradient">Gestor de Tareas</span>
           </h2>
 
           <p className="login-hero-description">
-            Experience the future of project management with AI-powered tools that adapt to your
-            team's unique workflow and boost productivity.
+            Software de gestion de tareas para equipo de trabajo de la agencia de marketing
           </p>
         </motion.div>
       </div>

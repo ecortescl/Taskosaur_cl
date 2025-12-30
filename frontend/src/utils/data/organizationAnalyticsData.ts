@@ -42,7 +42,7 @@ export interface Widget {
 export const organizationAnalyticsWidgets: Widget[] = [
   {
     id: "kpi-metrics",
-    title: "Organization KPIs",
+    title: "KPIs de la Organización",
     component: OrganizationKPIMetrics,
     dataKey: "kpiMetrics",
     visible: true,
@@ -51,7 +51,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "project-portfolio",
-    title: "Project Portfolio Status",
+    title: "Estado del Portafolio de Proyectos",
     component: ProjectPortfolioChart,
     dataKey: "projectPortfolio",
     visible: true,
@@ -60,7 +60,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "team-utilization",
-    title: "Team Role Distribution",
+    title: "Distribución de Roles del Equipo",
     component: TeamUtilizationChart,
     dataKey: "teamUtilization",
     visible: true,
@@ -69,7 +69,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "task-distribution",
-    title: "Task Priority Distribution",
+    title: "Distribución de Prioridad de Tareas",
     component: TaskDistributionChart,
     dataKey: "taskDistribution",
     visible: true,
@@ -78,7 +78,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "task-type",
-    title: "Task Type Distribution",
+    title: "Distribución de Tipos de Tarea",
     component: TaskTypeChart,
     dataKey: "taskType",
     visible: false,
@@ -87,7 +87,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "sprint-metrics",
-    title: "Sprint Status Overview",
+    title: "Resumen de Estado de Sprints",
     component: SprintMetricsChart,
     dataKey: "sprintMetrics",
     visible: false,
@@ -96,7 +96,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "quality-metrics",
-    title: "Bug Resolution Quality",
+    title: "Calidad de Resolución de Bugs",
     component: QualityMetricsChart,
     dataKey: "qualityMetrics",
     visible: false,
@@ -105,7 +105,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "workspace-projects",
-    title: "Projects per Workspace",
+    title: "Proyectos por Workspace",
     component: WorkspaceProjectChart,
     dataKey: "workspaceProjectCount",
     visible: false,
@@ -114,7 +114,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "member-workload",
-    title: "Member Workload Distribution",
+    title: "Distribución de Carga de Trabajo de Miembros",
     component: MemberWorkloadChart,
     dataKey: "memberWorkload",
     visible: true,
@@ -123,7 +123,7 @@ export const organizationAnalyticsWidgets: Widget[] = [
   },
   {
     id: "resource-allocation",
-    title: "Resource Allocation",
+    title: "Asignación de Recursos",
     component: ResourceAllocationChart,
     dataKey: "resourceAllocation",
     visible: false,
@@ -141,43 +141,43 @@ export const organizationKPICards: KPICard[] = [
   },
   {
     id: "projects",
-    label: "Total Projects",
+    label: "Total Proyectos",
     visible: true,
     isDefault: true,
   },
   {
     id: "members",
-    label: "Team Members",
+    label: "Miembros del Equipo",
     visible: true,
     isDefault: true,
   },
   {
     id: "task-completion",
-    label: "Task Completion",
+    label: "Completitud de Tareas",
     visible: true,
     isDefault: true,
   },
   {
     id: "bug-resolution",
-    label: "Bug Resolution",
+    label: "Resolución de Bugs",
     visible: false,
     isDefault: false,
   },
   {
     id: "overdue-tasks",
-    label: "Overdue Tasks",
+    label: "Tareas Vencidas",
     visible: false,
     isDefault: false,
   },
   {
     id: "active-sprints",
-    label: "Active Sprints",
+    label: "Sprints Activos",
     visible: false,
     isDefault: false,
   },
   {
     id: "productivity",
-    label: "Overall Productivity",
+    label: "Productividad General",
     visible: false,
     isDefault: false,
   },

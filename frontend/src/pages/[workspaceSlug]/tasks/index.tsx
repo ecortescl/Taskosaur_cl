@@ -202,10 +202,10 @@ function WorkspaceTasksContent() {
   const validateRequiredData = useCallback(() => {
     const issues = [];
     if (!workspace?.id) issues.push("Missing workspace ID");
-    if (!workspace?.organizationId) issues.push("Missing organization ID");
+    if (!workspace?.organizationId) issues.push("Falta el ID de la organización");
     if (issues.length > 0) {
       console.error("Validation failed:", issues);
-      setLocalError(`Missing required data: ${issues.join(", ")}`);
+      setLocalError(`Faltan datos requeridos: ${issues.join(", ")}`);
       return false;
     }
     return true;
@@ -253,13 +253,13 @@ function WorkspaceTasksContent() {
 
       const ws = await getWorkspaceBySlug(workspaceSlug as string);
       if (!ws) {
-        throw new Error(`Workspace "${workspaceSlug}" not found`);
+        throw new Error(`Espacio de trabajo "${workspaceSlug}" no encontrado`);
       }
       setWorkspace(ws);
       return { ws };
     } catch (error) {
       console.error("LoadInitialData error:", error);
-      setLocalError(error instanceof Error ? error.message : "Failed to load initial data");
+      setLocalError(error instanceof Error ? error.message : "Error al cargar los datos iniciales");
     }
   }, [isAuthenticated, workspaceSlug, router]);
 
@@ -319,7 +319,7 @@ function WorkspaceTasksContent() {
       await getAllTasks(workspace.organizationId, params);
     } catch (error) {
       console.error("Failed to load tasks:", error);
-      setLocalError(error instanceof Error ? error.message : "Failed to load tasks");
+      setLocalError(error instanceof Error ? error.message : "Error al cargar las tareas");
     } finally {
       setIsInitialLoad(false);
     }
@@ -462,10 +462,10 @@ function WorkspaceTasksContent() {
       selected: selectedAssignees.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.assignees)
-              ? task.assignees.some((assignee) => assignee.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.assignees)
+            ? task.assignees.some((assignee) => assignee.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -479,10 +479,10 @@ function WorkspaceTasksContent() {
       selected: selectedReporters.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.reporters)
-              ? task.reporters.some((reporter) => reporter.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.reporters)
+            ? task.reporters.some((reporter) => reporter.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -551,7 +551,7 @@ function WorkspaceTasksContent() {
     () => [
       createSection({
         id: "project",
-        title: "Projects",
+        title: "Proyectos",
         icon: Folder,
         data: projectFilters,
         selectedIds: selectedProjects,
@@ -563,7 +563,7 @@ function WorkspaceTasksContent() {
       }),
       createSection({
         id: "status",
-        title: "Status",
+        title: "Estado",
         icon: CheckSquare,
         data: statusFilters,
         selectedIds: selectedStatuses,
@@ -577,7 +577,7 @@ function WorkspaceTasksContent() {
       }),
       createSection({
         id: "priority",
-        title: "Priority",
+        title: "Prioridad",
         icon: Flame,
         data: priorityFilters,
         selectedIds: selectedPriorities,
@@ -588,7 +588,7 @@ function WorkspaceTasksContent() {
       }),
       createSection({
         id: "assignee",
-        title: "Assignee",
+        title: "Responsable",
         icon: User,
         data: assigneeFilters,
         selectedIds: selectedAssignees,
@@ -599,7 +599,7 @@ function WorkspaceTasksContent() {
       }),
       createSection({
         id: "reporter",
-        title: "Reporter",
+        title: "Informador",
         icon: Users,
         data: reporterFilters,
         selectedIds: selectedReporters,
@@ -647,23 +647,23 @@ function WorkspaceTasksContent() {
 
   const handleAddColumn = (columnId: string) => {
     const columnConfigs: Record<string, { label: string; type: ColumnConfig["type"] }> = {
-      description: { label: "Description", type: "text" },
-      taskNumber: { label: "Task Number", type: "number" },
-      timeline: { label: "Timeline", type: "dateRange" },
-      completedAt: { label: "Completed Date", type: "date" },
-      storyPoints: { label: "Story Points", type: "number" },
-      originalEstimate: { label: "Original Estimate", type: "number" },
-      remainingEstimate: { label: "Remaining Estimate", type: "number" },
-      reporter: { label: "Reporter", type: "user" },
-      updatedBy: { label: "Updated By", type: "user" },
-      createdAt: { label: "Created Date", type: "date" },
-      updatedAt: { label: "Updated Date", type: "date" },
+      description: { label: "Descripción", type: "text" },
+      taskNumber: { label: "Número de Tarea", type: "number" },
+      timeline: { label: "Cronograma", type: "dateRange" },
+      completedAt: { label: "Fecha de Finalización", type: "date" },
+      storyPoints: { label: "Puntos de Historia", type: "number" },
+      originalEstimate: { label: "Estimación Original", type: "number" },
+      remainingEstimate: { label: "Estimación Restante", type: "number" },
+      reporter: { label: "Informador", type: "user" },
+      updatedBy: { label: "Actualizado Por", type: "user" },
+      createdAt: { label: "Fecha de Creación", type: "date" },
+      updatedAt: { label: "Fecha de Actualización", type: "date" },
       sprint: { label: "Sprint", type: "text" },
-      parentTask: { label: "Parent Task", type: "text" },
-      childTasksCount: { label: "Child Tasks", type: "number" },
-      commentsCount: { label: "Comments", type: "number" },
-      attachmentsCount: { label: "Attachments", type: "number" },
-      timeEntries: { label: "Time Entries", type: "number" },
+      parentTask: { label: "Tarea Padre", type: "text" },
+      childTasksCount: { label: "Tareas Hijas", type: "number" },
+      commentsCount: { label: "Comentarios", type: "number" },
+      attachmentsCount: { label: "Adjuntos", type: "number" },
+      timeEntries: { label: "Entradas de Tiempo", type: "number" },
     };
     const config = columnConfigs[columnId];
     if (!config) {
@@ -725,25 +725,25 @@ function WorkspaceTasksContent() {
     const sorted = [...tasks].sort((a, b) => {
       let aValue = a[sortField];
       let bValue = b[sortField];
-      
+
       // Handle date fields
       if (["createdAt", "updatedAt", "completedAt", "dueDate", "timeline"].includes(sortField)) {
         aValue = aValue ? new Date(aValue).getTime() : 0;
         bValue = bValue ? new Date(bValue).getTime() : 0;
       }
-      
+
       // Handle status field (object with name property)
       if (sortField === "status") {
         aValue = a.status?.name || "";
         bValue = b.status?.name || "";
       }
-      
+
       // Handle commentsCount field (stored in _count.comments)
       if (sortField === "commentsCount") {
         aValue = a._count?.comments || 0;
         bValue = b._count?.comments || 0;
       }
-      
+
       if (typeof aValue === "string" && typeof bValue === "string") {
         return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       }
@@ -771,7 +771,7 @@ function WorkspaceTasksContent() {
         return (
           <div className="text-center py-12">
             <p className="text-[var(--muted-foreground)]">
-              Kanban is only available on Project level.
+              Kanban solo está disponible a nivel de Proyecto.
             </p>
           </div>
         );
@@ -816,8 +816,8 @@ function WorkspaceTasksContent() {
       {/* Sticky PageHeader */}
       <div className="sticky top-0 z-50 ">
         <PageHeader
-          title={workspace ? `${workspace.name} Tasks` : "Workspace Tasks"}
-          description="Manage and track all tasks across projects in this workspace."
+          title={workspace ? `Tareas de ${workspace.name}` : "Tareas del Espacio de Trabajo"}
+          description="Gestiona y haz un seguimiento de todas las tareas en los proyectos de este espacio de trabajo."
           actions={
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 gap-2">
               <div className="flex items-center gap-2">
@@ -825,7 +825,7 @@ function WorkspaceTasksContent() {
                   <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                   <Input
                     type="text"
-                    placeholder="Search tasks..."
+                    placeholder="Buscar tareas..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     className="pl-10 rounded-md border border-[var(--border)]"
@@ -842,10 +842,10 @@ function WorkspaceTasksContent() {
                 {currentView === "list" && (
                   <FilterDropdown
                     sections={filterSections}
-                    title="Advanced Filters"
+                    title="Filtros Avanzados"
                     activeFiltersCount={totalActiveFilters}
                     onClearAllFilters={clearAllFilters}
-                    placeholder="Filter results..."
+                    placeholder="Filtrar resultados..."
                     dropdownWidth="w-56"
                     showApplyButton={false}
                     onOpen={loadFilterData}
@@ -859,7 +859,7 @@ function WorkspaceTasksContent() {
                   onClick={() => {
                     const safeSlug = sanitizeSlug(workspaceSlug);
                     if (!safeSlug) {
-                      console.error('Invalid workspace slug');
+                      console.error('ID del espacio de trabajo inválido');
                       router.push('/');
                       return;
                     }
@@ -872,7 +872,7 @@ function WorkspaceTasksContent() {
                   }}
                   disabled={!workspace?.id}
                 >
-                  Create Task
+                  Crear Tarea
                 </ActionButton>
               )}
               <NewTaskModal
@@ -886,7 +886,7 @@ function WorkspaceTasksContent() {
                     await handleTaskCreated();
                   } catch (error) {
                     const errorMessage =
-                      error instanceof Error ? error.message : "Failed to refresh tasks";
+                      error instanceof Error ? error.message : "Error al actualizar las tareas";
                     console.error("Error creating task:", errorMessage);
                     await loadTasks();
                   }
@@ -905,7 +905,7 @@ function WorkspaceTasksContent() {
             setCurrentView(v);
             const safeSlug = sanitizeSlug(workspaceSlug);
             if (!safeSlug) {
-              console.error('Invalid workspace slug');
+              console.error('ID del espacio de trabajo inválido');
               router.push('/');
               return;
             }
@@ -928,13 +928,12 @@ function WorkspaceTasksContent() {
                       key={mode}
                       type="button"
                       onClick={() => setGanttViewMode(mode)}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${
-                        ganttViewMode === mode
-                          ? "bg-blue-500 text-white"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
-                      }`}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${ganttViewMode === mode
+                        ? "bg-blue-500 text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
+                        }`}
                     >
-                      {mode}
+                      {mode === "days" ? "días" : mode === "weeks" ? "semanas" : "meses"}
                     </button>
                   ))}
                 </div>
@@ -958,7 +957,7 @@ function WorkspaceTasksContent() {
               {currentView === "kanban" &&
                 (hasAccess || userAccess?.role === "OWNER" || userAccess?.role === "MANAGER") && (
                   <div className="flex items-center gap-2">
-                    <Tooltip content="Manage Columns" position="top" color="primary">
+                    <Tooltip content="Gestionar Columnas" position="top" color="primary">
                       <ColumnManager
                         currentView={currentView}
                         availableColumns={columns}
@@ -984,7 +983,7 @@ function WorkspaceTasksContent() {
             pageSize={pageSize}
             onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
-            itemType="tasks"
+            itemType="tareas"
           />
         </div>
       )}

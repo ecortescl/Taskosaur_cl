@@ -82,7 +82,7 @@ export default function DangerZoneModal({
   children,
   open,
   onOpenChange,
-  triggerText = "Danger Zone",
+  triggerText = "Zona de Peligro",
   triggerVariant = "destructive",
   entity,
   actions,
@@ -103,7 +103,7 @@ export default function DangerZoneModal({
   const entityDisplayName = entity.displayName || entity.name;
   const confirmationText =
     selectedAction?.confirmationMessage ||
-    `Type **${entity.name}** to confirm ${selectedAction?.name || "action"}`;
+    `Escribe **${entity.name}** para confirmar ${selectedAction?.name || "acción"}`;
 
   const resetForm = useCallback(() => {
     setSelectedAction(null);
@@ -164,7 +164,7 @@ export default function DangerZoneModal({
       e.preventDefault();
 
       if (!selectedAction || !isConfirmationValid()) {
-        setError(`Please type "${entity.name}" exactly to confirm`);
+        setError(`Por favor escribe "${entity.name}" exactamente para confirmar`);
         return;
       }
 
@@ -173,7 +173,7 @@ export default function DangerZoneModal({
 
       try {
         await selectedAction.handler();
-        toast.success(`${entity.type} ${selectedAction.name}d successfully!`);
+        toast.success(`${entity.type} ${selectedAction.name}d exitosamente!`);
         handleOpenChange(false);
 
         // After organization deletion, simply reload the page
@@ -185,7 +185,7 @@ export default function DangerZoneModal({
         const errMsg =
           error instanceof Error
             ? error.message
-            : `Failed to ${selectedAction.name} ${entity.type}`;
+            : `Error al ${selectedAction.name} ${entity.type}`;
         setError(errMsg);
         toast.error(errMsg);
       } finally {
@@ -196,8 +196,8 @@ export default function DangerZoneModal({
   );
 
   const modalTitle =
-    title || `${entity.type.charAt(0).toUpperCase() + entity.type.slice(1)} Danger Zone`;
-  const modalDescription = description || `Perform destructive actions on ${entityDisplayName}`;
+    title || `Zona de Peligro de ${entity.type.charAt(0).toUpperCase() + entity.type.slice(1)}`;
+  const modalDescription = description || `Realizar acciones destructivas en ${entityDisplayName}`;
 
   return (
     <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
@@ -224,7 +224,7 @@ export default function DangerZoneModal({
           // Actions List View
           <div className="space-y-4">
             <div className="text-sm text-[var(--muted-foreground)] mb-4">
-              Select an action to perform on <strong>{entityDisplayName}</strong>:
+              Selecciona una acción para realizar en <strong>{entityDisplayName}</strong>:
             </div>
 
             <div className="space-y-3">
@@ -254,7 +254,7 @@ export default function DangerZoneModal({
 
             <div className="projects-form-actions flex gap-2 justify-end mt-6">
               <ActionButton secondary onClick={() => handleOpenChange(false)}>
-                Cancel
+                Cancelar
               </ActionButton>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function DangerZoneModal({
                       className="projects-form-label-icon"
                       style={{ color: "var(--destructive)" }}
                     />
-                    Confirmation <span className="projects-form-label-required">*</span>
+                    Confirmación <span className="projects-form-label-required">*</span>
                   </Label>
                   <div className="space-y-2">
                     <div
@@ -325,7 +325,7 @@ export default function DangerZoneModal({
                 onClick={handleBackToActions}
                 disabled={isSubmitting}
               >
-                Back
+                Atrás
               </ActionButton>
               <ActionButton
                 type="submit"

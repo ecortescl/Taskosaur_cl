@@ -18,7 +18,7 @@ export default function TabView({
   rightContent,
 }: TaskViewTabsProps) {
   const tabs = [
-    { id: "list" as const, label: "List", icon: HiListBullet },
+    { id: "list" as const, label: "Lista", icon: HiListBullet },
     ...(viewKanban ? [{ id: "kanban" as const, label: "Kanban", icon: HiViewColumns }] : []),
     ...(viewGantt ? [{ id: "gantt" as const, label: "Gantt", icon: HiCalendarDays }] : []),
   ];

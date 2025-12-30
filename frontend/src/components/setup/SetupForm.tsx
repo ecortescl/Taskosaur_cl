@@ -54,24 +54,24 @@ export function SetupForm() {
 
   const validateForm = (): string | null => {
     if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
-      return "Please fill in all required fields";
+      return "Por favor, completa todos los campos requeridos";
     }
 
     if (formData.password.length < 8) {
-      return "Password must be at least 8 characters long";
+      return "La contraseña debe tener al menos 8 caracteres";
     }
 
     if (!confirmPassword) {
-      return "Please confirm your password";
+      return "Por favor, confirma tu contraseña";
     }
 
     if (formData.password !== confirmPassword) {
-      return "Passwords do not match";
+      return "Las contraseñas no coinciden";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      return "Please enter a valid email address";
+      return "Por favor, ingresa un correo electrónico válido";
     }
 
     return null;
@@ -95,11 +95,11 @@ export function SetupForm() {
       if (response.access_token) {
         router.push("/dashboard");
       } else {
-        router.push("/login?message=Registration successful! Please log in.");
+        router.push("/login?message=¡Registro exitoso! Por favor, inicia sesión.");
       }
     } catch (err: any) {
       const errorMessage =
-        err.response?.data?.message || err.message || "Failed to create super admin";
+        err.response?.data?.message || err.message || "Error al crear el súper administrador";
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -123,13 +123,13 @@ export function SetupForm() {
           >
             <CheckCircle className="setup-success-icon" />
           </motion.div>
-          <h2 className="setup-success-title">Setup Complete!</h2>
+          <h2 className="setup-success-title">¡Configuración completada!</h2>
           <p className="setup-success-message">
-            Super admin account has been created successfully.
+            La cuenta de súper administrador ha sido creada con éxito.
           </p>
           <div className="setup-success-redirect">
             <Loader2 className="setup-redirect-spinner" />
-            <span>Redirecting to login page...</span>
+            <span>Redirigiendo a la página de inicio de sesión...</span>
           </div>
         </div>
       </motion.div>
@@ -149,13 +149,11 @@ export function SetupForm() {
         <div className="setup-mobile-logo">
           <div className="setup-mobile-logo-icon">
             <Image
-              src="/taskosaur-logo.svg"
-              alt="Taskosaur Logo"
+              src="https://landing-quiebre-test.vercel.app/Logo_quiebre_calado.svg"
+              alt="QUIEBRE.CL Logo"
               width={50}
               height={50}
-              className={`size-10 ${
-                resolvedTheme === "light" ? "filter invert brightness-200" : ""
-              }`}
+              className="size-10"
             />
           </div>
         </div>
@@ -166,12 +164,12 @@ export function SetupForm() {
           </div>
           <h1 className="setup-form-title">
             <div className="md:hidden">
-              Welcome to
-              <span className="flex items-center justify-center">Taskosaur</span>
+              Bienvenido a
+              <span className="flex items-center justify-center">QUIEBRE.CL</span>
             </div>
-            <span className="hidden md:block">First-Time Setup</span>
+            <span className="hidden md:block">Configuración Inicial</span>
           </h1>
-          <p className="setup-form-subtitle">Create your super admin account to get started</p>
+          <p className="setup-form-subtitle">Crea tu cuenta de súper administrador para comenzar</p>
         </div>
       </div>
 
@@ -183,7 +181,7 @@ export function SetupForm() {
         >
           <Alert variant="destructive" className="setup-error-alert">
             <AlertDescription className="font-medium">
-              <span className="setup-error-title">Setup Failed</span>
+              <span className="setup-error-title">Error en la configuración</span>
               <span className="setup-error-message">{error}</span>
             </AlertDescription>
           </Alert>
@@ -202,7 +200,7 @@ export function SetupForm() {
           <div className="setup-field-container">
             <Label htmlFor="firstName" className="setup-field-label">
               <User className="setup-field-icon" />
-              <span>First Name</span>
+              <span>Nombre</span>
             </Label>
             <Input
               id="firstName"
@@ -211,7 +209,7 @@ export function SetupForm() {
               required
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
-              placeholder="John"
+              placeholder="Juan"
               className="setup-input"
               disabled={isLoading}
             />
@@ -220,7 +218,7 @@ export function SetupForm() {
           <div className="setup-field-container">
             <Label htmlFor="lastName" className="setup-field-label">
               <User className="setup-field-icon" />
-              <span>Last Name</span>
+              <span>Apellido</span>
             </Label>
             <Input
               id="lastName"
@@ -229,7 +227,7 @@ export function SetupForm() {
               required
               value={formData.lastName}
               onChange={(e) => handleInputChange("lastName", e.target.value)}
-              placeholder="Doe"
+              placeholder="Pérez"
               className="setup-input"
               disabled={isLoading}
             />
@@ -245,7 +243,7 @@ export function SetupForm() {
         >
           <Label htmlFor="email" className="setup-field-label">
             <Mail className="setup-field-icon" />
-            <span>Email Address</span>
+            <span>Correo electrónico</span>
           </Label>
           <Input
             id="email"
@@ -255,7 +253,7 @@ export function SetupForm() {
             required
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
-            placeholder="admin@company.com"
+            placeholder="administrador@empresa.com"
             className="setup-input"
             disabled={isLoading}
           />
@@ -270,7 +268,7 @@ export function SetupForm() {
         >
           <Label htmlFor="username" className="setup-field-label">
             <User className="setup-field-icon" />
-            <span>Username (Optional)</span>
+            <span>Nombre de usuario (Opcional)</span>
           </Label>
           <Input
             id="username"
@@ -293,7 +291,7 @@ export function SetupForm() {
         >
           <Label htmlFor="password" className="setup-field-label">
             <Lock className="setup-field-icon" />
-            <span>Password</span>
+            <span>Contraseña</span>
           </Label>
           <div className="setup-password-container">
             <Input
@@ -304,7 +302,7 @@ export function SetupForm() {
               required
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              placeholder="Enter a secure password"
+              placeholder="Ingresa una contraseña segura"
               className="setup-password-input"
               disabled={isLoading}
             />
@@ -314,13 +312,13 @@ export function SetupForm() {
               size="sm"
               onClick={() => setShowPassword(!showPassword)}
               className="setup-password-toggle"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               disabled={isLoading}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          <p className="setup-password-hint">Password must be at least 8 characters long</p>
+          <p className="setup-password-hint">La contraseña debe tener al menos 8 caracteres</p>
         </motion.div>
 
         {/* Confirm Password Field */}
@@ -332,7 +330,7 @@ export function SetupForm() {
         >
           <Label htmlFor="confirmPassword" className="setup-field-label">
             <Lock className="setup-field-icon" />
-            <span>Confirm Password</span>
+            <span>Confirmar contraseña</span>
           </Label>
           <div className="setup-password-container">
             <Input
@@ -343,7 +341,7 @@ export function SetupForm() {
               required
               value={confirmPassword}
               onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-              placeholder="Re-enter your password"
+              placeholder="Vuelve a ingresar tu contraseña"
               className="setup-password-input"
               disabled={isLoading}
             />
@@ -353,7 +351,7 @@ export function SetupForm() {
               size="sm"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="setup-password-toggle"
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               disabled={isLoading}
             >
               {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -371,11 +369,11 @@ export function SetupForm() {
             {isLoading ? (
               <>
                 <Loader2 className="setup-loading-spinner" />
-                Creating Admin Account...
+                Creando cuenta de administrador...
               </>
             ) : (
               <>
-                Create Super Admin Account
+                Crear cuenta de súper administrador
                 <ArrowRight className="setup-button-arrow" />
               </>
             )}
@@ -391,7 +389,7 @@ export function SetupForm() {
         className="setup-footer"
       >
         <p className="setup-footer-text">
-          This will create the first administrative user for your Taskosaur instance.
+          Esto creará el primer usuario administrativo para tu instancia de QUIEBRE.CL.
         </p>
       </motion.div>
     </motion.div>

@@ -42,7 +42,7 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
   }, [userId, isOpen]);
 
   const formatInviteDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -57,10 +57,10 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
   };
 
   const getEntityType = (invite: Invitation) => {
-    if (invite.organizationId) return "Organization";
+    if (invite.organizationId) return "Organización";
     if (invite.workspaceId) return "Workspace";
-    if (invite.projectId) return "Project";
-    return "Entity";
+    if (invite.projectId) return "Proyecto";
+    return "Entidad";
   };
 
   const getEntityInitial = (invite: Invitation) => {
@@ -97,17 +97,17 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
   }, [pendingInvites, loading, isOpen, onAccept]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
+    <Dialog open={isOpen} onOpenChange={() => { }}>
       <DialogContent className="max-w-md border-none" showCloseButton={false}>
         <DialogHeader>
-          <DialogTitle className="text-center">Pending Invitations</DialogTitle>
+          <DialogTitle className="text-center">Invitaciones Pendientes</DialogTitle>
         </DialogHeader>
 
         <div className="max-h-96 overflow-y-auto">
           {loading ? (
-            <div className="text-center py-4">Loading invitations...</div>
+            <div className="text-center py-4">Cargando invitaciones...</div>
           ) : pendingInvites.length === 0 ? (
-            <div className="text-center py-4">No pending invitations found.</div>
+            <div className="text-center py-4">No se encontraron invitaciones pendientes.</div>
           ) : (
             <div className="space-y-4">
               {pendingInvites.map((invite) => (
@@ -118,7 +118,7 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
                     </div>
                     <div className="flex-1">
                       <h4 className="font-medium">{getEntityName(invite)}</h4>
-                      <p className="text-sm text-muted-foreground">Role: {invite.role}</p>
+                      <p className="text-sm text-muted-foreground">Rol: {invite.role}</p>
                       <div className="flex gap-2 mt-3">
                         <ActionButton
                           className="bg-red-500 w-[98.3px] h-[45px]"
@@ -127,12 +127,12 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
                           disabled={processingInvite?.token === invite.token}
                         >
                           {processingInvite?.token === invite.token &&
-                          processingInvite?.action === "decline" ? (
+                            processingInvite?.action === "decline" ? (
                             <div className="flex items-center justify-center gap-2">
                               <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
                             </div>
                           ) : (
-                            "Decline"
+                            "Rechazar"
                           )}
                         </ActionButton>
                         <ActionButton
@@ -142,12 +142,12 @@ export function InvitationModal({ userId, isOpen, onAccept }: InvitationModalPro
                           disabled={processingInvite?.token === invite.token}
                         >
                           {processingInvite?.token === invite.token &&
-                          processingInvite?.action === "accept" ? (
+                            processingInvite?.action === "accept" ? (
                             <div className="flex items-center justify-center gap-2">
                               <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
                             </div>
                           ) : (
-                            "Accept"
+                            "Aceptar"
                           )}
                         </ActionButton>
                       </div>

@@ -249,13 +249,13 @@ function ProjectTasksContent() {
 
     const issues = [];
 
-    if (!workspace?.id) issues.push("Missing workspace ID");
-    if (!currentOrganizationId) issues.push("Missing organization ID");
-    if (!project?.id) issues.push("Missing project ID");
+    if (!workspace?.id) issues.push("Falta el ID del espacio de trabajo");
+    if (!currentOrganizationId) issues.push("Falta el ID de la organización");
+    if (!project?.id) issues.push("Falta el ID del proyecto");
 
     if (issues.length > 0) {
       console.error("Validation failed:", issues);
-      setLocalError(`Missing required data: ${issues.join(", ")}`);
+      setLocalError(`Falta información requerida: ${issues.join(", ")}`);
       return false;
     }
 
@@ -291,7 +291,7 @@ function ProjectTasksContent() {
       return { ws, proj };
     } catch (error) {
       console.error("LoadInitialData error:", error);
-      setLocalError(error instanceof Error ? error.message : "Failed to load initial data");
+      setLocalError(error instanceof Error ? error.message : "Error al cargar los datos iniciales");
     }
   }, [hasValidAuth, workspaceSlug, projectSlug, workspaceApi, projectApi, isAuth]);
 
@@ -341,7 +341,7 @@ function ProjectTasksContent() {
       setPublicTasksTotal(publicTaskResponse.total || 0);
     } catch (error) {
       console.error("Failed to load public tasks:", error);
-      setLocalError(error instanceof Error ? error.message : "Failed to load public tasks");
+      setLocalError(error instanceof Error ? error.message : "Error al cargar las tareas públicas");
     } finally {
       setIsLoadingPublic(false);
       setIsInitialLoad(false);
@@ -386,7 +386,7 @@ function ProjectTasksContent() {
       await getAllTasks(currentOrganizationId, params);
     } catch (error) {
       console.error("Failed to load tasks:", error);
-      setLocalError(error instanceof Error ? error.message : "Failed to load tasks");
+      setLocalError(error instanceof Error ? error.message : "Error al cargar las tareas");
     } finally {
       setIsInitialLoad(false);
     }
@@ -577,7 +577,7 @@ function ProjectTasksContent() {
     const sorted = [...displayTasks].sort((a, b) => {
       let aValue = a[sortField];
       let bValue = b[sortField];
-      
+
       // Handle date fields
       if (["createdAt", "updatedAt", "completedAt", "dueDate", "timeline"].includes(sortField)) {
         aValue = aValue ? new Date(aValue).getTime() : 0;
@@ -602,7 +602,7 @@ function ProjectTasksContent() {
         aValue = a.status?.name || "";
         bValue = b.status?.name || "";
       }
-      
+
       // Handle commentsCount field (stored in _count.comments)
       if (sortField === "commentsCount") {
         aValue = a._count?.comments || 0;
@@ -616,7 +616,7 @@ function ProjectTasksContent() {
       if (typeof aValue === "number" && typeof bValue === "number") {
         return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
       }
-      
+
       return 0;
     });
     return sorted;
@@ -626,13 +626,13 @@ function ProjectTasksContent() {
     () =>
       isAuth
         ? availableStatuses.map((status) => ({
-            id: status.id,
-            label: status.name,
-            value: status.id,
-            selected: selectedStatuses.includes(status.id),
-            count: status._count?.tasks || 0,
-            color: status.color || "#6b7280",
-          }))
+          id: status.id,
+          label: status.name,
+          value: status.id,
+          selected: selectedStatuses.includes(status.id),
+          count: status._count?.tasks || 0,
+          color: status.color || "#6b7280",
+        }))
         : [],
     [availableStatuses, selectedStatuses, isAuth]
   );
@@ -641,13 +641,13 @@ function ProjectTasksContent() {
     () =>
       isAuth
         ? availablePriorities.map((priority) => ({
-            id: priority.id,
-            name: priority.name,
-            value: priority.value,
-            selected: selectedPriorities.includes(priority.value),
-            count: displayTasks.filter((task) => task.priority === priority.value).length,
-            color: priority.color,
-          }))
+          id: priority.id,
+          name: priority.name,
+          value: priority.value,
+          selected: selectedPriorities.includes(priority.value),
+          count: displayTasks.filter((task) => task.priority === priority.value).length,
+          color: priority.color,
+        }))
         : [],
     [availablePriorities, selectedPriorities, displayTasks, isAuth]
   );
@@ -660,10 +660,10 @@ function ProjectTasksContent() {
       selected: selectedAssignees.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.assignees)
-              ? task.assignees.some((assignee) => assignee.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.assignees)
+            ? task.assignees.some((assignee) => assignee.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -677,10 +677,10 @@ function ProjectTasksContent() {
       selected: selectedReporters.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.reporters)
-              ? task.reporters.some((reporter) => reporter.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.reporters)
+            ? task.reporters.some((reporter) => reporter.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -756,51 +756,51 @@ function ProjectTasksContent() {
     () =>
       isAuth
         ? [
-            createSection({
-              id: "status",
-              title: "Status",
-              icon: CheckSquare,
-              data: statusFilters,
-              selectedIds: selectedStatuses,
-              searchable: false,
-              onToggle: safeToggleStatus,
-              onSelectAll: () => setSelectedStatuses(statusFilters.map((s) => s.id)),
-              onClearAll: () => setSelectedStatuses([]),
-            }),
-            createSection({
-              id: "priority",
-              title: "Priority",
-              icon: Flame,
-              data: priorityFilters,
-              selectedIds: selectedPriorities,
-              searchable: false,
-              onToggle: safeTogglePriority,
-              onSelectAll: () => setSelectedPriorities(priorityFilters.map((p) => p.id)),
-              onClearAll: () => setSelectedPriorities([]),
-            }),
-            createSection({
-              id: "assignee",
-              title: "Assignee",
-              icon: User,
-              data: assigneeFilters,
-              selectedIds: selectedAssignees,
-              searchable: true,
-              onToggle: toggleAssignee,
-              onSelectAll: () => setSelectedAssignees(assigneeFilters.map((a) => a.id)),
-              onClearAll: () => setSelectedAssignees([]),
-            }),
-            createSection({
-              id: "reporter",
-              title: "Reporter",
-              icon: Users,
-              data: reporterFilters,
-              selectedIds: selectedReporters,
-              searchable: true,
-              onToggle: toggleReporter,
-              onSelectAll: () => setSelectedReporters(reporterFilters.map((r) => r.id)),
-              onClearAll: () => setSelectedReporters([]),
-            }),
-          ]
+          createSection({
+            id: "status",
+            title: "Estado",
+            icon: CheckSquare,
+            data: statusFilters,
+            selectedIds: selectedStatuses,
+            searchable: false,
+            onToggle: safeToggleStatus,
+            onSelectAll: () => setSelectedStatuses(statusFilters.map((s) => s.id)),
+            onClearAll: () => setSelectedStatuses([]),
+          }),
+          createSection({
+            id: "priority",
+            title: "Prioridad",
+            icon: Flame,
+            data: priorityFilters,
+            selectedIds: selectedPriorities,
+            searchable: false,
+            onToggle: safeTogglePriority,
+            onSelectAll: () => setSelectedPriorities(priorityFilters.map((p) => p.id)),
+            onClearAll: () => setSelectedPriorities([]),
+          }),
+          createSection({
+            id: "assignee",
+            title: "Responsable",
+            icon: User,
+            data: assigneeFilters,
+            selectedIds: selectedAssignees,
+            searchable: true,
+            onToggle: toggleAssignee,
+            onSelectAll: () => setSelectedAssignees(assigneeFilters.map((a) => a.id)),
+            onClearAll: () => setSelectedAssignees([]),
+          }),
+          createSection({
+            id: "reporter",
+            title: "Informador",
+            icon: Users,
+            data: reporterFilters,
+            selectedIds: selectedReporters,
+            searchable: true,
+            onToggle: toggleReporter,
+            onSelectAll: () => setSelectedReporters(reporterFilters.map((r) => r.id)),
+            onClearAll: () => setSelectedReporters([]),
+          }),
+        ]
         : [],
     [
       isAuth,
@@ -822,9 +822,9 @@ function ProjectTasksContent() {
 
   const totalActiveFilters = isAuth
     ? selectedStatuses.length +
-      selectedPriorities.length +
-      selectedAssignees.length +
-      selectedReporters.length
+    selectedPriorities.length +
+    selectedAssignees.length +
+    selectedReporters.length
     : 0;
 
   const clearAllFilters = useCallback(() => {
@@ -845,23 +845,23 @@ function ProjectTasksContent() {
 
   const handleAddColumn = (columnId: string) => {
     const columnConfigs: Record<string, { label: string; type: ColumnConfig["type"] }> = {
-      description: { label: "Description", type: "text" },
-      taskNumber: { label: "Task Number", type: "number" },
-      timeline: { label: "Timeline", type: "dateRange" },
-      completedAt: { label: "Completed Date", type: "date" },
-      storyPoints: { label: "Story Points", type: "number" },
-      originalEstimate: { label: "Original Estimate", type: "number" },
-      remainingEstimate: { label: "Remaining Estimate", type: "number" },
-      reporter: { label: "Reporter", type: "user" },
-      updatedBy: { label: "Updated By", type: "user" },
-      createdAt: { label: "Created Date", type: "date" },
-      updatedAt: { label: "Updated Date", type: "date" },
+      description: { label: "Descripción", type: "text" },
+      taskNumber: { label: "Número de Tarea", type: "number" },
+      timeline: { label: "Cronograma", type: "dateRange" },
+      completedAt: { label: "Fecha de Finalización", type: "date" },
+      storyPoints: { label: "Puntos de Historia", type: "number" },
+      originalEstimate: { label: "Estimación Original", type: "number" },
+      remainingEstimate: { label: "Estimación Restante", type: "number" },
+      reporter: { label: "Informador", type: "user" },
+      updatedBy: { label: "Actualizado Por", type: "user" },
+      createdAt: { label: "Fecha de Creación", type: "date" },
+      updatedAt: { label: "Fecha de Actualización", type: "date" },
       sprint: { label: "Sprint", type: "text" },
-      parentTask: { label: "Parent Task", type: "text" },
-      childTasksCount: { label: "Child Tasks", type: "number" },
-      commentsCount: { label: "Comments", type: "number" },
-      attachmentsCount: { label: "Attachments", type: "number" },
-      timeEntries: { label: "Time Entries", type: "number" },
+      parentTask: { label: "Tarea Padre", type: "text" },
+      childTasksCount: { label: "Tareas Hijas", type: "number" },
+      commentsCount: { label: "Comentarios", type: "number" },
+      attachmentsCount: { label: "Adjuntos", type: "number" },
+      timeEntries: { label: "Entradas de Tiempo", type: "number" },
     };
 
     const config = columnConfigs[columnId];
@@ -956,8 +956,8 @@ function ProjectTasksContent() {
           return (
             <div className="text-center py-12">
               <p className="text-[var(--muted-foreground)]">
-                Kanban view is available for authenticated users only. Please log in to access this
-                view.
+                La vista Kanban solo está disponible para usuarios autenticados. Por favor, inicia sesión para acceder a esta
+                vista.
               </p>
             </div>
           );
@@ -980,7 +980,7 @@ function ProjectTasksContent() {
         ) : (
           <div className="text-center py-12">
             <p className="text-[var(--muted-foreground)]">
-              No workflow found. Create workflow statuses to use the Kanban view.
+              No se encontró un flujo de trabajo. Crea estados de flujo de trabajo para usar la vista Kanban.
             </p>
           </div>
         );
@@ -989,8 +989,8 @@ function ProjectTasksContent() {
           return (
             <div className="text-center py-12">
               <p className="text-[var(--muted-foreground)]">
-                Gantt view is available for authenticated users only. Please log in to access this
-                view.
+                La vista de Gantt solo está disponible para usuarios autenticados. Por favor, inicia sesión para acceder a esta
+                vista.
               </p>
             </div>
           );
@@ -1036,8 +1036,8 @@ function ProjectTasksContent() {
       {/* Sticky PageHeader */}
       <div className="sticky top-0 z-30 bg-[var(--background)]">
         <PageHeader
-          title={project ? `${project.name} Tasks` : "Project Tasks"}
-          description={`Manage and track all tasks for ${project?.name || "this project"}`}
+          title={project ? `Tareas de ${project.name}` : "Tareas del Proyecto"}
+          description={`Gestiona y realiza un seguimiento de todas las tareas de ${project?.name || "este proyecto"}`}
           actions={
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 gap-2">
               <div className="flex items-center gap-2">
@@ -1047,7 +1047,7 @@ function ProjectTasksContent() {
                     <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                     <Input
                       type="text"
-                      placeholder="Search tasks..."
+                      placeholder="Buscar tareas..."
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}
                       className="pl-10 rounded-md border border-[var(--border)]"
@@ -1067,10 +1067,10 @@ function ProjectTasksContent() {
                 {isAuth && currentView === "list" && (
                   <FilterDropdown
                     sections={filterSections}
-                    title="Advanced Filters"
+                    title="Filtros Avanzados"
                     activeFiltersCount={totalActiveFilters}
                     onClearAllFilters={clearAllFilters}
-                    placeholder="Filter results..."
+                    placeholder="Filtrar resultados..."
                     dropdownWidth="w-56"
                     showApplyButton={false}
                   />
@@ -1101,7 +1101,7 @@ function ProjectTasksContent() {
                   }}
                   disabled={!workspace?.id || !project?.id}
                 >
-                  Create Task
+                  Crear Tarea
                 </ActionButton>
               )}
               <NewTaskModal
@@ -1114,7 +1114,7 @@ function ProjectTasksContent() {
                   try {
                     await handleTaskCreated();
                   } catch (error) {
-                    const errorMessage = error?.message ? error.message : "Failed to refresh tasks";
+                    const errorMessage = error?.message ? error.message : "Error al actualizar las tareas";
                     console.error("Error creating task:", errorMessage);
                     if (isAuth) {
                       await loadTasks();
@@ -1167,13 +1167,12 @@ function ProjectTasksContent() {
                       key={mode}
                       type="button"
                       onClick={() => setGanttViewMode(mode)}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${
-                        ganttViewMode === mode
-                          ? "bg-blue-500 text-white"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
-                      }`}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${ganttViewMode === mode
+                        ? "bg-blue-500 text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
+                        }`}
                     >
-                      {mode}
+                      {mode === "days" ? "Días" : mode === "weeks" ? "Semanas" : "Meses"}
                     </button>
                   ))}
                 </div>
@@ -1201,7 +1200,7 @@ function ProjectTasksContent() {
                 currentView === "kanban" &&
                 (hasAccess || userAccess?.role === "OWNER" || userAccess?.role === "MANAGER") && (
                   <div className="flex items-center gap-2">
-                    <Tooltip content="Manage Columns" position="top" color="primary">
+                    <Tooltip content="Gestionar Columnas" position="top" color="primary">
                       <ColumnManager
                         currentView={currentView}
                         availableColumns={columns}
@@ -1228,7 +1227,7 @@ function ProjectTasksContent() {
             pageSize={pageSize}
             onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
-            itemType="tasks"
+            itemType="tareas"
           />
         </div>
       )}

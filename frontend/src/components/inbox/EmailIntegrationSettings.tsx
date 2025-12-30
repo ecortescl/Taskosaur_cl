@@ -109,7 +109,7 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
       if (error.response?.status === 404) {
         setCurrentInbox(null);
       } else {
-        toast.error("Failed to load email integration settings");
+        toast.error("Error al cargar los ajustes de integración de email");
       }
     } finally {
       setLoadingInbox(false);
@@ -168,21 +168,21 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
     const errors: Record<string, string> = {};
 
     if (!data.name.trim()) {
-      errors.name = "Inbox name is required";
+      errors.name = "El nombre del inbox es obligatorio";
     } else if (data.name.length > 100) {
-      errors.name = "Name must be less than 100 characters";
+      errors.name = "El nombre debe tener menos de 100 caracteres";
     }
 
     if (data.emailAddress && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.emailAddress)) {
-      errors.emailAddress = "Please enter a valid email address";
+      errors.emailAddress = "Por favor, ingrese una dirección de email válida";
     }
 
     if (!data.defaultStatusId) {
-      errors.defaultStatusId = "Please select a default status";
+      errors.defaultStatusId = "Por favor, seleccione un estado por defecto";
     }
 
     if (data.autoReplyEnabled && !data.autoReplyTemplate.trim()) {
-      errors.autoReplyTemplate = "Auto-reply message is required when auto-reply is enabled";
+      errors.autoReplyTemplate = "El mensaje de respuesta automática es obligatorio cuando la respuesta automática está activada";
     }
 
     return errors;
@@ -206,7 +206,7 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
     setValidationErrors(errors);
 
     if (Object.keys(errors).length > 0) {
-      toast.error("Please fix the validation errors");
+      toast.error("Por favor, corrija los errores de validación");
       return;
     }
 
@@ -220,15 +220,15 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
 
       if (currentInbox) {
         await updateInbox(projectId, inboxData);
-        toast.success("Inbox updated successfully");
+        toast.success("Inbox actualizado con éxito");
         setHasUnsavedChanges(false);
       } else {
         await createInbox(projectId, inboxData);
-        toast.success("Inbox created successfully");
+        toast.success("Inbox creado con éxito");
         setCurrentStep(2);
       }
     } catch (error: any) {
-      toast.error(currentInbox ? "Failed to update inbox" : "Failed to create inbox");
+      toast.error(currentInbox ? "Error al actualizar el inbox" : "Error al crear el inbox");
     } finally {
       setIsSaving(false);
     }
@@ -251,20 +251,20 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
       }
 
       // Step 2: Test the email connection
-      toast.loading("Testing email connection...", { id: "test-connection" });
+      toast.loading("Probando conexión de email...", { id: "test-connection" });
 
       const testResult = await inboxApi.testEmailConnection(projectId, accountResponse.id);
 
       toast.dismiss("test-connection");
 
       if (testResult.success) {
-        toast.success("Email connection test passed! ✓");
+        toast.success("¡Prueba de conexión de email exitosa! ✓");
         setCurrentStep(3);
       } else {
-        toast.error(`Connection test failed: ${testResult.message}`);
+        toast.error(`La prueba de conexión falló: ${testResult.message}`);
       }
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to setup email account";
+      const errorMessage = error.response?.data?.message || error.message || "Error al configurar la cuenta de email";
       toast.error(errorMessage);
       throw error;
     } finally {
@@ -274,20 +274,20 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
 
   const finishSetup = () => {
     loadInboxData();
-    toast.success("Email integration is now active!");
+    toast.success("¡La integración de email ya está activa!");
     setCurrentStep(4);
   };
 
   const handleTriggerSync = async () => {
     try {
       await triggerSync(projectId);
-      toast.success("Email sync triggered");
+      toast.success("Sincronización de email iniciada");
 
       setTimeout(() => {
         loadInboxData();
       }, 2000);
     } catch (error: any) {
-      toast.error("Failed to trigger sync");
+      toast.error("Error al iniciar la sincronización");
     }
   };
 
@@ -371,10 +371,10 @@ export default function EmailIntegrationSettings({ projectId }: EmailIntegration
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <HiEnvelope className="w-5 h-5 text-[var(--primary)]" />
-                <span className="text-md font-semibold">Email Integration Setup</span>
+                <span className="text-md font-semibold">Configuración de Integración de Email</span>
               </div>
               <p className="text-sm font-normal text-[var(--muted-foreground)]/60 mt-2">
-                Configure your email account to sync with tasks
+                Configura tu cuenta de correo para sincronizarla con las tareas
               </p>
             </div>
           </CardTitle>

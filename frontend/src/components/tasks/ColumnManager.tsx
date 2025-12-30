@@ -57,7 +57,7 @@ export function ColumnManager({
   // List view
   return (
     <DropdownMenu>
-      <Tooltip content="Manage Columns" position="top" color="primary">
+      <Tooltip content="Gestionar Columnas" position="top" color="primary">
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
@@ -70,7 +70,7 @@ export function ColumnManager({
       </Tooltip>
       <DropdownMenuContent align="end" className="w-64 bg-[var(--card)] border-[var(--border)]">
         <DropdownMenuLabel className="text-xs font-semibold  flex justify-between items-center">
-          <span>Manage View Columns</span>
+          <span>Gestionar Columnas de Vista</span>
           {onResetColumns && (
             <Button
               variant="ghost"
@@ -82,12 +82,12 @@ export function ColumnManager({
               }}
             >
               <RotateCcw size={12} />
-              Reset
+              Reiniciar
             </Button>
           )}
         </DropdownMenuLabel>
         <div className="px-2 py-1 text-xs text-muted-foreground">
-          Customize which columns are visible in your view
+          Personaliza qué columnas son visibles en tu vista
         </div>
         <DropdownMenuSeparator />
 
@@ -112,11 +112,10 @@ export function ColumnManager({
                   e.preventDefault();
                   isActive ? onRemoveColumn(column.id) : onAddColumn(column.id);
                 }}
-                className={`my-1 cursor-pointer justify-between py-2 ${
-                  isActive
+                className={`my-1 cursor-pointer justify-between py-2 ${isActive
                     ? "bg-[var(--accent)] text-[var(--accent-foreground)] text-sx"
                     : "hover:bg-[var(--accent)]/50"
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-2">
                   <Icon className="w-4 h-4 text-gray-500" />

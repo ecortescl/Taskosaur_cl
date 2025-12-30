@@ -47,10 +47,10 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
         setTotalPages(response.pagination.totalPages);
         setPage(pageNum);
       } else {
-        setError("Failed to fetch activities");
+        setError("Error al obtener actividades");
       }
     } catch (err) {
-      setError("An error occurred while fetching activities");
+      setError("Ocurrió un error al obtener las actividades");
       console.error("Error fetching activities:", err);
     } finally {
       setLoadingActivities(false);
@@ -73,37 +73,37 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
 
     switch (activity.type) {
       case "TASK_CREATED":
-        return `${name} added the task`;
+        return `${name} creó la tarea`;
 
       case "TASK_UPDATED":
-        return `${name} updated the task`;
+        return `${name} actualizó la tarea`;
 
       case "TASK_COMMENTED":
-        return `${name} commented`;
+        return `${name} comentó`;
 
       case "TASK_DELETED":
-        return `${name} deleted the task`;
+        return `${name} eliminó la tarea`;
 
       case "TASK_ASSIGNED":
-        return `${name} changed assignee`;
+        return `${name} cambió el responsable`;
 
       case "TASK_LABEL_ADDED":
-        return `${name} label added`;
+        return `${name} agregó una etiqueta`;
 
       case "TASK_LABEL_REMOVED":
-        return `${name} label removed`;
+        return `${name} eliminó una etiqueta`;
 
       case "TASK_STATUS_CHANGED":
-        return `${name} changed status`;
+        return `${name} cambió el estado`;
 
       case "TASK_ATTACHMENT_ADDED":
-        return `${name} added task attachment`;
+        return `${name} agregó un adjunto`;
 
       case "TASK_ATTACHMENT_REMOVED":
-        return `${name} removed task attachment`;
+        return `${name} eliminó un adjunto`;
 
       default:
-        return `${name} updated the task`;
+        return `${name} actualizó la tarea`;
     }
   };
 
@@ -117,15 +117,15 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
     const diffInMonths = Math.floor(diffInDays / 30);
 
     if (diffInMinutes < 1) {
-      return "Just now";
+      return "Hace un momento";
     } else if (diffInMinutes < 60) {
-      return `${diffInMinutes} ${diffInMinutes === 1 ? "minute" : "minutes"} ago`;
+      return `hace ${diffInMinutes} ${diffInMinutes === 1 ? "minuto" : "minutos"}`;
     } else if (diffInHours < 24) {
-      return `${diffInHours} ${diffInHours === 1 ? "hour" : "hours"} ago`;
+      return `hace ${diffInHours} ${diffInHours === 1 ? "hora" : "horas"}`;
     } else if (diffInDays < 30) {
-      return `${diffInDays} ${diffInDays === 1 ? "day" : "days"} ago`;
+      return `hace ${diffInDays} ${diffInDays === 1 ? "día" : "días"}`;
     } else if (diffInMonths < 12) {
-      return `${diffInMonths} ${diffInMonths === 1 ? "month" : "months"} ago`;
+      return `hace ${diffInMonths} ${diffInMonths === 1 ? "mes" : "meses"}`;
     } else {
       return date.toLocaleDateString("en-US", {
         month: "long",
@@ -147,7 +147,7 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
           <div className="p-1 rounded-md">
             <HiOutlineBolt className="w-4 h-4 text-[var(--primary)]" />
           </div>
-          <h3 className="text-sm font-semibold text-[var(--foreground)]">Activities</h3>
+          <h3 className="text-sm font-semibold text-[var(--foreground)]">Actividades</h3>
         </div>
         <div className="space-y-3">
           {[...Array(3)].map((_, i) => (
@@ -199,7 +199,7 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
           <div className="flex items-center gap-2 text-[var(--muted-foreground)] text-sm">
             <HiOutlineBolt className="size-4" />
             <h4 className="font-medium text-[var(--muted-foreground)] text-sm tracking-wide">
-              No activities yet
+              No hay actividades aún
             </h4>
           </div>
         </div>
@@ -246,7 +246,7 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
                   className="text-xs text-[var(--primary)] font-medium py-2 px-4 rounded-md hover:bg-[var(--accent)] focus:outline-none cursor-pointer transition-colors"
                   onClick={toggleShowAll}
                 >
-                  View more ({activities.length - INITIAL_DISPLAY_COUNT} more)
+                  Ver más ({activities.length - INITIAL_DISPLAY_COUNT} más)
                 </button>
               )}
 
@@ -255,7 +255,7 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
                   className="text-xs text-[var(--primary)] font-medium py-2 px-4 rounded-md hover:bg-[var(--accent)] focus:outline-none cursor-pointer transition-colors"
                   onClick={toggleShowAll}
                 >
-                  Show less
+                  Ver menos
                 </button>
               )}
 
@@ -265,7 +265,7 @@ const TaskActivities: React.FC<TaskActivitiesProps> = ({ taskId, setLoading }) =
                   onClick={loadMore}
                   disabled={loadingActivities}
                 >
-                  {loadingActivities ? "Loading..." : "Load more activities"}
+                  {loadingActivities ? "Cargando..." : "Cargar más actividades"}
                 </button>
               )}
             </div>

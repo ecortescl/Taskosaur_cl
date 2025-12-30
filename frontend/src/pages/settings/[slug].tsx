@@ -43,17 +43,17 @@ const AccessDenied = ({ onBack }: { onBack: () => void }) => (
               <div className="w-10 h-10 mx-auto mb-3 rounded-xl bg-[var(--muted)] flex items-center justify-center">
                 <HiExclamationTriangle className="w-5 h-5 text-[var(--muted-foreground)]" />
               </div>
-              <h3 className="text-md font-semibold text-[var(--foreground)] mb-2">Access Denied</h3>
+              <h3 className="text-md font-semibold text-[var(--foreground)] mb-2">Acceso Denegado</h3>
               <p className="text-sm text-[var(--muted-foreground)] mb-4">
-                You don't have permission to manage this organization. Only users with management
-                access can view these settings.
+                No tiene permiso para gestionar esta organización. Solo los usuarios con acceso de administración
+                pueden ver estas configuraciones.
               </p>
               <Button
                 onClick={onBack}
                 className="h-8 bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90 hover:shadow-md transition-all duration-200 font-medium flex items-center gap-2 mx-auto"
               >
                 <HiArrowLeft className="w-4 h-4" />
-                Back to Organizations
+                Volver a Organizaciones
               </Button>
             </div>
           </CardContent>
@@ -131,7 +131,7 @@ function OrganizationManagePageContent() {
       }));
       setWorkflows(validatedWorkflows);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to load workflows";
+      const errorMessage = err instanceof Error ? err.message : "Error al cargar los flujos de trabajo";
       setWorkflowError(errorMessage);
       setWorkflows([]);
     } finally {
@@ -194,7 +194,7 @@ function OrganizationManagePageContent() {
       setRoleCounts(membersData.roleCounts);
       loadWorkflows(slugToUse);
     } catch (err) {
-      setError("Failed to load organization data");
+      setError("Error al cargar los datos de la organización");
       setUserAccess(null);
     } finally {
       setIsLoading(false);
@@ -281,10 +281,14 @@ function OrganizationManagePageContent() {
 
   // Get badge label based on access
   const getAccessBadgeLabel = () => {
-    if (!userAccess) return "Member";
-    if (userAccess.isSuperAdmin) return "Super Admin";
-    if (userAccess.isElevated) return userAccess?.role || "Manager";
-    return userAccess?.role || "Member";
+    if (!userAccess) return "Miembro";
+    if (userAccess.isSuperAdmin) return "Super Administrador";
+    if (userAccess.isElevated) {
+      if (userAccess.role === "MANAGER") return "Gerente";
+      if (userAccess.role === "OWNER") return "Propietario";
+      return userAccess?.role || "Gerente";
+    }
+    return userAccess?.role === "VIEWER" ? "Observador" : "Miembro";
   };
 
   const getAccessBadgeColor = () => {
@@ -319,7 +323,7 @@ function OrganizationManagePageContent() {
         <PageHeader
           icon={<HiOfficeBuilding className="w-5 h-5" />}
           title={organization.name}
-          description="Manage organization settings, members, and workflows"
+          description="Gestione la configuración, miembros y flujos de trabajo de la organización"
         />
 
         <Card className="bg-[var(--card)] rounded-[var(--card-radius)] border-none shadow-sm">
@@ -355,7 +359,7 @@ function OrganizationManagePageContent() {
 
               {/* Row 2: Role Badge */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[var(--muted-foreground)]">Your Role:</span>
+                <span className="text-xs text-[var(--muted-foreground)]">Su Rol:</span>
                 <Badge
                   className={`${getAccessBadgeColor()} text-xs px-2 py-1 rounded-md border-none`}
                 >
@@ -409,9 +413,8 @@ function OrganizationManagePageContent() {
                 className="absolute bottom-0 h-0.5 bg-[var(--primary)] transition-all duration-300 ease-in-out"
                 style={{
                   width: "33.33%",
-                  transform: `translateX(${
-                    activeTab === "settings" ? "0%" : activeTab === "workflows" ? "100%" : "200%"
-                  })`,
+                  transform: `translateX(${activeTab === "settings" ? "0%" : activeTab === "workflows" ? "100%" : "200%"
+                    })`,
                 }}
               />
 
@@ -420,21 +423,21 @@ function OrganizationManagePageContent() {
                 className="flex items-center gap-2 px-3 py-2 data-[state=active]:bg-transparent data-[state=active]:text-[var(--primary)] hover:text-[var(--foreground)] transition-colors bg-transparent rounded-none shadow-none cursor-pointer"
               >
                 <HiCog className="w-4 h-4" />
-                <span className="hidden sm:inline">Settings</span>
+                <span className="hidden sm:inline">Configuración</span>
               </TabsTrigger>
               <TabsTrigger
                 value="workflows"
                 className="flex items-center gap-2 px-3 py-2 data-[state=active]:bg-transparent data-[state=active]:text-[var(--primary)] hover:text-[var(--foreground)] transition-colors bg-transparent rounded-none cursor-pointer"
               >
                 <HiViewGrid className="w-4 h-4" />
-                <span className="hidden sm:inline">Workflows</span>
+                <span className="hidden sm:inline">Flujos de Trabajo</span>
               </TabsTrigger>
               <TabsTrigger
                 value="members"
                 className="flex items-center gap-2 px-3 py-2 data-[state=active]:bg-transparent data-[state=active]:text-[var(--primary)] hover:text-[var(--foreground)] transition-colors bg-transparent rounded-none cursor-pointer"
               >
                 <HiUsers className="w-4 h-4" />
-                <span className="hidden sm:inline">Members</span>
+                <span className="hidden sm:inline">Miembros</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -454,12 +457,12 @@ function OrganizationManagePageContent() {
                 <div className="flex items-center gap-2 mb-1">
                   <ChartNoAxesGantt className="w-5 h-5 text-[var(--primary)]" />
                   <CardTitle className="text-md font-semibold text-[var(--foreground)]">
-                    Workflow Management
+                    Gestión de Flujos de Trabajo
                   </CardTitle>
                 </div>
                 <p className="text-sm text-[var(--muted-foreground)]">
-                  Configure task statuses and workflow transitions for your organization. These
-                  workflows will be used as templates for new projects.
+                  Configure los estados de las tareas y las transiciones del flujo de trabajo para su organización. Estos
+                  flujos se utilizarán como plantillas para nuevos proyectos.
                 </p>
               </CardHeader>
               <CardContent className="pt-0">
@@ -561,21 +564,21 @@ function OrganizationManagePageContent() {
                   <CardHeader className="pb-2">
                     <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                       <HiOfficeBuilding className="w-5 h-5 text-[var(--muted-foreground)]" />
-                      Organization Info
+                      Información de la Organización
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       <div>
                         <p className="text-sm font-medium text-[var(--foreground)]">
-                          {organization?.name || "Unknown Organization"}
+                          {organization?.name || "Organización Desconocida"}
                         </p>
                         <p className="text-xs text-[var(--muted-foreground)]">
-                          {organization?.description || "No description available"}
+                          {organization?.description || "Sin descripción disponible"}
                         </p>
                       </div>
                       <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                        <span>Members:</span>
+                        <span>Miembros:</span>
                         <span className="font-medium text-[var(--foreground)]">{totalMembers}</span>
                       </div>
 

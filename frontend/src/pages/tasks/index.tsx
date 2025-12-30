@@ -324,23 +324,23 @@ function TasksPageContent() {
   // Column management
   const handleAddColumn = useCallback((columnId: string) => {
     const columnConfigs: Record<string, { label: string; type: ColumnConfig["type"] }> = {
-      description: { label: "Description", type: "text" },
-      taskNumber: { label: "Task Number", type: "number" },
-      timeline: { label: "Timeline", type: "dateRange" },
-      completedAt: { label: "Completed Date", type: "date" },
-      storyPoints: { label: "Story Points", type: "number" },
-      originalEstimate: { label: "Original Estimate", type: "number" },
-      remainingEstimate: { label: "Remaining Estimate", type: "number" },
-      reporter: { label: "Reporter", type: "user" },
-      updatedBy: { label: "Updated By", type: "user" },
-      createdAt: { label: "Created Date", type: "date" },
-      updatedAt: { label: "Updated Date", type: "date" },
+      description: { label: "Descripción", type: "text" },
+      taskNumber: { label: "Número de Tarea", type: "number" },
+      timeline: { label: "Cronograma", type: "dateRange" },
+      completedAt: { label: "Fecha de Finalización", type: "date" },
+      storyPoints: { label: "Puntos de Historia", type: "number" },
+      originalEstimate: { label: "Estimación Original", type: "number" },
+      remainingEstimate: { label: "Estimación Restante", type: "number" },
+      reporter: { label: "Informador", type: "user" },
+      updatedBy: { label: "Actualizado Por", type: "user" },
+      createdAt: { label: "Fecha de Creación", type: "date" },
+      updatedAt: { label: "Fecha de Actualización", type: "date" },
       sprint: { label: "Sprint", type: "text" },
-      parentTask: { label: "Parent Task", type: "text" },
-      childTasksCount: { label: "Child Tasks", type: "number" },
-      commentsCount: { label: "Comments", type: "number" },
-      attachmentsCount: { label: "Attachments", type: "number" },
-      timeEntries: { label: "Time Entries", type: "number" },
+      parentTask: { label: "Tarea Padre", type: "text" },
+      childTasksCount: { label: "Tareas Hijas", type: "number" },
+      commentsCount: { label: "Comentarios", type: "number" },
+      attachmentsCount: { label: "Adjuntos", type: "number" },
+      timeEntries: { label: "Entradas de Tiempo", type: "number" },
     };
 
     const config = columnConfigs[columnId];
@@ -516,10 +516,10 @@ function TasksPageContent() {
 
   const priorityFilters = useMemo(() => {
     const priorities = [
-      { id: "LOW", name: "Low", value: "LOW", color: "#6b7280" },
-      { id: "MEDIUM", name: "Medium", value: "MEDIUM", color: "#f59e0b" },
-      { id: "HIGH", name: "High", value: "HIGH", color: "#ef4444" },
-      { id: "HIGHEST", name: "Highest", value: "HIGHEST", color: "#dc2626" },
+      { id: "LOW", name: "Baja", value: "LOW", color: "#6b7280" },
+      { id: "MEDIUM", name: "Media", value: "MEDIUM", color: "#f59e0b" },
+      { id: "HIGH", name: "Alta", value: "HIGH", color: "#ef4444" },
+      { id: "HIGHEST", name: "Máxima", value: "HIGHEST", color: "#dc2626" },
     ];
 
     return priorities.map((priority) => ({
@@ -539,10 +539,10 @@ function TasksPageContent() {
       selected: selectedAssignees.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.assignees)
-              ? task.assignees.some((assignee) => assignee.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.assignees)
+            ? task.assignees.some((assignee) => assignee.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -556,10 +556,10 @@ function TasksPageContent() {
       selected: selectedReporters.includes(member.user.id),
       count: Array.isArray(tasks)
         ? tasks.filter((task) =>
-            Array.isArray(task.reporters)
-              ? task.reporters.some((reporter) => reporter.id === member.user.id)
-              : false
-          ).length
+          Array.isArray(task.reporters)
+            ? task.reporters.some((reporter) => reporter.id === member.user.id)
+            : false
+        ).length
         : 0,
       email: member?.user?.email,
     }));
@@ -569,7 +569,7 @@ function TasksPageContent() {
     () => [
       createSection({
         id: "workspace",
-        title: "Workspace",
+        title: "Espacio de trabajo",
         icon: Building2,
         data: workspaceFilters,
         selectedIds: selectedWorkspaces,
@@ -580,7 +580,7 @@ function TasksPageContent() {
       }),
       createSection({
         id: "project",
-        title: "Project",
+        title: "Proyecto",
         icon: Folder,
         data: projectFilters,
         selectedIds: selectedProjects,
@@ -591,7 +591,7 @@ function TasksPageContent() {
       }),
       createSection({
         id: "status",
-        title: "Status",
+        title: "Estado",
         icon: CheckSquare,
         data: statusFilters,
         selectedIds: selectedStatuses,
@@ -605,7 +605,7 @@ function TasksPageContent() {
       }),
       createSection({
         id: "priority",
-        title: "Priority",
+        title: "Prioridad",
         icon: Flame,
         data: priorityFilters,
         selectedIds: selectedPriorities,
@@ -616,7 +616,7 @@ function TasksPageContent() {
       }),
       createSection({
         id: "assignee",
-        title: "Assignee",
+        title: "Responsable",
         icon: User,
         data: assigneeFilters,
         selectedIds: selectedAssignees,
@@ -627,7 +627,7 @@ function TasksPageContent() {
       }),
       createSection({
         id: "reporter",
-        title: "Reporter",
+        title: "Informador",
         icon: Users,
         data: reporterFilters,
         selectedIds: selectedReporters,
@@ -691,7 +691,7 @@ function TasksPageContent() {
         aValue = a.status?.name || "";
         bValue = b.status?.name || "";
       }
-      
+
       // Handle commentsCount field (stored in _count.comments)
       if (sortField === "commentsCount") {
         aValue = a._count?.comments || 0;
@@ -747,7 +747,7 @@ function TasksPageContent() {
 
     switch (currentView) {
       case "kanban":
-        return <div>Kanban Is only available on Project Level.</div>;
+        return <div>Kanban solo está disponible a nivel de Proyecto.</div>;
       default:
         return (
           <TaskListView
@@ -774,8 +774,8 @@ function TasksPageContent() {
       <div className="sticky top-0 z-50">
         <PageHeader
           icon={<Clipboard className="size-20px" />}
-          title="My Tasks"
-          description="Manage and track all your assigned tasks in one place."
+          title="Mis Tareas"
+          description="Administra y haz seguimiento de todas tus tareas asignadas en un solo lugar."
           actions={
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 gap-2">
               <div className="flex items-center gap-2">
@@ -783,7 +783,7 @@ function TasksPageContent() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted-foreground)]" />
                   <Input
                     type="text"
-                    placeholder="Search tasks..."
+                    placeholder="Buscar tareas..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     className="pl-10 rounded-md border border-[var(--border)]"
@@ -798,13 +798,13 @@ function TasksPageContent() {
                   )}
                 </div>
                 {currentView === "list" && (
-                  <Tooltip content="Advanced Filters" position="top" color="primary">
+                  <Tooltip content="Filtros Avanzados" position="top" color="primary">
                     <FilterDropdown
                       sections={filterSections}
-                      title="Advanced Filters"
+                      title="Filtros Avanzados"
                       activeFiltersCount={totalActiveFilters}
                       onClearAllFilters={clearAllFilters}
-                      placeholder="Filter results..."
+                      placeholder="Filtrar resultados..."
                       dropdownWidth="w-56"
                       showApplyButton={false}
                       onOpen={handleFilterDropdownOpen}
@@ -814,7 +814,7 @@ function TasksPageContent() {
               </div>
               {userAccess?.role !== "VIEWER" && (
                 <ActionButton primary showPlusIcon onClick={() => setNewTaskModalOpen(true)}>
-                  Create Task
+                  Crear Tarea
                 </ActionButton>
               )}
             </div>
@@ -839,13 +839,12 @@ function TasksPageContent() {
                       key={mode}
                       type="button"
                       onClick={() => setGanttViewMode(mode)}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${
-                        ganttViewMode === mode
-                          ? "bg-blue-500 text-white"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
-                      }`}
+                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors capitalize cursor-pointer ${ganttViewMode === mode
+                        ? "bg-blue-500 text-white"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-[var(--accent)]/50"
+                        }`}
                     >
-                      {mode}
+                      {mode === "days" ? "Días" : mode === "weeks" ? "Semanas" : "Meses"}
                     </button>
                   ))}
                 </div>
@@ -883,7 +882,7 @@ function TasksPageContent() {
             pageSize={pageSize}
             onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
-            itemType="tasks"
+            itemType="tareas"
           />
         </div>
       )}

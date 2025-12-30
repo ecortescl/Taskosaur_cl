@@ -22,18 +22,18 @@ export const ProjectDetailError: React.FC<ProjectDetailErrorProps> = ({
             <HiExclamation className="projects-error-icon" />
             <div className="projects-error-content">
               <CardTitle className="projects-error-title projects-error-title-dark">
-                {error === "Project not found" ? "Project Not Found" : "Error Loading Project"}
+                {error === "Project not found" ? "Proyecto No Encontrado" : "Error al Cargar Proyecto"}
               </CardTitle>
               <CardDescription className="projects-error-description projects-error-description-dark">
                 {error === "Project not found"
-                  ? `The project "${projectSlug}" does not exist in workspace "${workspaceSlug}".`
-                  : error || "An unexpected error occurred while loading the project."}
+                  ? `El proyecto "${projectSlug}" no existe en el espacio de trabajo "${workspaceSlug}".`
+                  : error || "Ocurrió un error inesperado al cargar el proyecto."}
               </CardDescription>
               <Link
                 href={`/${workspaceSlug}`}
                 className="projects-error-link projects-error-link-dark"
               >
-                Return to Workspace
+                Volver al Espacio de Trabajo
               </Link>
             </div>
           </CardHeader>

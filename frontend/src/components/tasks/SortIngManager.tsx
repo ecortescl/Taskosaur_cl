@@ -76,7 +76,7 @@ const SortingManager: React.FC<SortingManagerProps> = ({
 
   return (
     <DropdownMenu>
-      <Tooltip content="Sort tasks" position="top" color="primary">
+      <Tooltip content="Ordenar tareas" position="top" color="primary">
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
@@ -90,8 +90,8 @@ const SortingManager: React.FC<SortingManagerProps> = ({
 
       <DropdownMenuContent align="end" className="w-64 bg-[var(--card)] border-[var(--border)]">
         <DropdownMenuLabel className="text-xs font-semibold flex justify-between items-center">
-          <span>Sort Options</span>
-          <Tooltip content="Reset" position="top" color="primary">
+          <span>Opciones de Orden</span>
+          <Tooltip content="Reiniciar" position="top" color="primary">
             <Button
               variant="ghost"
               size="sm"
@@ -106,38 +106,36 @@ const SortingManager: React.FC<SortingManagerProps> = ({
           </Tooltip>
         </DropdownMenuLabel>
         <div className="px-2  text-xs text-[var(--muted-foreground)]">
-          Choose how to sort your tasks
+          Elige cómo ordenar tus tareas
         </div>
         <DropdownMenuSeparator />
         {/* Sort Direction Controls */}
         <div className="px-2">
-          <div className="text-xs font-medium text-[var(--foreground)] mb-2">Direction</div>
+          <div className="text-xs font-medium text-[var(--foreground)] mb-2">Dirección</div>
           <div className="flex gap-1">
             <Button
               variant={sortOrder === "asc" ? "default" : "outline"}
               size="sm"
-              className={`flex-1 text-xs h-8 ${
-                sortOrder === "asc"
+              className={`flex-1 text-xs h-8 ${sortOrder === "asc"
                   ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                   : "border-[var(--border)]"
-              }`}
+                }`}
               onClick={handleSortOrderToggle}
             >
               <ArrowUp size={12} className="mr-1" />
-              Ascending
+              Ascendente
             </Button>
             <Button
               variant={sortOrder === "desc" ? "default" : "outline"}
               size="sm"
-              className={`flex-1 text-xs h-8 ${
-                sortOrder === "desc"
+              className={`flex-1 text-xs h-8 ${sortOrder === "desc"
                   ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
                   : "border-[var(--border)]"
-              }`}
+                }`}
               onClick={handleSortOrderToggle}
             >
               <ArrowDown size={12} className="mr-1" />
-              Descending
+              Descendente
             </Button>
           </div>
         </div>
@@ -156,11 +154,10 @@ const SortingManager: React.FC<SortingManagerProps> = ({
                       e.preventDefault();
                       handleFieldSelect(field);
                     }}
-                    className={`my-1 cursor-pointer justify-between py-2 text-xs ${
-                      isActive
+                    className={`my-1 cursor-pointer justify-between py-2 text-xs ${isActive
                         ? "bg-[var(--accent)] text-[var(--accent-foreground)]"
                         : "hover:bg-[var(--accent)]/50"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-2">
                       <Icon className="w-4 h-4 text-gray-500" />

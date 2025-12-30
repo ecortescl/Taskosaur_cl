@@ -166,7 +166,19 @@ function ProjectMembersContent() {
 
   const getRoleLabel = (role: string) => {
     const roleConfig = roles.find((r) => r.name === role);
-    return roleConfig?.name || role;
+    if (!roleConfig) return role;
+    switch (roleConfig.name) {
+      case "OWNER":
+        return "Dueño";
+      case "MANAGER":
+        return "Gestor";
+      case "DEVELOPER":
+        return "Desarrollador";
+      case "VIEWER":
+        return "Espectador";
+      default:
+        return roleConfig.name;
+    }
   };
 
   const getCurrentUserId = () => getCurrentUser()?.id;
@@ -251,7 +263,7 @@ function ProjectMembersContent() {
       currentRouteRef.current = pageKey;
 
       if (!workspaceSlug || !projectSlug || !isAuthenticated()) {
-        setError("Authentication required");
+        setError("Autenticación requerida");
         setLoading(false);
         return;
       }
@@ -266,7 +278,7 @@ function ProjectMembersContent() {
         }
         const workspaceData = workspace || (await getWorkspaceBySlug(workspaceSlug));
         if (!workspaceData) {
-          setError("Workspace not found");
+          setError("Espacio de trabajo no encontrado");
           setLoading(false);
           return;
         }
@@ -274,7 +286,7 @@ function ProjectMembersContent() {
         const projectsData = await getProjectsByWorkspace(workspaceData.id);
         const foundProject = projectsData?.find((p: any) => p.slug === projectSlug);
         if (!foundProject) {
-          setError("Project not found");
+          setError("Proyecto no encontrado");
           setLoading(false);
           return;
         }
@@ -302,8 +314,8 @@ function ProjectMembersContent() {
             const processedMembers = membersData.data.map((member: ProjectMember) => ({
               id: member.id,
               email: member.user?.email || "",
-              firstName: member.user?.firstName || "Unknown",
-              lastName: member.user?.lastName || "User",
+              firstName: member.user?.firstName || "Desconocido",
+              lastName: member.user?.lastName || "Usuario",
               username: member.user?.username || "",
               role: member.role || "DEVELOPER",
               status: member.user?.status || "ACTIVE",
@@ -321,7 +333,7 @@ function ProjectMembersContent() {
           }
         } catch (membersError) {
           console.error("Failed to fetch members:", membersError);
-          setError("Failed to load project members");
+          setError("Error al cargar los miembros del proyecto");
           setMembers([]);
           fetchPrevention.markFetchComplete("project-members", []);
         }
@@ -329,7 +341,7 @@ function ProjectMembersContent() {
         isInitializedRef.current = true;
       } catch (err) {
         if (requestIdRef.current === requestId && isMountedRef.current) {
-          setError(err?.message ? err.message : "Failed to load data");
+          setError(err?.message ? err.message : "Error al cargar los datos");
           setMembers([]);
           isInitializedRef.current = false;
         }
@@ -402,8 +414,8 @@ function ProjectMembersContent() {
         const processedMembers = membersData.data.map((member: ProjectMember) => ({
           id: member.id,
           email: member.user?.email || "",
-          firstName: member.user?.firstName || "Unknown",
-          lastName: member.user?.lastName || "User",
+          firstName: member.user?.firstName || "Desconocido",
+          lastName: member.user?.lastName || "Usuario",
           username: member.user?.username || "",
           role: member.role || "DEVELOPER",
           status: member.user?.status || "ACTIVE",
@@ -419,7 +431,7 @@ function ProjectMembersContent() {
       }
       setError(null);
     } catch (err) {
-      setError(err?.message ? err.message : "Failed to load members");
+      setError(err?.message ? err.message : "Error al cargar los miembros");
       setMembers([]);
     }
   };
@@ -452,7 +464,7 @@ function ProjectMembersContent() {
   const handleRoleUpdate = async (memberId: string, newRole: string) => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
-      toast.error("User not authenticated");
+      toast.error("Usuario no autenticado");
       return;
     }
 
@@ -461,9 +473,9 @@ function ProjectMembersContent() {
       await updateProjectMemberRole(memberId, currentUser.id, newRole);
       updateLocalStorageUser(newRole);
       await refreshMembers();
-      toast.success("Member role updated successfully");
+      toast.success("Rol del miembro actualizado con éxito");
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to update role";
+      const errorMessage = err instanceof Error ? err.message : "Error al actualizar el rol";
       toast.error(errorMessage);
     } finally {
       setUpdatingMember(null);
@@ -473,7 +485,7 @@ function ProjectMembersContent() {
   const handleRemoveMember = async (member: ProjectMember) => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
-      toast.error("User not authenticated");
+      toast.error("Usuario no autenticado");
       return;
     }
 
@@ -485,14 +497,14 @@ function ProjectMembersContent() {
 
       // If user removed themselves, redirect to project page
       if (member.userId === currentUser.id) {
-        toast.success("You have left the project");
+        toast.success("Has salido del proyecto");
         router.push(`/workspaces/${workspaceSlug}/projects/${projectSlug}`);
         return;
       }
 
-      toast.success("Member removed successfully");
+      toast.success("Miembro eliminado con éxito");
     } catch (err) {
-      const errorMessage = err.message ? err.message : "Failed to remove member";
+      const errorMessage = err.message ? err.message : "Error al eliminar el miembro";
       toast.error(errorMessage);
       setMemberToRemove(null);
     } finally {
@@ -502,8 +514,8 @@ function ProjectMembersContent() {
 
   const handleInvite = async (email: string, role: string) => {
     if (!project) {
-      toast.error("Project not found");
-      throw new Error("Project not found");
+      toast.error("Proyecto no encontrado");
+      throw new Error("Proyecto no encontrado");
     }
 
     const validation = invitationApi.validateInvitationData({
@@ -514,7 +526,7 @@ function ProjectMembersContent() {
 
     if (!validation.isValid) {
       validation.errors.forEach((error) => toast.error(error));
-      throw new Error("Validation failed");
+      throw new Error("Error de validación");
     }
 
     try {
@@ -524,7 +536,7 @@ function ProjectMembersContent() {
         role: role,
       });
 
-      toast.success(`Invitation sent to ${email}`);
+      toast.success(`Invitación enviada a ${email}`);
 
       if (pendingInvitationsRef.current) {
         await pendingInvitationsRef.current.refreshInvitations();
@@ -548,7 +560,7 @@ function ProjectMembersContent() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("es-419", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -566,11 +578,11 @@ function ProjectMembersContent() {
   return (
     <div className="dashboard-container space-y-6 pt-0" data-automation-id="invite-member-btn">
       <PageHeader
-        title={`${project?.name || "Project"} Members`}
+        title={`Miembros de ${project?.name || "Proyecto"}`}
         description={
           workspace?.name && project?.name
-            ? `Manage members for ${project.name} in ${workspace.name} workspace`
-            : "Manage project members and their permissions"
+            ? `Gestiona los miembros de ${project.name} en el espacio de trabajo ${workspace.name}`
+            : "Gestiona los miembros del proyecto y sus permisos"
         }
         actions={
           hasAccess && (
@@ -583,7 +595,7 @@ function ProjectMembersContent() {
               {inviteLoading ? (
                 <div className="w-4 h-4 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin mr-2"></div>
               ) : null}
-              Invite Member
+              Invitar Miembro
             </ActionButton>
           )
         }
@@ -598,7 +610,7 @@ function ProjectMembersContent() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                   <HiUsers className="w-5 h-5 text-[var(--muted-foreground)]" />
-                  Team Members ({activeMembers.length})
+                  Miembros del Equipo ({activeMembers.length})
                 </CardTitle>
                 <div className="relative w-full sm:w-auto">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -609,7 +621,7 @@ function ProjectMembersContent() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 h-9 w-full sm:w-64 border-input bg-background text-[var(--foreground)]"
-                    placeholder="Search members..."
+                    placeholder="Buscar miembros..."
                   />
 
                   {searchTerm && (
@@ -628,11 +640,11 @@ function ProjectMembersContent() {
               {/* Table Header - Desktop Only */}
               <div className="hidden lg:block px-4 py-3 bg-[var(--muted)]/30 border-b border-[var(--border)]">
                 <div className="grid grid-cols-12 gap-3 text-xs font-medium text-[var(--muted-foreground)] uppercase tracking-wide">
-                  <div className="col-span-4">Member</div>
-                  <div className="col-span-2">Status</div>
-                  <div className="col-span-2">Joined</div>
-                  <div className="col-span-2">Role</div>
-                  <div className="col-span-2">Action</div>
+                  <div className="col-span-4">Miembro</div>
+                  <div className="col-span-2">Estado</div>
+                  <div className="col-span-2">Unido</div>
+                  <div className="col-span-2">Rol</div>
+                  <div className="col-span-2">Acción</div>
                 </div>
               </div>
 
@@ -642,13 +654,13 @@ function ProjectMembersContent() {
                   icon={HiUsers}
                   title={
                     searchTerm
-                      ? "No members found matching your search"
-                      : "No members found in this project"
+                      ? "No se encontraron miembros que coincidan con tu búsqueda"
+                      : "No se encontraron miembros en este proyecto"
                   }
                   description={
                     searchTerm
-                      ? "Try adjusting your search terms"
-                      : "Start by inviting team members to collaborate on this project"
+                      ? "Intenta ajustar tus términos de búsqueda"
+                      : "Comienza invitando a miembros del equipo para colaborar en este proyecto"
                   }
                 />
               ) : (
@@ -696,13 +708,13 @@ function ProjectMembersContent() {
                                 <Tooltip
                                   content={
                                     isCurrentUser
-                                      ? "Leave Project"
+                                      ? "Salir del Proyecto"
                                       : isOwner
-                                        ? "Project owner cannot be removed"
+                                        ? "El dueño del proyecto no puede ser eliminado"
                                         : userAccess?.role === "MANAGER" &&
-                                            member.role === "MANAGER"
-                                          ? "Cannot remove other managers"
-                                          : "Remove Member"
+                                          member.role === "MANAGER"
+                                          ? "No se puede eliminar a otros gestores"
+                                          : "Eliminar Miembro"
                                   }
                                   position="top"
                                   color="danger"
@@ -749,7 +761,15 @@ function ProjectMembersContent() {
                                     member.role
                                   )}`}
                                 >
-                                  {member.role}
+                                  {member.role === "OWNER"
+                                    ? "Dueño"
+                                    : member.role === "MANAGER"
+                                      ? "Gestor"
+                                      : member.role === "DEVELOPER"
+                                        ? "Desarrollador"
+                                        : member.role === "VIEWER"
+                                          ? "Espectador"
+                                          : member.role}
                                 </Badge>
                               )}
                             </div>
@@ -789,7 +809,15 @@ function ProjectMembersContent() {
                                   member.status || "ACTIVE"
                                 )}`}
                               >
-                                {member.status || "ACTIVE"}
+                                {member.status === "ACTIVE"
+                                  ? "Activo"
+                                  : member.status === "PENDING"
+                                    ? "Pendiente"
+                                    : member.status === "INACTIVE"
+                                      ? "Inactivo"
+                                      : member.status === "SUSPENDED"
+                                        ? "Suspendido"
+                                        : member.status || "Activo"}
                               </Badge>
                             </div>
 
@@ -822,7 +850,15 @@ function ProjectMembersContent() {
                                         value={role.name}
                                         className="hover:bg-[var(--hover-bg)]"
                                       >
-                                        {role.name.charAt(0) + role.name.slice(1).toLowerCase()}
+                                        {role.name === "OWNER"
+                                          ? "Dueño"
+                                          : role.name === "MANAGER"
+                                            ? "Gestor"
+                                            : role.name === "DEVELOPER"
+                                              ? "Desarrollador"
+                                              : role.name === "VIEWER"
+                                                ? "Espectador"
+                                                : role.name}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -833,7 +869,15 @@ function ProjectMembersContent() {
                                     member.role
                                   )}`}
                                 >
-                                  {member.role}
+                                  {member.role === "OWNER"
+                                    ? "Dueño"
+                                    : member.role === "MANAGER"
+                                      ? "Gestor"
+                                      : member.role === "DEVELOPER"
+                                        ? "Desarrollador"
+                                        : member.role === "VIEWER"
+                                          ? "Espectador"
+                                          : member.role}
                                 </Badge>
                               )}
                             </div>
@@ -844,13 +888,13 @@ function ProjectMembersContent() {
                                 <Tooltip
                                   content={
                                     isCurrentUser
-                                      ? "Leave Project"
+                                      ? "Salir del Proyecto"
                                       : isOwner
-                                        ? "Project owner cannot be removed"
+                                        ? "El dueño del proyecto no puede ser eliminado"
                                         : userAccess?.role === "MANAGER" &&
-                                            member.role === "MANAGER"
-                                          ? "Cannot remove other managers"
-                                          : "Remove Member"
+                                          member.role === "MANAGER"
+                                          ? "No se puede eliminar a otros gestores"
+                                          : "Eliminar Miembro"
                                   }
                                   position="top"
                                   color="danger"
@@ -903,31 +947,31 @@ function ProjectMembersContent() {
             <CardHeader className="pb-2">
               <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                 <HiFolder className="w-5 h-5 text-[var(--muted-foreground)]" />
-                Project Info
+                Información del Proyecto
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-3">
                 <div>
                   <p className="text-sm font-medium text-[var(--foreground)]">
-                    {project?.name || "Unknown Project"}
+                    {project?.name || "Proyecto Desconocido"}
                   </p>
                   <p className="text-xs text-[var(--muted-foreground)]">
-                    {project?.description || "No description available"}
+                    {project?.description || "Sin descripción disponible"}
                   </p>
                 </div>
                 <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                  <span>Workspace:</span>
+                  <span>Espacio de Trabajo:</span>
                   <span className="font-medium text-[var(--foreground)]">
-                    {workspace?.name || "Unknown"}
+                    {workspace?.name || "Desconocido"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                  <span>Members:</span>
+                  <span>Miembros:</span>
                   <span className="font-medium text-[var(--foreground)]">{members.length}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-                  <span>Active Members:</span>
+                  <span>Miembros Activos:</span>
                   <span className="font-medium text-[var(--foreground)]">
                     {members.filter((m) => m.status === "ACTIVE").length}
                   </span>
@@ -941,7 +985,7 @@ function ProjectMembersContent() {
             <CardHeader className="pb-2">
               <CardTitle className="text-md font-semibold text-[var(--foreground)] flex items-center gap-2">
                 <HiCog className="w-5 h-5 text-[var(--muted-foreground)]" />
-                Role Distribution
+                Distribución de Roles
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
@@ -952,7 +996,17 @@ function ProjectMembersContent() {
                   ).length;
                   return (
                     <div key={role.id} className="flex items-center justify-between text-xs">
-                      <span className="text-[var(--muted-foreground)]">{role.name}</span>
+                      <span className="text-[var(--muted-foreground)]">
+                        {role.name === "OWNER"
+                          ? "Dueño"
+                          : role.name === "MANAGER"
+                            ? "Gestor"
+                            : role.name === "DEVELOPER"
+                              ? "Desarrollador"
+                              : role.name === "VIEWER"
+                                ? "Espectador"
+                                : role.name}
+                      </span>
                       <Badge
                         variant={role.variant}
                         className="h-5 px-2 text-xs border-none bg-[var(--primary)]/10 text-[var(--primary)]"
@@ -990,14 +1044,14 @@ function ProjectMembersContent() {
           isOpen={true}
           onClose={() => setMemberToRemove(null)}
           onConfirm={() => handleRemoveMember(memberToRemove)}
-          title={memberToRemove.userId === getCurrentUserId() ? "Leave Project" : "Remove Member"}
+          title={memberToRemove.userId === getCurrentUserId() ? "Salir del Proyecto" : "Eliminar Miembro"}
           message={
             memberToRemove.userId === getCurrentUserId()
-              ? "Are you sure you want to leave this project? You will lose access to all project resources."
-              : "Are you sure you want to remove this member from the Project?"
+              ? "¿Estás seguro de que deseas salir de este proyecto? Perderás el acceso a todos los recursos del proyecto."
+              : "¿Estás seguro de que deseas eliminar a este miembro del Proyecto?"
           }
-          confirmText={memberToRemove.userId === getCurrentUserId() ? "Leave" : "Remove"}
-          cancelText="Cancel"
+          confirmText={memberToRemove.userId === getCurrentUserId() ? "Salir" : "Eliminar"}
+          cancelText="Cancelar"
         />
       )}
     </div>

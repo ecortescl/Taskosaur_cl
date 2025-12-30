@@ -28,16 +28,16 @@ import { HiEnvelope, HiCog } from "react-icons/hi2";
 
 // Form validation schema using Zod
 const inboxSetupSchema = z.object({
-  name: z.string().min(1, "Inbox name is required").max(100),
+  name: z.string().min(1, "El nombre del inbox es obligatorio").max(100),
   description: z.string().optional(),
-  emailAddress: z.string().email("Valid email address is required").optional().or(z.literal("")),
+  emailAddress: z.string().email("Se requiere una dirección de correo válida").optional().or(z.literal("")),
   emailSignature: z.string().optional(),
   autoReplyEnabled: z.boolean().optional(),
   autoReplyTemplate: z.string().optional(), // ✅ MUST BE PRESENT
   autoCreateTask: z.boolean().optional(),
   defaultTaskType: z.enum(["TASK", "BUG", "EPIC", "STORY", "SUBTASK"]).optional(),
   defaultPriority: z.enum(["LOWEST", "LOW", "MEDIUM", "HIGH", "HIGHEST"]).optional(),
-  defaultStatusId: z.string().min(1, "Default status is required"),
+  defaultStatusId: z.string().min(1, "El estado por defecto es obligatorio"),
 });
 
 export type InboxSetupFormData = z.infer<typeof inboxSetupSchema>;
@@ -60,7 +60,7 @@ export default function InboxSetupForm({
   const form = useForm<InboxSetupFormData>({
     resolver: zodResolver(inboxSetupSchema),
     defaultValues: {
-      name: "Project Inbox",
+      name: "Inbox del Proyecto",
       autoCreateTask: true,
       autoReplyEnabled: false,
       defaultTaskType: "TASK",
@@ -80,9 +80,9 @@ export default function InboxSetupForm({
   const handleFormSubmit = async (data: InboxSetupFormData) => {
     try {
       await onSubmit(data);
-      toast.success("Inbox setup completed successfully");
+      toast.success("Configuración del inbox completada con éxito");
     } catch (error) {
-      toast.error("Failed to setup inbox");
+      toast.error("Error al configurar el inbox");
       console.error("Inbox setup error:", error);
     }
   };
@@ -92,7 +92,7 @@ export default function InboxSetupForm({
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <HiEnvelope className="w-5 h-5" />
-          <span>Set Up Email Integration</span>
+          <span>Configurar Integración de Email</span>
         </CardTitle>
       </CardHeader>
 
@@ -101,18 +101,18 @@ export default function InboxSetupForm({
           <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
             {/* Basic Information Section */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Basic Information</h3>
+              <h3 className="text-lg font-medium">Información Básica</h3>
 
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Inbox Name *</FormLabel>
+                    <FormLabel>Nombre del Inbox *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Support Inbox" {...field} disabled={isLoading} />
+                      <Input placeholder="Inbox de Soporte" {...field} disabled={isLoading} />
                     </FormControl>
-                    <FormDescription>A descriptive name for your email inbox</FormDescription>
+                    <FormDescription>Un nombre descriptivo para tu inbox de correo</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -123,16 +123,16 @@ export default function InboxSetupForm({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Descripción</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Customer support email integration"
+                        placeholder="Integración de email para soporte al cliente"
                         rows={2}
                         {...field}
                         disabled={isLoading}
                       />
                     </FormControl>
-                    <FormDescription>Optional description of this inbox's purpose</FormDescription>
+                    <FormDescription>Descripción opcional del propósito de este inbox</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -143,17 +143,17 @@ export default function InboxSetupForm({
                 name="emailAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel>Dirección de Email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="support@company.com"
+                        placeholder="soporte@empresa.com"
                         {...field}
                         disabled={isLoading}
                       />
                     </FormControl>
                     <FormDescription>
-                      The email address for this inbox (can be set up later)
+                      La dirección de email para este inbox (se puede configurar más tarde)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -163,7 +163,7 @@ export default function InboxSetupForm({
 
             {/* Task Creation Settings */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Task Creation Settings</h3>
+              <h3 className="text-lg font-medium">Ajustes de Creación de Tareas</h3>
 
               <FormField
                 control={form.control}
@@ -171,9 +171,9 @@ export default function InboxSetupForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">Auto-create Tasks</FormLabel>
+                      <FormLabel className="text-base">Crear Tareas Automáticamente</FormLabel>
                       <FormDescription>
-                        Automatically convert incoming emails to tasks
+                        Convertir automáticamente los emails entrantes en tareas
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -193,7 +193,7 @@ export default function InboxSetupForm({
                   name="defaultTaskType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Default Task Type</FormLabel>
+                      <FormLabel>Tipo de Tarea por Defecto</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -201,15 +201,15 @@ export default function InboxSetupForm({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select task type" />
+                            <SelectValue placeholder="Seleccionar tipo de tarea" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="TASK">Task</SelectItem>
-                          <SelectItem value="BUG">Bug</SelectItem>
-                          <SelectItem value="EPIC">Epic</SelectItem>
-                          <SelectItem value="STORY">Story</SelectItem>
-                          <SelectItem value="SUBTASK">Subtask</SelectItem>
+                          <SelectItem value="TASK">Tarea</SelectItem>
+                          <SelectItem value="BUG">Error</SelectItem>
+                          <SelectItem value="EPIC">Épica</SelectItem>
+                          <SelectItem value="STORY">Historia</SelectItem>
+                          <SelectItem value="SUBTASK">Subtarea</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -222,7 +222,7 @@ export default function InboxSetupForm({
                   name="defaultPriority"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Default Priority</FormLabel>
+                      <FormLabel>Prioridad por Defecto</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -230,14 +230,14 @@ export default function InboxSetupForm({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select priority" />
+                            <SelectValue placeholder="Seleccionar prioridad" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="LOW">Low</SelectItem>
-                          <SelectItem value="MEDIUM">Medium</SelectItem>
-                          <SelectItem value="HIGH">High</SelectItem>
-                          <SelectItem value="HIGHEST">Highest</SelectItem>
+                          <SelectItem value="LOW">Baja</SelectItem>
+                          <SelectItem value="MEDIUM">Media</SelectItem>
+                          <SelectItem value="HIGH">Alta</SelectItem>
+                          <SelectItem value="HIGHEST">Muy Alta</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -251,7 +251,7 @@ export default function InboxSetupForm({
                 name="defaultStatusId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Default Status *</FormLabel>
+                    <FormLabel>Estado por Defecto *</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -259,7 +259,7 @@ export default function InboxSetupForm({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select default status" />
+                          <SelectValue placeholder="Seleccionar estado por defecto" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -279,7 +279,7 @@ export default function InboxSetupForm({
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      Status assigned to new tasks created from emails
+                      Estado asignado a las nuevas tareas creadas desde emails
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -289,7 +289,7 @@ export default function InboxSetupForm({
 
             {/* Auto-Reply Settings */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Auto-Reply Settings</h3>
+              <h3 className="text-lg font-medium">Ajustes de Respuesta Automática</h3>
 
               <FormField
                 control={form.control}
@@ -297,8 +297,8 @@ export default function InboxSetupForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">Enable Auto-Reply</FormLabel>
-                      <FormDescription>Send automatic replies to incoming emails</FormDescription>
+                      <FormLabel className="text-base">Activar Respuesta Automática</FormLabel>
+                      <FormDescription>Enviar respuestas automáticas a los emails entrantes</FormDescription>
                     </div>
                     <FormControl>
                       <Switch
@@ -317,16 +317,16 @@ export default function InboxSetupForm({
                   name="autoReplyTemplate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Auto-Reply Message</FormLabel>
+                      <FormLabel>Mensaje de Respuesta Automática</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Thank you for contacting us. We'll respond within 24 hours."
+                          placeholder="Gracias por contactarnos. Responderemos dentro de las próximas 24 horas."
                           rows={4}
                           {...field}
                           disabled={isLoading}
                         />
                       </FormControl>
-                      <FormDescription>Message sent automatically to email senders</FormDescription>
+                      <FormDescription>Mensaje enviado automáticamente a los remitentes de los emails</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -336,23 +336,23 @@ export default function InboxSetupForm({
 
             {/* Email Signature */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Email Signature</h3>
+              <h3 className="text-lg font-medium">Firma de Email</h3>
 
               <FormField
                 control={form.control}
                 name="emailSignature"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Signature</FormLabel>
+                    <FormLabel>Firma</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="--&#10;Best regards,&#10;Support Team"
+                        placeholder="--&#10;Saludos cordiales,&#10;Equipo de Soporte"
                         rows={3}
                         {...field}
                         disabled={isLoading}
                       />
                     </FormControl>
-                    <FormDescription>Signature added to all outgoing email replies</FormDescription>
+                    <FormDescription>Firma añadida a todas las respuestas de email salientes</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -365,10 +365,10 @@ export default function InboxSetupForm({
                 {isSubmitting ? (
                   <>
                     <HiCog className="w-4 h-4 mr-2 animate-spin" />
-                    Creating Inbox...
+                    Creando Inbox...
                   </>
                 ) : (
-                  "Create Inbox"
+                  "Crear Inbox"
                 )}
               </Button>
 
@@ -379,7 +379,7 @@ export default function InboxSetupForm({
                 disabled={isSubmitting || isLoading}
                 className="flex-1"
               >
-                Cancel
+                Cancelar
               </Button>
             </div>
           </form>

@@ -9,11 +9,11 @@ import {
 import { ChartWrapper } from "../chart-wrapper";
 
 const chartConfig = {
-  LOWEST: { label: "Lowest", color: "#94A3B8" },
-  LOW: { label: "Low", color: "#3B82F6" },
-  MEDIUM: { label: "Medium", color: "#F59E0B" },
-  HIGH: { label: "High", color: "#EF4444" },
-  HIGHEST: { label: "Highest", color: "#DC2626" },
+  LOWEST: { label: "Mínima", color: "#94A3B8" },
+  LOW: { label: "Baja", color: "#3B82F6" },
+  MEDIUM: { label: "Media", color: "#F59E0B" },
+  HIGH: { label: "Alta", color: "#EF4444" },
+  HIGHEST: { label: "Máxima", color: "#DC2626" },
 };
 
 interface TaskPriorityChartProps {
@@ -39,8 +39,8 @@ export function TaskPriorityChart({ data }: TaskPriorityChartProps) {
 
   return (
     <ChartWrapper
-      title="Task Priority Distribution"
-      description="Priority breakdown across all tasks"
+      title="Distribución de Prioridad de Tareas"
+      description="Desglose de la prioridad en todas las tareas"
       config={chartConfig}
       className="border-[var(--border)]"
     >

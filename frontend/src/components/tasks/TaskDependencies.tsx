@@ -52,17 +52,17 @@ export default function TaskDependencies({
   const getDependencyTypeDescription = (type: DependencyType) => {
     switch (type) {
       case DependencyType.BLOCKS:
-        return "Blocks this task";
+        return "Bloquea esta tarea";
       case DependencyType.FINISH_START:
-        return "Must finish before this task starts";
+        return "Debe terminar antes de que esta tarea comience";
       case DependencyType.START_START:
-        return "Must start before this task starts";
+        return "Debe comenzar antes de que esta tarea comience";
       case DependencyType.FINISH_FINISH:
-        return "Must finish before this task finishes";
+        return "Debe terminar antes de que esta tarea termine";
       case DependencyType.START_FINISH:
-        return "Must start before this task finishes";
+        return "Debe comenzar antes de que esta tarea termine";
       default:
-        return "Related task";
+        return "Tarea relacionada";
     }
   };
 
@@ -92,9 +92,9 @@ export default function TaskDependencies({
       {/* Dependencies (Tasks this task depends on) */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Dependencies</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Dependencias</h3>
           <Button variant="outline" onClick={() => setShowAddDependency(true)}>
-            Add Dependency
+            Agregar Dependencia
           </Button>
         </div>
 
@@ -126,11 +126,10 @@ export default function TaskDependencies({
                   <div className="flex items-center space-x-3">
                     <div className="flex items-center space-x-2">
                       <span
-                        className={`px-2 py-1 text-xs rounded-full ${
-                          blockingTask.status.category === "DONE"
+                        className={`px-2 py-1 text-xs rounded-full ${blockingTask.status.category === "DONE"
                             ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
                             : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
-                        }`}
+                          }`}
                       >
                         {blockingTask.status.name}
                       </span>
@@ -176,15 +175,15 @@ export default function TaskDependencies({
                 d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
               />
             </svg>
-            <p>No dependencies</p>
-            <p className="text-sm">This task doesn't depend on any other tasks</p>
+            <p>Sin dependencias</p>
+            <p className="text-sm">Esta tarea no depende de ninguna otra tarea</p>
           </div>
         )}
       </div>
 
       {/* Blocked Tasks (Tasks that depend on this task) */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Blocked Tasks</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tareas Bloqueadas</h3>
 
         {(() => {
           const blockedTasks = getTasksBlockedByThis();
@@ -210,18 +209,17 @@ export default function TaskDependencies({
                           </span>
                         </div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Waiting for this task to be completed
+                          Esperando que esta tarea se complete
                         </p>
                       </div>
                     </div>
 
                     <div className="flex items-center space-x-2">
                       <span
-                        className={`px-2 py-1 text-xs rounded-full ${
-                          blockedTask.status.category === "DONE"
+                        className={`px-2 py-1 text-xs rounded-full ${blockedTask.status.category === "DONE"
                             ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
                             : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100"
-                        }`}
+                          }`}
                       >
                         {blockedTask.status.name}
                       </span>
@@ -246,8 +244,8 @@ export default function TaskDependencies({
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <p>No blocked tasks</p>
-              <p className="text-sm">No other tasks are waiting for this task to be completed</p>
+              <p>No hay tareas bloqueadas</p>
+              <p className="text-sm">Ninguna otra tarea está esperando que esta tarea se complete</p>
             </div>
           );
         })()}
@@ -258,12 +256,12 @@ export default function TaskDependencies({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Add Dependency
+              Agregar Dependencia
             </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="form-label-primary mb-2">Task that blocks this task</label>
+                <label className="form-label-primary mb-2">Tarea que bloquea esta tarea</label>
                 <select
                   value={newDependency.taskId}
                   onChange={(e) =>
@@ -271,7 +269,7 @@ export default function TaskDependencies({
                   }
                   className="form-select-primary"
                 >
-                  <option value="">Select a task...</option>
+                  <option value="">Selecciona una tarea...</option>
                   {availableTasks.map((t) => (
                     <option key={t.id} value={t.id}>
                       {t.slug} - {t.title}
@@ -281,7 +279,7 @@ export default function TaskDependencies({
               </div>
 
               <div>
-                <label className="form-label-primary mb-2">Dependency Type</label>
+                <label className="form-label-primary mb-2">Tipo de Dependencia</label>
                 <select
                   value={newDependency.type}
                   onChange={(e) =>
@@ -306,10 +304,10 @@ export default function TaskDependencies({
 
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="secondary" onClick={() => setShowAddDependency(false)}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleAddDependency} disabled={!newDependency.taskId}>
-                Add Dependency
+                Agregar Dependencia
               </Button>
             </div>
           </div>
@@ -322,10 +320,10 @@ export default function TaskDependencies({
           isOpen={true}
           onClose={() => setDependencyToRemove(null)}
           onConfirm={() => handleRemoveDependency(dependencyToRemove)}
-          title="Remove Dependency"
-          message="Are you sure you want to remove this dependency? This action cannot be undone."
-          confirmText="Remove"
-          cancelText="Cancel"
+          title="Eliminar Dependencia"
+          message="¿Estás seguro de que quieres eliminar esta dependencia? Esta acción no se puede deshacer."
+          confirmText="Eliminar"
+          cancelText="Cancelar"
           type="danger"
         />
       )}

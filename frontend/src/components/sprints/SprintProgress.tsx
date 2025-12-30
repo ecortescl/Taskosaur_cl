@@ -131,11 +131,15 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
 
   // Helper function for consistent date formatting to prevent hydration issues
   const formatDate = (dateString: string) => {
-    if (!currentDate) return "Loading...";
+    if (!currentDate) return "Cargando...";
     try {
-      return new Date(dateString).toLocaleDateString();
+      return new Date(dateString).toLocaleDateString("es-419", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
     } catch {
-      return "Invalid date";
+      return "Fecha inválida";
     }
   };
 
@@ -233,10 +237,10 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
       <div className="sprints-progress-empty">
         <div className="sprints-progress-empty-content">
           <h3 className="sprints-progress-empty-title sprints-progress-empty-title-dark">
-            No Sprint Selected
+            Ningún Sprint Seleccionado
           </h3>
           <p className="sprints-progress-empty-subtitle sprints-progress-empty-subtitle-dark">
-            Please select a sprint from the dropdown above to view progress.
+            Por favor, seleccione un sprint del menú desplegable superior para ver el progreso.
           </p>
         </div>
       </div>
@@ -251,16 +255,16 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
 
   return (
     <div className="sprints-progress-container sprints-progress-container-dark">
-      <h3 className="sprints-progress-title sprints-progress-title-dark">Sprint Progress</h3>
+      <h3 className="sprints-progress-title sprints-progress-title-dark">Progreso del Sprint</h3>
 
       {/* Sprint Timeline */}
       <div className="sprints-progress-timeline">
         <div className="sprints-progress-timeline-header">
           <span className="sprints-progress-timeline-label sprints-progress-timeline-label-dark">
-            Sprint Timeline
+            Línea de Tiempo del Sprint
           </span>
           <span className="sprints-progress-timeline-remaining sprints-progress-timeline-remaining-dark">
-            {daysRemaining > 0 ? `${daysRemaining} days remaining` : "Sprint ended"}
+            {daysRemaining > 0 ? `${daysRemaining} días restantes` : "Sprint finalizado"}
           </span>
         </div>
         <div className="sprints-progress-bar-container sprints-progress-bar-container-dark">
@@ -283,7 +287,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             {getCompletedStoryPoints()}/{getTotalStoryPoints()}
           </div>
           <div className="sprints-progress-stat-label sprints-progress-stat-label-dark">
-            Story Points
+            Puntos de Historia
           </div>
           <div className="sprints-progress-bar-container sprints-progress-bar-container-dark">
             <div
@@ -292,7 +296,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             />
           </div>
           <div className="sprints-progress-stat-meta sprints-progress-stat-meta-dark">
-            {Math.round(completionPercentage)}% complete
+            {Math.round(completionPercentage)}% completado
           </div>
         </div>
 
@@ -302,7 +306,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             {formatTime(getTotalTimeSpent())}
           </div>
           <div className="sprints-progress-stat-label sprints-progress-stat-label-dark">
-            Time Spent
+            Tiempo Dedicado
           </div>
           <div className="sprints-progress-bar-container sprints-progress-bar-container-dark">
             <div
@@ -315,7 +319,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             />
           </div>
           <div className="sprints-progress-stat-meta sprints-progress-stat-meta-dark">
-            {formatTime(getTotalOriginalEstimate())} estimated
+            {formatTime(getTotalOriginalEstimate())} estimado
           </div>
         </div>
 
@@ -325,7 +329,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             {statusCounts.DONE}/{tasks.length}
           </div>
           <div className="sprints-progress-stat-label sprints-progress-stat-label-dark">
-            Tasks Complete
+            Tareas Completas
           </div>
           <div className="sprints-progress-bar-container sprints-progress-bar-container-dark">
             <div
@@ -336,7 +340,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             />
           </div>
           <div className="sprints-progress-stat-meta sprints-progress-stat-meta-dark">
-            {statusCounts.IN_PROGRESS} in progress
+            {statusCounts.IN_PROGRESS} en progreso
           </div>
         </div>
 
@@ -346,13 +350,13 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
             {(currentSprint as any)?.velocity || 0}
           </div>
           <div className="sprints-progress-stat-label sprints-progress-stat-label-dark">
-            Velocity
+            Velocidad
           </div>
           <div className="sprints-progress-stat-meta sprints-progress-stat-meta-dark">
-            Story points per day
+            Puntos de historia por día
           </div>
           <div className="sprints-progress-stat-meta sprints-progress-stat-meta-dark">
-            Capacity: {(currentSprint as any)?.capacity || 0}h
+            Capacidad: {(currentSprint as any)?.capacity || 0}h
           </div>
         </div>
       </div>
@@ -360,7 +364,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
       {/* Burndown Chart Placeholder */}
       <div className="sprints-progress-burndown sprints-progress-burndown-dark">
         <h4 className="sprints-progress-burndown-title sprints-progress-burndown-title-dark">
-          Sprint Burndown
+          Burndown del Sprint
         </h4>
         <div className="sprints-progress-burndown-placeholder sprints-progress-burndown-placeholder-dark">
           <div className="sprints-progress-burndown-content">
@@ -378,7 +382,7 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
               />
             </svg>
             <p className="sprints-progress-burndown-text sprints-progress-burndown-text-dark">
-              Burndown chart will be implemented here
+              El gráfico de Burndown se implementará aquí
             </p>
           </div>
         </div>
@@ -388,17 +392,17 @@ export default function SprintProgress({ selectedSprint }: SprintProgressProps) 
       <div className="sprints-progress-actions sprints-progress-actions-dark">
         <div className="sprints-progress-actions-header">
           <h4 className="sprints-progress-actions-title sprints-progress-actions-title-dark">
-            Quick Actions
+            Acciones Rápidas
           </h4>
           <div className="sprints-progress-actions-buttons">
             <button className="sprints-progress-action-button sprints-progress-action-button-dark">
-              View Sprint Report
+              Ver Reporte de Sprint
             </button>
             <span className="sprints-progress-actions-divider sprints-progress-actions-divider-dark">
               |
             </span>
             <button className="sprints-progress-action-button sprints-progress-action-button-dark">
-              Export Data
+              Exportar Datos
             </button>
           </div>
         </div>

@@ -65,7 +65,7 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
 
   const formatDate = (dateString: string) => {
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      return new Date(dateString).toLocaleDateString("es-CL", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -104,7 +104,7 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
   return (
     <div className="task-attachments-container">
       <div className="space-y-4">
-        <SectionHeader icon={HiPaperClip} title="Attachments" />
+        <SectionHeader icon={HiPaperClip} title="Adjuntos" />
 
         {!loadingAttachments && (
           <>
@@ -141,7 +141,7 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
                         className="flex items-center gap-2 flex-shrink-0"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <Tooltip content="View" position="top" color="primary">
+                        <Tooltip content="Ver" position="top" color="primary">
                           <ActionButton
                             variant="outline"
                             onClick={() => previewRefs.current[attachment.id]?.openPreview()}
@@ -155,7 +155,7 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
                             )}
                           </ActionButton>
                         </Tooltip>
-                        <Tooltip content="Download" position="top" color="primary">
+                        <Tooltip content="Descargar" position="top" color="primary">
                           <ActionButton
                             variant="outline"
                             onClick={() => onDownloadAttachment(attachment.id, attachment.fileName)}
@@ -166,7 +166,7 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
                           </ActionButton>
                         </Tooltip>
                         {attachment.createdBy === currentUser?.id && (
-                          <Tooltip content="Delete" position="top" color="primary">
+                          <Tooltip content="Eliminar" position="top" color="primary">
                             <ActionButton
                               onClick={() => onDeleteAttachment(attachment.id)}
                               secondary
@@ -223,10 +223,10 @@ const TaskAttachments: React.FC<TaskAttachmentsProps> = ({
                     {isUploading ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        Uploading...
+                        Subiendo...
                       </div>
                     ) : (
-                      <div className="text-center">Add Attachment</div>
+                      <div className="text-center">Agregar Adjunto</div>
                     )}
                   </ActionButton>
                 </div>

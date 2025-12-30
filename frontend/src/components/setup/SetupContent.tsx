@@ -20,27 +20,25 @@ export function SetupContent() {
           <div className="">
             <div className="flex items-center">
               <Image
-                src="/taskosaur-logo.svg"
-                alt="Taskosaur Logo"
+                src="https://landing-quiebre-test.vercel.app/Logo_quiebre_calado.svg"
+                alt="QUIEBRE.CL Logo"
                 width={50}
                 height={50}
-                className={`size-6 lg:size-10 ${
-                  resolvedTheme === "light" ? "filter invert brightness-200" : ""
-                }`}
+                className="size-6 lg:size-10"
               />
-              <h1 className="setup-brand-title">Taskosaur</h1>
+              <h1 className="setup-brand-title">QUIEBRE.CL</h1>
             </div>
           </div>
 
           <h2 className="setup-hero-heading">
-            Begin your
+            Comienza tu
             <br />
-            <span className="setup-hero-heading-gradient">productivity journey</span>
+            <span className="setup-hero-heading-gradient">viaje de productividad</span>
           </h2>
 
           <p className="setup-hero-description">
-            Set up your super admin account to unlock the full power of Taskosaur's
-            AI-powered project management platform for your entire organization.
+            Configura tu cuenta de súper administrador para desbloquear todo el poder de la
+            plataforma de gestión de proyectos impulsada por IA de QUIEBRE.CL para toda tu organización.
           </p>
         </motion.div>
       </div>

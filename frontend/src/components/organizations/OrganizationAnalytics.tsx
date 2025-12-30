@@ -61,7 +61,7 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
       setShowTodayAgenda(true);
     } catch (error) {
       console.error(error);
-      toast.error("Faild to fetch today task data");
+      toast.error("Error al obtener la agenda de hoy");
     }
   };
 
@@ -177,7 +177,7 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
     }),
   ];
   const getCurrentDate = () => {
-    return new Date().toLocaleDateString("en-US", {
+    return new Date().toLocaleDateString("es-419", {
       weekday: "long",
       year: "numeric",
       month: "long",
@@ -185,7 +185,7 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
     });
   };
 
-  if (error) <ErrorState error="Error loading organization analytics:" onRetry={handleFetchData} />;
+  if (error) <ErrorState error="Error al cargar la analítica de la organización:" onRetry={handleFetchData} />;
 
   return (
     <div className="space-y-6">
@@ -197,12 +197,12 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
         upcomingTasks={todayTask?.tasks || []}
       />
       <PageHeader
-        title="Dashboard"
-        description="Comprehensive insights into your organization's performance and health"
+        title="Panel de Control"
+        description="Información detallada sobre el rendimiento y la salud de su organización"
         icon={<HiHome className="size-5" />}
         actions={
           <div className="flex items-center gap-2">
-            <Tooltip content="Today Agenda" position="top" color="primary">
+            <Tooltip content="Agenda de Hoy" position="top" color="primary">
               <ActionButton
                 variant="outline"
                 onClick={() => handleTodayTaskFetch()}
@@ -212,7 +212,7 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
                 <Calendar className="h-4 w-4" />
               </ActionButton>
             </Tooltip>
-            <Tooltip content="Dashboard Settings" position="left" color="primary">
+            <Tooltip content="Configuración del Dashboard" position="left" color="primary">
               <DashboardSettingsDropdown sections={settingSections} />
             </Tooltip>
           </div>
@@ -222,9 +222,9 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
       {/* No Data Message */}
       {!data && !loading && !error && (
         <Alert>
-          <AlertDescription>No analytics data available for this organization.</AlertDescription>
+          <AlertDescription>No hay datos analíticos disponibles para esta organización.</AlertDescription>
           <Button onClick={handleFetchData} variant="outline" size="sm" className="mt-2">
-            Load Data
+            Cargar Datos
           </Button>
         </Alert>
       )}
@@ -233,12 +233,12 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
       {data && visibleCount === 0 && (
         <Card className="p-8 text-center">
           <div className="space-y-2">
-            <h3 className="text-lg font-semibold">No widgets to display</h3>
+            <h3 className="text-lg font-semibold">No hay widgets para mostrar</h3>
             <p className="text-muted-foreground">
-              All widgets are currently hidden. Use the customize button to show widgets.
+              Todos los widgets están ocultos. Use el botón de configuración para mostrarlos.
             </p>
             <Button onClick={resetWidgets} variant="outline" className="mt-4">
-              Show All Widgets
+              Mostrar Todos los Widgets
             </Button>
           </div>
         </Card>
@@ -257,14 +257,14 @@ export function OrganizationAnalytics({ organizationId }: OrganizationAnalyticsP
                 <div key={widget.id} className={widget.gridCols}>
                   <Card className="p-4 h-full flex items-center justify-center">
                     <div className="text-center text-muted-foreground">
-                      <p>Failed to load data for {widget.title}</p>
+                      <p>Error al cargar los datos de {widget.title}</p>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={handleFetchData}
                         className="mt-2"
                       >
-                        Retry
+                        Reintentar
                       </Button>
                     </div>
                   </Card>

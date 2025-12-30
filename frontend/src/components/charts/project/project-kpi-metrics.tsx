@@ -15,41 +15,41 @@ interface ProjectKPIMetricsProps {
 export function ProjectKPIMetrics({ data }: ProjectKPIMetricsProps) {
   const kpiCards = [
     {
-      title: "Total Tasks",
-      label: "Tasks", // 👈 Added
+      title: "Tareas Totales",
+      label: "Tareas", // 👈 Added
       value: data?.totalTasks,
-      description: "All tasks in project",
+      description: "Todas las tareas del proyecto",
       icon: <CheckCircle className="h-4 w-4" />,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
     },
     {
-      title: "Completed Tasks",
-      label: "Completed Tasks", // 👈 Added
+      title: "Tareas Completadas",
+      label: "Tareas Completadas", // 👈 Added
       value: data?.completedTasks,
-      description: "Successfully finished",
+      description: "Terminadas con éxito",
       icon: <CheckCircle className="h-4 w-4" />,
     },
     {
-      title: "Active Sprints",
-      label: "Active Sprints", // 👈 Added
+      title: "Sprints Activos",
+      label: "Sprints Activos", // 👈 Added
       value: data?.activeSprints,
-      description: "Currently running",
+      description: "En ejecución",
       icon: <Zap className="h-4 w-4" />,
       color: "text-purple-600",
     },
     {
-      title: "Bug Resolution",
-      label: "Bug Resolution", // 👈 Added
+      title: "Resolución de Bugs",
+      label: "Resolución de Bugs", // 👈 Added
       value: `${data?.bugResolutionRate.toFixed(1)}%`,
-      description: `${data?.resolvedBugs}/${data?.totalBugs} bugs fixed`,
+      description: `${data?.resolvedBugs}/${data?.totalBugs} bugs corregidos`,
       icon: <Bug className="h-4 w-4" />,
     },
     {
-      title: "Task Completion",
-      label: "Task Completion", // 👈 Added
+      title: "Completitud de Tareas",
+      label: "Completitud de Tareas", // 👈 Added
       value: `${data?.completionRate.toFixed(1)}%`,
-      description: "Overall progress",
+      description: "Progreso general",
       icon:
         data?.completionRate > 75 ? (
           <TrendingUp className="h-4 w-4" />
@@ -58,10 +58,10 @@ export function ProjectKPIMetrics({ data }: ProjectKPIMetricsProps) {
         ),
     },
     {
-      title: "Open Bugs",
-      label: "Open Bugs", // 👈 Added
+      title: "Bugs Abiertos",
+      label: "Bugs Abiertos", // 👈 Added
       value: data?.totalBugs - data?.resolvedBugs,
-      description: "Requiring attention",
+      description: "Requieren atención",
       icon:
         data?.totalBugs - data?.resolvedBugs === 0 ? (
           <CheckCircle className="h-4 w-4" />

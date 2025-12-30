@@ -42,7 +42,7 @@ interface SimpleTaskCardProps {
 const SimpleTaskCard: React.FC<SimpleTaskCardProps> = ({ task, workspaceSlug, projectSlug }) => {
   const formatDate = (dateString: string) => {
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      return new Date(dateString).toLocaleDateString("es-419", {
         month: "short",
         day: "numeric",
       });
@@ -69,7 +69,7 @@ const SimpleTaskCard: React.FC<SimpleTaskCardProps> = ({ task, workspaceSlug, pr
           {task.dueDate && (
             <div className="projects-task-card-due-date">
               <HiCalendar size={10} />
-              Due: {formatDate(task.dueDate)}
+              Vence: {formatDate(task.dueDate)}
             </div>
           )}
         </CardContent>
@@ -125,7 +125,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({
               projectSlug={projectSlug}
             />
           ))}
-          {tasks.length === 0 && <div className="projects-kanban-empty">No tasks</div>}
+          {tasks.length === 0 && <div className="projects-kanban-empty">No hay tareas</div>}
 
           {hasAccess && (
             <Link
@@ -133,7 +133,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({
               className="projects-kanban-add-task"
             >
               <HiPlus size={12} className="projects-kanban-add-task-icon" />
-              Add task
+              Añadir tarea
             </Link>
           )}
         </div>
@@ -158,15 +158,15 @@ export const ProjectKanbanView: React.FC<ProjectKanbanViewProps> = ({
 
   // Fallback statuses if none are provided
   if (taskStatuses.length === 0) {
-    tasksByStatus["To Do"] = [];
-    tasksByStatus["In Progress"] = [];
-    tasksByStatus["Review"] = [];
-    tasksByStatus["Done"] = [];
+    tasksByStatus["Por hacer"] = [];
+    tasksByStatus["En curso"] = [];
+    tasksByStatus["Revisión"] = [];
+    tasksByStatus["Listo"] = [];
   }
 
   tasks.forEach((task) => {
     const status = taskStatuses.find((s) => s.id === task.statusId);
-    const statusName = status?.name || "To Do";
+    const statusName = status?.name || "Por hacer";
     if (tasksByStatus[statusName]) {
       tasksByStatus[statusName].push(task);
     }

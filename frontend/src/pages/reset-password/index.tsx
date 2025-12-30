@@ -51,21 +51,21 @@ function ResetPasswordForm() {
     const checkToken = async () => {
       if (!token || typeof token !== "string") {
         setIsValidToken(false);
-        setError("Invalid or missing reset token");
+        setError("Token de restablecimiento inválido o faltante");
         return;
       }
 
       try {
         const response: any = await validateResetToken(token);
         if (response) {
-          setIsValidToken(response?.valid);
+          setIsSuccess(response?.valid);
         } else {
           setIsValidToken(false);
-          setError(response.message || "Invalid or expired reset token");
+          setError(response.message || "Token de restablecimiento inválido o expirado");
         }
       } catch (err: any) {
         setIsValidToken(false);
-        setError(err.message || "Failed to validate reset token");
+        setError(err.message || "Error al validar el token de restablecimiento");
       }
     };
 
@@ -99,13 +99,13 @@ function ResetPasswordForm() {
     // }
 
     if (!passwordsMatch) {
-      setError("Passwords do not match");
+      setError("Las contraseñas no coinciden");
       setIsLoading(false);
       return;
     }
 
     if (!token || typeof token !== "string") {
-      setError("Invalid reset token");
+      setError("Token de restablecimiento inválido");
       setIsLoading(false);
       return;
     }
@@ -122,10 +122,10 @@ function ResetPasswordForm() {
       if (response.success) {
         setIsSuccess(true);
       } else {
-        setError(response.message || "Failed to reset password. Please try again.");
+        setError(response.message || "No se pudo restablecer la contraseña. Por favor, inténtalo de nuevo.");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to reset password. Please try again.");
+      setError(err.message || "No se pudo restablecer la contraseña. Por favor, inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
     }
@@ -141,9 +141,9 @@ function ResetPasswordForm() {
         {/* Invalid Token Header */}
         <div className="login-form-header">
           <div className="login-form-header-content">
-            <h1 className="login-form-title">Invalid Reset Link</h1>
+            <h1 className="login-form-title">Enlace de restablecimiento inválido</h1>
             <p className="login-form-subtitle">
-              This password reset link is invalid or has expired
+              Este enlace de restablecimiento de contraseña no es válido o ha expirado
             </p>
           </div>
         </div>
@@ -156,10 +156,10 @@ function ResetPasswordForm() {
           <Alert variant="destructive" className="login-error-alert">
             <AlertCircle className="login-field-icon" />
             <AlertDescription className="font-medium">
-              <span className="login-error-title">Reset Link Expired</span>
+              <span className="login-error-title">Enlace de restablecimiento expirado</span>
               <span className="login-error-message">
-                This link may have expired or been used already. Password reset links are only valid
-                for 24 hours.
+                Este enlace puede haber expirado o ya haber sido utilizado. Los enlaces de
+                restablecimiento de contraseña solo son válidos por 24 horas.
               </span>
             </AlertDescription>
           </Alert>
@@ -173,7 +173,7 @@ function ResetPasswordForm() {
         >
           <Link href="/forgot-password">
             <Button className="login-submit-button">
-              Request New Reset Link
+              Solicitar nuevo enlace
               <ArrowRight className="login-button-arrow" />
             </Button>
           </Link>
@@ -186,7 +186,7 @@ function ResetPasswordForm() {
         >
           <Link href="/login">
             <Button variant="outline" className="login-signup-button">
-              Back to Sign In
+              Volver al inicio de sesión
             </Button>
           </Link>
         </motion.div>
@@ -205,8 +205,8 @@ function ResetPasswordForm() {
         {/* Success Header */}
         <div className="login-form-header">
           <div className="login-form-header-content">
-            <h1 className="login-form-title">Password Reset Successful</h1>
-            <p className="login-form-subtitle">Your password has been successfully updated</p>
+            <h1 className="login-form-title">Restablecimiento exitoso</h1>
+            <p className="login-form-subtitle">Tu contraseña ha sido actualizada con éxito</p>
           </div>
         </div>
 
@@ -218,10 +218,10 @@ function ResetPasswordForm() {
           <Alert className="login-error-alert border-green-200 bg-green-50 text-green-800 dark:border-green-800/30 dark:bg-green-900/20">
             <CheckCircle2 className="login-field-icon text-green-600" />
             <AlertDescription className="font-medium">
-              <span className="login-error-title text-green-800 dark:text-green-200">All Set!</span>
+              <span className="login-error-title text-green-800 dark:text-green-200">¡Todo listo!</span>
               <span className="login-error-message text-green-700 dark:text-green-300">
-                Your password has been successfully reset. You can now sign in with your new
-                password.
+                Tu contraseña se ha restablecido correctamente. Ahora puedes iniciar sesión con tu
+                nueva contraseña.
               </span>
             </AlertDescription>
           </Alert>
@@ -235,7 +235,7 @@ function ResetPasswordForm() {
         >
           <Link href="/login">
             <Button className="login-submit-button">
-              Sign In Now
+              Iniciar sesión ahora
               <ArrowRight className="login-button-arrow" />
             </Button>
           </Link>
@@ -269,8 +269,8 @@ function ResetPasswordForm() {
       {/* Header */}
       <div className="login-form-header">
         <div className="login-form-header-content">
-          <h1 className="login-form-title">Set New Password</h1>
-          <p className="login-form-subtitle">Create a strong password for your account</p>
+          <h1 className="login-form-title">Establecer nueva contraseña</h1>
+          <p className="login-form-subtitle">Crea una contraseña segura para tu cuenta</p>
         </div>
       </div>
 
@@ -283,7 +283,7 @@ function ResetPasswordForm() {
           <Alert variant="destructive" className="login-error-alert">
             <AlertCircle className="login-field-icon" />
             <AlertDescription className="font-medium">
-              <span className="login-error-title">Password Reset Failed</span>
+              <span className="login-error-title">Error al restablecer la contraseña</span>
               <span className="login-error-message">{error}</span>
             </AlertDescription>
           </Alert>
@@ -301,7 +301,7 @@ function ResetPasswordForm() {
         >
           <Label htmlFor="password" className="login-field-label">
             <Lock className="login-field-icon" />
-            <span>New Password</span>
+            <span>Nueva contraseña</span>
           </Label>
           <div className="login-password-container">
             <Input
@@ -312,7 +312,7 @@ function ResetPasswordForm() {
               required
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a strong password"
+              placeholder="Crea una contraseña segura"
               className="login-password-input"
             />
             <Button
@@ -321,7 +321,7 @@ function ResetPasswordForm() {
               size="sm"
               onClick={() => setShowPassword(!showPassword)}
               className="login-password-toggle"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
@@ -409,7 +409,7 @@ function ResetPasswordForm() {
         >
           <Label htmlFor="confirmPassword" className="login-field-label">
             <Lock className="login-field-icon" />
-            <span>Confirm New Password</span>
+            <span>Confirmar nueva contraseña</span>
           </Label>
           <div className="login-password-container">
             <Input
@@ -420,7 +420,7 @@ function ResetPasswordForm() {
               required
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Confirm your new password"
+              placeholder="Confirma tu nueva contraseña"
               className="login-password-input"
             />
             <Button
@@ -429,7 +429,7 @@ function ResetPasswordForm() {
               size="sm"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="login-password-toggle"
-              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
               {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
@@ -438,9 +438,8 @@ function ResetPasswordForm() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`signup-password-match ${
-                passwordsMatch ? "signup-password-match-valid" : "signup-password-match-invalid"
-              }`}
+              className={`signup-password-match ${passwordsMatch ? "signup-password-match-valid" : "signup-password-match-invalid"
+                }`}
             >
               <CheckCircle2
                 className={
@@ -449,7 +448,7 @@ function ResetPasswordForm() {
                     : "signup-password-match-icon-invalid"
                 }
               />
-              <span>{passwordsMatch ? "Passwords match" : "Passwords do not match"}</span>
+              <span>{passwordsMatch ? "Las contraseñas coinciden" : "Las contraseñas no coinciden"}</span>
             </motion.div>
           )}
         </motion.div>
@@ -468,11 +467,11 @@ function ResetPasswordForm() {
             {isLoading ? (
               <>
                 <Loader2 className="login-loading-spinner" />
-                Updating password...
+                Actualizando contraseña...
               </>
             ) : (
               <>
-                Reset Password
+                Restablecer contraseña
                 <ArrowRight className="login-button-arrow" />
               </>
             )}
@@ -488,9 +487,9 @@ function ResetPasswordForm() {
         className="login-footer"
       >
         <p className="login-footer-text">
-          Remember your password?{" "}
+          ¿Recuerdas tu contraseña?{" "}
           <Link href="/login" className="login-footer-link">
-            Back to Sign In
+            Volver al inicio de sesión
           </Link>
         </p>
       </motion.div>

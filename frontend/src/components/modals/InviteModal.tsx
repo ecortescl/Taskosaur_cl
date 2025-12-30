@@ -60,10 +60,10 @@ const InviteModal = ({
           <DialogHeader>
             <DialogTitle className="text-[var(--foreground)] flex items-center gap-2">
               <HiMail className="w-5 h-5 text-[var(--primary)]" />
-              Invite Member to Workspace
+              Invitar Miembro al Espacio de Trabajo
             </DialogTitle>
             <DialogDescription className="text-[var(--muted-foreground)]">
-              Send an invitation to join this workspace.
+              Envía una invitación para unirse a este espacio de trabajo.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -72,26 +72,26 @@ const InviteModal = ({
                 htmlFor="invite-email"
                 className="text-sm font-medium text-[var(--foreground)]"
               >
-                Email Address
+                Correo electrónico
               </Label>
               <Input
                 id="invite-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email address"
+                placeholder="Ingresa el correo electrónico"
                 className="mt-1 border-none bg-background text-[var(--foreground)]"
                 required
               />
               {email && !isEmailValid && (
                 <p className="text-xs text-[var(--destructive)] mt-1">
-                  Please enter a valid email address
+                  Por favor, ingresa un correo electrónico válido
                 </p>
               )}
             </div>
 
             <div>
-              <Label className="text-sm font-medium text-[var(--foreground)]">Role</Label>
+              <Label className="text-sm font-medium text-[var(--foreground)]">Rol</Label>
               <Select value={role} onValueChange={setRole}>
                 <SelectTrigger
                   className="projects-workspace-button border-none mt-1"
@@ -102,7 +102,7 @@ const InviteModal = ({
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  <SelectValue placeholder="Select a role">
+                  <SelectValue placeholder="Selecciona un rol">
                     {role && <span className="text-[var(--foreground)]">{role}</span>}
                   </SelectValue>
                 </SelectTrigger>
@@ -121,7 +121,7 @@ const InviteModal = ({
               </Select>
               {!role && (
                 <p className="text-xs text-[var(--muted-foreground)] mt-1">
-                  Please select a role for the member
+                  Por favor, selecciona un rol para el miembro
                 </p>
               )}
             </div>
@@ -134,7 +134,7 @@ const InviteModal = ({
                 disabled={inviting}
                 className="w-20"
               >
-                Cancel
+                Cancelar
               </ActionButton>
               <ActionButton
                 primary
@@ -142,7 +142,7 @@ const InviteModal = ({
                 disabled={inviting || !email.trim() || !isEmailValid || !role}
                 className="w-28"
               >
-                {inviting ? "Inviting..." : "Send Invite"}
+                {inviting ? "Invitando..." : "Enviar invitación"}
               </ActionButton>
             </DialogFooter>
           </form>

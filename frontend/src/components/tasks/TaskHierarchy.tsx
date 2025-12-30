@@ -91,7 +91,7 @@ export default function TaskHierarchy({
       {/* Parent Task */}
       {parentTask && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Parent Task</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tarea Padre</h3>
           <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -104,7 +104,7 @@ export default function TaskHierarchy({
                     <span className="text-gray-600 dark:text-gray-400">{parentTask.title}</span>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Progress: {getTaskProgress(parentTask)}%
+                    Progreso: {getTaskProgress(parentTask)}%
                   </p>
                 </div>
               </div>
@@ -124,7 +124,7 @@ export default function TaskHierarchy({
       {/* Current Task Actions */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Task Hierarchy</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Jerarquía de Tareas</h3>
           <div className="flex space-x-2">
             {!task.parentTaskId && (
               <Button variant="outline" onClick={() => setShowCreateSubtask(true)}>
@@ -133,12 +133,12 @@ export default function TaskHierarchy({
             )}
             {task.parentTaskId && (
               <Button variant="outline" onClick={() => onPromoteToParent(task.id)}>
-                Promote to Parent
+                Promover a Padre
               </Button>
             )}
             {!task.parentTaskId && (
               <Button variant="outline" onClick={() => setShowConvertModal(true)}>
-                Convert to Subtask
+                Convertir a Subtarea
               </Button>
             )}
           </div>
@@ -156,11 +156,11 @@ export default function TaskHierarchy({
                 </div>
                 <div className="flex items-center space-x-4 mt-1">
                   <span className={`text-sm ${getPriorityColor(task.priority)}`}>
-                    {task.priority} Priority
+                    Prioridad {task.priority}
                   </span>
                   {subtasks.length > 0 && (
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {subtasks.length} subtasks • {getTaskProgress(task)}% complete
+                      {subtasks.length} subtareas • {getTaskProgress(task)}% completado
                     </span>
                   )}
                 </div>
@@ -182,7 +182,7 @@ export default function TaskHierarchy({
       {subtasks.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Subtasks ({subtasks.length})
+            Subtareas ({subtasks.length})
           </h3>
           <div className="space-y-2">
             {subtasks.map((subtask) => (
@@ -205,7 +205,7 @@ export default function TaskHierarchy({
                       </span>
                       {subtask.dueDate && (
                         <span className="text-xs text-gray-500 dark:text-gray-400">
-                          Due: {new Date(subtask.dueDate).toLocaleDateString()}
+                          Vence: {new Date(subtask.dueDate).toLocaleDateString()}
                         </span>
                       )}
                     </div>
@@ -215,11 +215,10 @@ export default function TaskHierarchy({
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2">
                     <span
-                      className={`px-2 py-1 text-xs rounded-full ${
-                        subtask.status.category === "DONE"
-                          ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
-                          : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100"
-                      }`}
+                      className={`px-2 py-1 text-xs rounded-full ${subtask.status.category === "DONE"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
+                        : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100"
+                        }`}
                     >
                       {subtask.status.name}
                     </span>
@@ -228,7 +227,7 @@ export default function TaskHierarchy({
                   <button
                     onClick={() => setTaskToPromote(subtask)}
                     className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 p-1"
-                    title="Promote to parent task"
+                    title="Promover a tarea padre"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
@@ -257,20 +256,20 @@ export default function TaskHierarchy({
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Title *
+                  Título *
                 </label>
                 <input
                   type="text"
                   value={subtaskData.title}
                   onChange={(e) => setSubtaskData((prev) => ({ ...prev, title: e.target.value }))}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="Enter subtask title..."
+                  placeholder="Ingresa título de subtarea..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Description
+                  Descripción
                 </label>
                 <textarea
                   value={subtaskData.description}
@@ -279,13 +278,13 @@ export default function TaskHierarchy({
                   }
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="Enter subtask description..."
+                  placeholder="Ingresa descripción de subtarea..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Priority
+                  Prioridad
                 </label>
                 <select
                   value={subtaskData.priority}
@@ -294,17 +293,17 @@ export default function TaskHierarchy({
                   }
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="LOWEST">Lowest</option>
-                  <option value="LOW">Low</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HIGH">High</option>
-                  <option value="HIGHEST">Highest</option>
+                  <option value="LOWEST">Más baja</option>
+                  <option value="LOW">Baja</option>
+                  <option value="MEDIUM">Media</option>
+                  <option value="HIGH">Alta</option>
+                  <option value="HIGHEST">Más alta</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Due Date
+                  Fecha de Vencimiento
                 </label>
                 <input
                   type="date"
@@ -317,10 +316,10 @@ export default function TaskHierarchy({
 
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="secondary" onClick={() => setShowCreateSubtask(false)}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleCreateSubtask} disabled={!subtaskData.title.trim()}>
-                Create Subtask
+                Crear Subtarea
               </Button>
             </div>
           </div>
@@ -332,17 +331,17 @@ export default function TaskHierarchy({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Convert to Subtask
+              Convertir a Subtarea
             </h3>
 
             <div className="space-y-4">
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Select a parent task to convert this task into a subtask.
+                Selecciona una tarea padre para convertir esta tarea en una subtarea.
               </p>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Parent Task
+                  Tarea Padre
                 </label>
                 <select
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -353,7 +352,7 @@ export default function TaskHierarchy({
                     }
                   }}
                 >
-                  <option value="">Select a parent task...</option>
+                  <option value="">Selecciona una tarea padre...</option>
                   {potentialParents.map((t) => (
                     <option key={t.id} value={t.id}>
                       {t.slug} - {t.title}
@@ -365,7 +364,7 @@ export default function TaskHierarchy({
 
             <div className="flex justify-end space-x-3 mt-6">
               <Button variant="secondary" onClick={() => setShowConvertModal(false)}>
-                Cancel
+                Cancelar
               </Button>
             </div>
           </div>
@@ -378,10 +377,10 @@ export default function TaskHierarchy({
           isOpen={true}
           onClose={() => setTaskToPromote(null)}
           onConfirm={() => handlePromoteTask(taskToPromote)}
-          title="Promote to Parent Task"
-          message={`Are you sure you want to promote "${taskToPromote.title}" to a parent task? This will remove it from its current parent.`}
-          confirmText="Promote"
-          cancelText="Cancel"
+          title="Promover a Tarea Padre"
+          message={`¿Estás seguro de que quieres promover "${taskToPromote.title}" a tarea padre? Esto la eliminará de su padre actual.`}
+          confirmText="Promover"
+          cancelText="Cancelar"
           type="info"
         />
       )}

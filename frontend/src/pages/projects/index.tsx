@@ -7,10 +7,10 @@ export default function ProjectsPage() {
     <ProjectsContent
       contextType="organization"
       contextId={orgId}
-      title="Your Projects"
-      description="Manage and organize projects within this organization."
-      emptyStateTitle="No projects found"
-      emptyStateDescription="Create your first project to get started with organizing your tasks and collaborating with your team."
+      title="Tus Proyectos"
+      description="Administra y organiza tus proyectos dentro de esta organización."
+      emptyStateTitle="No se encontraron proyectos"
+      emptyStateDescription="Crea tu primer proyecto para comenzar a organizar tus tareas y colaborar con tu equipo."
       enablePagination={true}
       generateProjectLink={(project) => `/${project.workspace.slug}/${project.slug}`}
     />
