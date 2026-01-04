@@ -76,8 +76,8 @@ RUN if [ ! -f "package.json" ]; then \
         exit 1; \
     fi
 
-# Expose the application port
-EXPOSE 3000
+# Expose the application port (dynamic for Dokploy)
+EXPOSE ${PORT:-3000}
 
 # Set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

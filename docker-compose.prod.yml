@@ -41,6 +41,9 @@ services:
       # Node Environment
       NODE_ENV: production
 
+      # Port Configuration (Dokploy will set this automatically)
+      PORT: ${PORT:-3000}
+
       # Database Configuration (connect to internal PostgreSQL)
       # Note: Explicitly set to use 'postgres' hostname for Docker network
       DATABASE_URL: postgresql://${POSTGRES_USER:-taskosaur}:${POSTGRES_PASSWORD:-taskosaur}@postgres:5432/${POSTGRES_DB:-taskosaur}
@@ -51,7 +54,7 @@ services:
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD:-}
 
-      # Application URLs
+      # Application URLs (will be set by Dokploy)
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
       NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3000/api}
@@ -85,7 +88,7 @@ services:
       AWS_REGION: ${AWS_REGION:-}
       AWS_BUCKET_NAME: ${AWS_BUCKET_NAME:-}
     ports:
-      - "${APP_PORT:-3000}:3000"
+      - "${PORT:-3000}:${PORT:-3000}"
     volumes:
       - app_uploads:/app/uploads
       - app_logs:/app/logs
@@ -98,7 +101,7 @@ services:
       - taskosaur-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:${PORT:-3000}/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
       interval: 30s
       timeout: 10s
       retries: 3
