@@ -46,8 +46,8 @@ docker-compose -f docker-compose.dev.yml up -d
 ### 3. Access the application
 
 - **Frontend**: http://localhost:3001
-- **Backend API**: http://localhost:3000
-- **Backend API Docs**: http://localhost:3000/api/docs
+- **Backend API**: http://localhost:3030
+- **Backend API Docs**: http://localhost:3030/api/docs
 
 ## Services
 
@@ -55,7 +55,7 @@ The docker-compose setup includes:
 
 - **postgres** (PostgreSQL 16) - Internal only
 - **redis** (Redis 7) - Internal only
-- **app** (Backend + Frontend) - Ports 3000 (Backend) & 3001 (Frontend)
+- **app** (Backend + Frontend) - Ports 3030 (Backend) & 3001 (Frontend)
 
 ## Useful Commands
 
@@ -128,7 +128,7 @@ The setup uses volume mounts for hot-reloading:
 
 ### Port conflicts
 
-If ports 3000 (backend), 3001 (frontend), 5432, or 6379 are already in use, you can modify them in `docker-compose.dev.yml`:
+If ports 3030 (backend), 3001 (frontend), 5432, or 6379 are already in use, you can modify them in `docker-compose.dev.yml`:
 
 ```yaml
 ports:

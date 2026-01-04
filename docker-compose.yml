@@ -48,9 +48,9 @@ services:
       REDIS_PASSWORD: ${REDIS_PASSWORD:-}
 
       # Application URLs
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
-      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3000/api}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3030}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3030}
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:3030/api}
 
       # Security
       JWT_SECRET: ${JWT_SECRET}
@@ -81,7 +81,7 @@ services:
       AWS_REGION: ${AWS_REGION:-}
       AWS_BUCKET_NAME: ${AWS_BUCKET_NAME:-}
     ports:
-      - "3000:3000"
+      - "3030:3030"
     volumes:
       - app_uploads:/app/taskosaur/uploads
       - app_logs:/app/taskosaur/logs
@@ -94,7 +94,7 @@ services:
       - taskosaur-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3030/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))\""]
       interval: 30s
       timeout: 10s
       retries: 3

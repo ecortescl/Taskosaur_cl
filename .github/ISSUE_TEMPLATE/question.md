@@ -23,7 +23,7 @@ List any approaches you've already attempted.
 **Have you checked the following resources?**
 - [ ] [README.md](https://github.com/your-username/taskosaur/blob/main/README.md)
 - [ ] [FAQ Section](https://github.com/your-username/taskosaur/blob/main/README.md#faq)
-- [ ] [API Documentation](http://localhost:3000/api/docs)
+- [ ] [API Documentation](http://localhost:3030/api/docs)
 - [ ] [Existing Issues](https://github.com/your-username/taskosaur/issues)
 - [ ] [Discussions](https://github.com/your-username/taskosaur/discussions)
 

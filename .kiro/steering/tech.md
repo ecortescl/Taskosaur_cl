@@ -35,7 +35,7 @@ npm run dev
 
 # Start individually
 npm run dev:frontend    # Next.js on port 3001
-npm run dev:backend     # NestJS on port 3000
+npm run dev:backend     # NestJS on port 3030
 
 # Docker development
 docker compose -f docker-compose.dev.yml up

@@ -379,7 +379,7 @@ ${sessionContext?.currentWorkSpaceProjectSlug ? `- Available Projects in Current
       switch (provider) {
         case 'openrouter':
           requestUrl = `${apiUrl}/chat/completions`;
-          requestHeaders['HTTP-Referer'] = process.env.APP_URL || 'http://localhost:3000';
+          requestHeaders['HTTP-Referer'] = process.env.APP_URL || 'http://localhost:3030';
           requestHeaders['X-Title'] = 'Taskosaur AI Assistant';
           requestBody.top_p = 0.9;
           requestBody.frequency_penalty = 0;
@@ -987,7 +987,7 @@ ${sessionContext?.currentWorkSpaceProjectSlug ? `- Available Projects in Current
       switch (provider) {
         case 'openrouter':
           requestUrl = `${validatedUrl}/chat/completions`;
-          requestHeaders['HTTP-Referer'] = process.env.APP_URL || 'http://localhost:3000';
+          requestHeaders['HTTP-Referer'] = process.env.APP_URL || 'http://localhost:3030';
           requestHeaders['X-Title'] = 'Taskosaur AI Assistant';
           break;
 

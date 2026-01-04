@@ -201,7 +201,7 @@ export class AuthService {
       resetTokenExpiry.setHours(resetTokenExpiry.getHours() + 24);
       const hashedResetToken = await bcrypt.hash(resetToken, 10);
       await this.usersService.updateResetToken(user.id, hashedResetToken, resetTokenExpiry);
-      const resetUrl = `${this.configService.get('FRONTEND_URL', 'http://localhost:3000')}/reset-password?token=${resetToken}`;
+      const resetUrl = `${this.configService.get('FRONTEND_URL', 'http://localhost:3030')}/reset-password?token=${resetToken}`;
       await this.emailService.sendPasswordResetEmail(user.email, {
         userName: user.firstName,
         resetToken: resetToken, // Pass the plain token (not hashed)

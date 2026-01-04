@@ -90,8 +90,8 @@ The fastest way to get started with Taskosaur is using Docker Compose:
 
 4. **Access the application**
    - Frontend: http://localhost:3001
-   - Backend API: http://localhost:3000
-   - API Documentation: http://localhost:3000/api/docs
+   - Backend API: http://localhost:3030
+   - API Documentation: http://localhost:3030/api/docs
 
 See [DOCKER_DEV_SETUP.md](DOCKER_DEV_SETUP.md) for detailed Docker documentation.
 
@@ -150,7 +150,7 @@ If you prefer to run services locally:
    CORS_ORIGIN="http://localhost:3001"
 
    # Backend API URL (for frontend to connect to backend)
-   NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
+   NEXT_PUBLIC_API_BASE_URL=http://localhost:3030/api
 
    # File Upload
    UPLOAD_DEST="./uploads"
@@ -182,13 +182,13 @@ If you prefer to run services locally:
 
    # Or start individually
    npm run dev:frontend    # Start frontend only (port 3001)
-   npm run dev:backend     # Start backend only (port 3000)
+   npm run dev:backend     # Start backend only (port 3030)
    ```
 
 6. **Access the Application**
    - Frontend: http://localhost:3001
-   - Backend API: http://localhost:3000
-   - API Documentation: http://localhost:3000/api/docs
+   - Backend API: http://localhost:3030
+   - API Documentation: http://localhost:3030/api/docs
 
 ## Development
 
@@ -201,7 +201,7 @@ All commands are run from the root directory:
 ```bash
 npm run dev              # Start both frontend and backend concurrently
 npm run dev:frontend     # Start frontend only (Next.js on port 3001)
-npm run dev:backend      # Start backend only (NestJS on port 3000)
+npm run dev:backend      # Start backend only (NestJS on port 3030)
 ```
 
 #### Build
@@ -272,7 +272,7 @@ git commit -m "feat: add feature"  # Runs checks automatically
 
 ```
 taskosaur/
-├── backend/                # NestJS Backend (Port 3000)
+├── backend/                # NestJS Backend (Port 3030)
 │   ├── src/
 │   │   ├── modules/       # Feature modules
 │   │   ├── common/        # Shared utilities
@@ -484,7 +484,7 @@ _Taskosaur is actively under development. The following features represent our p
    SMTP_FROM=noreply@taskosaur.com
 
    # Frontend URL (for email links)
-   FRONTEND_URL=http://localhost:3000
+   FRONTEND_URL=http://localhost:3030
 
    # File Upload
    UPLOAD_DEST="./uploads"
@@ -520,9 +520,9 @@ _Taskosaur is actively under development. The following features represent our p
    ```
 
 6. **Access the Application**
-   - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Backend API: [http://localhost:3001/api](http://localhost:3001/api)
-   - API Documentation: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+   - Frontend: [http://localhost:3030](http://localhost:3030)
+   - Backend API: [http://localhost:3031/api](http://localhost:3031/api)
+   - API Documentation: [http://localhost:3031/api/docs](http://localhost:3031/api/docs)
 
 ## Development
 
@@ -742,7 +742,7 @@ FRONTEND_URL=https://your-domain.com
 
 The API documentation is automatically generated using Swagger:
 
-- Development: http://localhost:3000/api/docs
+- Development: http://localhost:3030/api/docs
 - Production: `https://api.your-domain.com/api/docs`
 
 ## Contributing

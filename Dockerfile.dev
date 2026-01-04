@@ -31,9 +31,9 @@ RUN chmod +x /entrypoint.sh
 RUN npm run db:generate || true
 
 # Expose ports
-# 3000 - Backend (NestJS)
+# 3030 - Backend (NestJS)
 # 3001 - Frontend (Next.js)
-EXPOSE 3000 3001
+EXPOSE 3030 3001
 
 # Set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

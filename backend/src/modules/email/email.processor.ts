@@ -244,7 +244,7 @@ export class EmailProcessor {
             </div>
             
             <div class="button-container">
-              <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/login" class="button">Login to Your Account</a>
+              <a href="${process.env.FRONTEND_URL || 'http://localhost:3030'}/login" class="button">Login to Your Account</a>
             </div>
             
             <div class="info-section">
@@ -325,7 +325,7 @@ export class EmailProcessor {
             </div>
             
             <div class="button-container">
-              <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects/${data.projectId}" class="button">View Project</a>
+              <a href="${process.env.FRONTEND_URL || 'http://localhost:3030'}/projects/${data.projectId}" class="button">View Project</a>
             </div>
           </div>
           <div class="footer">
@@ -350,7 +350,7 @@ export class EmailProcessor {
             </div>
             
             <div class="button-container">
-              <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects/${data.projectId}/team" class="button">Manage Team</a>
+              <a href="${process.env.FRONTEND_URL || 'http://localhost:3030'}/projects/${data.projectId}/team" class="button">Manage Team</a>
             </div>
           </div>
           <div class="footer">
@@ -374,7 +374,7 @@ export class EmailProcessor {
             </div>
             
             <div class="button-container">
-              <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects/${data.projectId}/invite?email=${data.inviteeEmail}" class="button">Send New Invitation</a>
+              <a href="${process.env.FRONTEND_URL || 'http://localhost:3030'}/projects/${data.projectId}/invite?email=${data.inviteeEmail}" class="button">Send New Invitation</a>
             </div>
           </div>
           <div class="footer">
